@@ -1,0 +1,26 @@
+:root {
+  /* Apolo: preto e branco, laranja propulsão só como luz */
+  --preto-topo: #121212;
+  --preto: #0a0a0a;
+  --preto-fim: #050505;
+  --fantasma: #1f1f1f;
+  --tinta: #f4f4f2;
+  --tinta-2: #9b9b9b;
+  --tinta-3: #8a8a8a;
+  --fio: rgba(244, 244, 242, .14);
+  --fio-forte: rgba(244, 244, 242, .32);
+  --laranja: #ff5a1f;
+  --laranja-luz: rgba(255, 90, 31, .45);
+
+  --fonte: 'Figtree Variable', 'Figtree', system-ui, sans-serif;
+
+  --margem: clamp(20px, 3.9vw, 72px);
+  --gap: clamp(14px, 1.65vw, 24px);
+  --titulo: clamp(34px, 3.9vw, 64px);
+  --lead: clamp(21px, 1.98vw, 31px);
+  --gigante: clamp(76px, 14.6vw, 250px);
+
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --ease-io: cubic-bezier(.65, 0, .35, 1);
+  --ease-snap: cubic-bezier(.3, .9, .2, 1);
+}

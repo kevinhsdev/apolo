@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Apolo Studio · Sites para empresas que querem decolar</title>
+  <meta name="description" content="Agência de desenvolvimento de sites. Sites rápidos, achados no Google e dentro da LGPD, a partir de R$ 1.200, prontos em 7 dias.">
+  <link rel="canonical" href="https://apolostudio.com.br/">
+  <meta name="theme-color" content="#0a0a0a">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Apolo Studio">
+  <meta property="og:title" content="Apolo Studio · Sites para empresas que querem decolar">
+  <meta property="og:description" content="Sites rápidos, achados no Google e dentro da LGPD. A partir de R$ 1.200, prontos em 7 dias.">
+  <meta property="og:url" content="https://apolostudio.com.br/">
+  <meta property="og:image" content="https://apolostudio.com.br/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Apolo Studio",
+    "description": "Agência de desenvolvimento de sites para empresas de todos os ramos.",
+    "url": "https://apolostudio.com.br/",
+    "logo": "https://apolostudio.com.br/apple-touch-icon.png",
+    "image": "https://apolostudio.com.br/og.png",
+    "areaServed": "BR",
+    "sameAs": ["https://www.instagram.com/apolostudio.br/"],
+    "makesOffer": [
+      { "@type": "Offer", "name": "Site Decolagem", "price": "1200", "priceCurrency": "BRL" },
+      { "@type": "Offer", "name": "Site Órbita", "price": "2200", "priceCurrency": "BRL" },
+      { "@type": "Offer", "name": "Site Lua", "price": "3800", "priceCurrency": "BRL" }
+    ]
+  }
+  </script>
+  <style>
+    html { background: #0a0a0a; }
+    html:not(.com-estilo) body { visibility: hidden; animation: mostra 0s 6s forwards; }
+    html:not(.assentou) *, html:not(.assentou) *::before, html:not(.assentou) *::after { transition: none !important; }
+    @keyframes mostra { to { visibility: visible; } }
+  </style>
+  <noscript><style>html:not(.com-estilo) body { visibility: visible; animation: none; }</style></noscript>
+</head>
+<body>
+  <div class="faixa" data-faixa hidden>
+    <a class="faixa__link" href="#pacotes"><span class="faixa__selo">Lançamento</span><span data-faixa-texto></span><span class="faixa__sep" aria-hidden="true">·</span><span class="faixa__tempo">termina em <b data-faixa-relogio></b></span><span class="faixa__ver">Ver pacotes →</span></a>
+    <button class="faixa__fechar" type="button" data-faixa-fechar aria-label="Fechar aviso">×</button>
+  </div>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+  <canvas class="globo" aria-hidden="true"></canvas>
+  <span class="ponto-voo" aria-hidden="true"></span>
+
+  <header class="nav" data-nav>
+    <nav class="nav__grupo nav__grupo--esq" aria-label="Seções">
+      <a class="link" href="#processo">Processo</a>
+      <a class="link" href="#dominio">Domínio</a>
+      <a class="link" href="#pacotes">Pacotes</a>
+      <a class="link" href="#projetos">Projetos</a>
+      <a class="link" href="#diagnostico">Diagnóstico</a>
+    </nav>
+    <a class="nav__marca" href="#topo" aria-label="Apolo Studio, voltar ao topo">
+      <svg class="marca__simbolo" viewBox="210 226 315 280" aria-hidden="true"><path d="M318 241h47L245 455l-25-45z"/><path d="M370 241h48l97 169-25 45z"/><path d="M245 455Q367.5 355 490 455l-20 38Q367.5 407 265 493z"/></svg>
+      <span>apolo</span>
+    </a>
+    <div class="nav__grupo nav__grupo--dir">
+      <a class="link" href="https://www.instagram.com/apolostudio.br/" target="_blank" rel="noopener">Instagram</a>
+      <a class="link" href="#contato" data-whats="Olá! Vim pelo site da Apolo e quero conversar sobre um site.">WhatsApp</a>
+    </div>
+    <button class="nav__menu" type="button" aria-expanded="false" aria-controls="menu"><span class="rola" data-texto="Menu">Menu</span></button>
+  </header>
+
+  <div class="menu" id="menu" hidden>
+    <nav class="menu__links" aria-label="Menu">
+      <a class="menu__link" href="#processo">Processo</a>
+      <a class="menu__link" href="#dominio">Domínio</a>
+      <a class="menu__link" href="#projetos">Projetos</a>
+      <a class="menu__link" href="#pacotes">Pacotes</a>
+      <a class="menu__link" href="#diagnostico">Diagnóstico</a>
+      <a class="menu__link" href="#contato">Contato</a>
+    </nav>
+    <div class="menu__pe">
+      <a class="link" href="https://www.instagram.com/apolostudio.br/" target="_blank" rel="noopener">Instagram</a>
+      <a class="botao" href="#contato" data-whats="Olá! Vim pelo site da Apolo e quero um site."><span class="rola">Quero meu site</span></a>
+    </div>
+  </div>
+
+  <main id="conteudo">
+    <section class="hero" id="topo">
+      <p class="palavra hero__palavra" aria-hidden="true" data-palavra>apolo</p>
+      <h1 class="hero__lead">
+        <span class="linha"><span>Sites para</span></span>
+        <span class="linha"><span>sua empresa</span></span>
+        <span class="linha"><span>sair do chão.</span></span>
+      </h1>
+      <p class="hero__preco">
+        <span class="linha"><span>Sites a partir de</span></span>
+        <span class="linha"><span>R$ 1.200, em 7 dias úteis</span></span>
+      </p>
+      <div class="hero__acoes">
+        <a class="metal-btn" href="#dominio"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Quero meu site</span><span class="metal-btn__orb" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      </div>
+    </section>
+
+    <section class="regioes" id="processo" aria-label="Como trabalhamos">
+      <div class="regioes__bloco regioes__bloco--a" data-revela>
+        <h2 class="titulo"><span class="linha"><span>Feito para</span></span><span class="linha"><span>ser achado.</span></span></h2>
+        <p class="corpo">SEO técnico, Google Meu Negócio e site rápido no celular. Quem procura o que você faz encontra você.</p>
+      </div>
+      <div class="regioes__bloco regioes__bloco--b" data-revela data-falha>
+        <h2 class="titulo"><span class="linha"><span>Um faz,</span></span><span class="linha"><span>o outro confere.</span></span></h2>
+        <p class="corpo">Todo site passa pelos dois sócios e pelos 30 itens do Padrão Apolo antes de ir ao ar: LGPD, acessibilidade, SEO e segurança.</p>
+      </div>
+    </section>
+
+    <section class="dominio" id="dominio" aria-labelledby="dominio-titulo">
+      <div class="dominio__topo">
+        <h2 class="titulo" id="dominio-titulo" data-revela><span class="linha"><span>Comece</span></span><span class="linha"><span>pelo nome.</span></span></h2>
+        <p class="corpo dominio__texto" data-revela>Digite o nome que você quer. A gente consulta agora no Registro.br, e o domínio do primeiro ano já vem em todo pacote, no seu nome.</p>
+      </div>
+      <form class="busca" data-busca novalidate>
+        <label class="busca__rotulo" for="busca-input">Nome do seu site</label>
+        <div class="busca__linha">
+          <div class="busca__campo">
+            <span class="busca__espelho" aria-hidden="true"></span>
+            <input class="busca__input" id="busca-input" name="nome" placeholder="seunegocio" maxlength="40" autocomplete="off" autocapitalize="none" spellcheck="false" inputmode="url">
+            <span class="busca__sufixo" aria-hidden="true"><span class="busca__ponto">.<span class="busca__luz"></span></span><span data-sufixo-resto>com.br</span></span>
+            <span class="busca__cursor" aria-hidden="true"></span>
+          </div>
+          <button class="botao-seta busca__enviar" type="submit" aria-label="Consultar domínio"><span class="seta" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></button>
+        </div>
+        <p class="busca__erro" role="alert"></p>
+      </form>
+      <ul class="tlds" data-tlds aria-live="polite">
+        <li class="tld" data-tld=".com.br"><button class="tld__escolher" type="button" aria-pressed="true"><span class="tld__ponto"></span><span class="tld__nome">.com.br</span></button><span class="tld__estado">Digite um nome</span><span class="tld__preco">Incluso no 1º ano</span><button class="tld__acao" type="button" disabled><span class="rola">Quero este</span></button><span class="tld__sugestoes"></span></li>
+        <li class="tld" data-tld=".com"><button class="tld__escolher" type="button" aria-pressed="false"><span class="tld__ponto"></span><span class="tld__nome">.com</span></button><span class="tld__estado">Digite um nome</span><span class="tld__preco">Incluso no 1º ano</span><button class="tld__acao" type="button" disabled><span class="rola">Quero este</span></button><span class="tld__sugestoes"></span></li>
+        <li class="tld" data-tld=".net.br"><button class="tld__escolher" type="button" aria-pressed="false"><span class="tld__ponto"></span><span class="tld__nome">.net.br</span></button><span class="tld__estado">Digite um nome</span><span class="tld__preco">Incluso no 1º ano</span><button class="tld__acao" type="button" disabled><span class="rola">Quero este</span></button><span class="tld__sugestoes"></span></li>
+        <li class="tld" data-tld=".net"><button class="tld__escolher" type="button" aria-pressed="false"><span class="tld__ponto"></span><span class="tld__nome">.net</span></button><span class="tld__estado">Digite um nome</span><span class="tld__preco">Incluso no 1º ano</span><button class="tld__acao" type="button" disabled><span class="rola">Quero este</span></button><span class="tld__sugestoes"></span></li>
+      </ul>
+    </section>
+
+    <section class="projetos" id="projetos" aria-labelledby="projetos-titulo">
+      <div class="projetos__cabeca">
+        <div>
+          <p class="projetos__eyebrow">Projetos</p>
+          <h2 class="projetos__titulo" id="projetos-titulo">O que sai daqui <span>já está no ar.</span></h2>
+        </div>
+        <p class="projetos__intro">Passe o mouse para ver o site rolando, ou abra e navegue ao vivo, no computador e no celular.</p>
+      </div>
+      <div class="projetos__grade" data-projetos-destaque></div>
+      <div class="projetos__acao">
+        <a class="metal-btn" href="/projetos.html"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Ver a biblioteca de projetos (<span data-projetos-total>0</span>)</span><span class="metal-btn__orb" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      </div>
+    </section>
+    <section class="planos" id="pacotes" aria-labelledby="planos-titulo">
+      <div class="planos__cabeca" data-revela>
+        <p class="pilula"><span class="ponto ponto--vivo" aria-hidden="true"></span> <span data-pilula>Pix ou até 3x no cartão</span></p>
+        <h2 class="planos__titulo" id="planos-titulo">Escolha a sua missão. <span>A gente cuida do lançamento.</span></h2>
+        <p class="planos__intro">Do primeiro voo à órbita completa: pague uma vez e o site é seu para sempre. Depois, se quiser, mantemos ele no ar todo mês.</p>
+        <div class="seletor" role="tablist" aria-label="Tipo de plano">
+          <span class="seletor__fundo" aria-hidden="true"></span>
+          <button type="button" role="tab" id="aba-site" aria-controls="painel-site" aria-selected="true" data-aba="site">Criar meu site <em>pagamento único</em></button>
+          <button type="button" role="tab" id="aba-mensal" aria-controls="painel-mensal" aria-selected="false" data-aba="mensal" tabindex="-1">Manter no ar <em>mensal</em></button>
+        </div>
+      </div>
+      <div class="cartoes" id="painel-site" role="tabpanel" aria-labelledby="aba-site" data-painel="site">
+        <article class="cartao cartao--laranja" data-cartao="decolagem">
+          <div class="cartao__topo"><p class="cartao__rotulo">Pagamento único</p></div>
+          <div class="cartao__missao">
+            <svg class="emblema" viewBox="0 0 120 120" aria-hidden="true"><circle class="e-estrela" cx="22" cy="30" r="0.9"/><circle class="e-estrela" cx="60" cy="18" r="0.7"/><circle class="e-estrela" cx="96" cy="62" r="0.8"/><path class="e-chao" d="M8 106Q60 84 112 106"/><path class="e-hachura" d="M20 112h10M44 110h16M74 110h14M96 113h8"/><path class="e-traj" d="M38 96C44 66 66 40 104 24"/><path class="e-rastro" d="M38 96C44 66 66 40 104 24" pathLength="100" style="--dur:2.8s;--curva:cubic-bezier(.55,0,.75,.6)"/><circle class="e-luz e-viaja" r="3.4" style="offset-path:path('M38 96C44 66 66 40 104 24');--dur:2.8s;--curva:cubic-bezier(.55,0,.75,.6)"/><circle class="e-onda" cx="38" cy="96" r="3"/><path class="e-base" d="M32 97h12M35 97l3-5 3 5"/></svg>
+            <div><p class="cartao__num">Missão 01</p><h3 class="cartao__nome">Decolagem</h3></div>
+          </div>
+          <p class="cartao__de" data-de hidden><s></s><span class="cartao__off"></span></p>
+          <p class="cartao__preco" data-preco="1.200"><span class="cartao__moeda">R$</span><span class="cartao__valor">1.200</span><span class="cartao__por"></span></p>
+          <p class="cartao__sub">50% para começar e 50% na entrega, no Pix. Ou em até 3x de R$ 400 no cartão.</p>
+          <ul class="cartao__lista">
+            <li class="is-forte"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h7l4 4v12H7z"/><path d="M14 4v4h4"/></svg><span>1 página com até 6 seções</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><span>Pronto em 7 dias úteis</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L18 10l-4-4L4 16z"/><path d="M13 7l4 4"/></svg><span>2 rodadas de ajuste</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3L5 14h6l-1 7 8-11h-6z"/></svg><span>Botão de WhatsApp e mapa</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2"/></svg><span>Google Meu Negócio</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg><span>SEO básico</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c2.5 2.5 2.5 13.5 0 16M12 4c-2.5 2.5-2.5 13.5 0 16"/></svg><span>Domínio do 1º ano incluso, no seu nome</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Padrão Apolo: 30 itens conferidos</span></li>
+          </ul>
+          <p class="cartao__nota"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg> Para quem precisa aparecer no Google já.</p>
+          <a class="metal-btn cartao__cta" href="#contato" data-pedir="decolagem"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Quero o Decolagem</span><span class="metal-btn__orb" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        </article>
+        <article class="cartao cartao--laranja is-recomendado" data-cartao="orbita">
+          <div class="cartao__topo"><p class="cartao__rotulo">Pagamento único</p><span class="cartao__selo">Mais escolhido</span></div>
+          <div class="cartao__missao">
+            <svg class="emblema" viewBox="0 0 120 120" aria-hidden="true"><circle class="e-estrela" cx="18" cy="34" r="0.8"/><circle class="e-estrela" cx="102" cy="26" r="0.9"/><circle class="e-estrela" cx="98" cy="94" r="0.7"/><g transform="rotate(-20 60 60)"><path class="e-anel-p" d="M38 60a22 5.5 0 0 1 44 0"/></g><circle class="e-corpo" cx="60" cy="60" r="14"/><path class="e-sombra" d="M60 46a14 14 0 0 1 0 28a9 14 0 0 0 0-28z"/><g transform="rotate(-20 60 60)"><path class="e-anel-p" d="M38 60a22 5.5 0 0 0 44 0"/><path class="e-traj" d="M14 60a46 17 0 1 0 92 0a46 17 0 1 0 -92 0"/><path class="e-rastro" d="M14 60a46 17 0 1 0 92 0a46 17 0 1 0 -92 0" pathLength="100" style="--dur:5s;--curva:linear"/><circle class="e-luz e-viaja" r="3.4" style="offset-path:path('M14 60a46 17 0 1 0 92 0a46 17 0 1 0 -92 0');--dur:5s;--curva:linear"/></g></svg>
+            <div><p class="cartao__num">Missão 02</p><h3 class="cartao__nome">Órbita</h3></div>
+          </div>
+          <p class="cartao__de" data-de hidden><s></s><span class="cartao__off"></span></p>
+          <p class="cartao__preco" data-preco="2.200"><span class="cartao__moeda">R$</span><span class="cartao__valor">2.200</span><span class="cartao__por"></span></p>
+          <p class="cartao__sub">50% para começar e 50% na entrega, no Pix. Ou em até 3x de R$ 733,33 no cartão.</p>
+          <ul class="cartao__lista">
+            <li class="is-forte"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h7l4 4v12H7z"/><path d="M14 4v4h4"/></svg><span>Até 5 páginas</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><span>Pronto em 14 dias úteis</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L18 10l-4-4L4 16z"/><path d="M13 7l4 4"/></svg><span>3 rodadas de ajuste</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14M5 12h14M5 18h9"/></svg><span>Textos escritos pela Apolo</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2"/></svg><span>SEO local</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><span>Link de agendamento</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V11M12 19V5M19 19v-6"/></svg><span>Google Analytics</span></li>
+            <li class="is-forte"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l4 4L19 6"/></svg><span>Tudo do Decolagem</span></li>
+          </ul>
+          <p class="cartao__nota"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg> O site completo de quem atende o bairro ou a cidade.</p>
+          <a class="metal-btn cartao__cta cartao__cta--cheio" href="#contato" data-pedir="orbita"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Quero o Órbita</span><span class="metal-btn__orb" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        </article>
+        <article class="cartao cartao--laranja" data-cartao="lua">
+          <div class="cartao__topo"><p class="cartao__rotulo">Pagamento único</p></div>
+          <div class="cartao__missao">
+            <svg class="emblema" viewBox="0 0 120 120" aria-hidden="true"><circle class="e-estrela" cx="52" cy="16" r="0.8"/><circle class="e-estrela" cx="104" cy="34" r="0.9"/><circle class="e-estrela" cx="14" cy="56" r="0.7"/><circle class="e-estrela" cx="100" cy="64" r="0.6"/><circle class="e-corpo" cx="26" cy="28" r="7"/><path class="e-sombra" d="M26 21a7 7 0 0 1 0 14a4.5 7 0 0 0 0-14z"/><path class="e-solo" d="M6 98Q60 80 114 98V122H6z"/><path class="e-chao" d="M6 98Q60 80 114 98"/><ellipse class="e-crat" cx="30" cy="99" rx="6" ry="1.8"/><ellipse class="e-crat" cx="88" cy="97" rx="8" ry="2.2"/><ellipse class="e-crat" cx="56" cy="104" rx="3.5" ry="1.1"/><ellipse class="e-crat" cx="102" cy="104" rx="3" ry="1"/><path class="e-traj" d="M90 12C84 40 68 62 64 89"/><path class="e-rastro" d="M90 12C84 40 68 62 64 89" pathLength="100" style="--dur:3.6s;--curva:cubic-bezier(.15,.6,.25,1)"/><circle class="e-luz e-viaja" r="3.4" style="offset-path:path('M90 12C84 40 68 62 64 89');--dur:3.6s;--curva:cubic-bezier(.15,.6,.25,1)"/><circle class="e-onda e-onda--pouso" cx="64" cy="89" r="2.6"/><path class="e-base" d="M58 89h12M60 89l4-4 4 4"/></svg>
+            <div><p class="cartao__num">Missão 03</p><h3 class="cartao__nome">Lua</h3></div>
+          </div>
+          <p class="cartao__de" data-de hidden><s></s><span class="cartao__off"></span></p>
+          <p class="cartao__preco" data-preco="3.800"><span class="cartao__moeda">R$</span><span class="cartao__valor">3.800</span><span class="cartao__por"></span></p>
+          <p class="cartao__sub">50% para começar e 50% na entrega, no Pix. Ou em até 3x de R$ 1.266,67 no cartão.</p>
+          <ul class="cartao__lista">
+            <li class="is-forte"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h7l4 4v12H7z"/><path d="M14 4v4h4"/></svg><span>Até 10 páginas, com blog</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><span>Pronto em 21 dias úteis</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L18 10l-4-4L4 16z"/><path d="M13 7l4 4"/></svg><span>3 rodadas de ajuste</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 15H4z"/></svg><span>Logotipo simples</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="M20 15l-5-5-9 9"/></svg><span>10 artes para o Instagram</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h9l3 3v13H6z"/><path d="M9 11h6M9 15h6"/></svg><span>3 artigos no blog</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18a4 4 0 0 1-.5-8A6 6 0 0 1 18 9a4.5 4.5 0 0 1-.5 9z"/></svg><span>1 mês de manutenção Plus</span></li>
+            <li class="is-forte"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l4 4L19 6"/></svg><span>Tudo do Órbita</span></li>
+          </ul>
+          <p class="cartao__nota"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg> Marca, site e conteúdo de uma vez só.</p>
+          <a class="metal-btn cartao__cta" href="#contato" data-pedir="lua"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Quero o Lua</span><span class="metal-btn__orb" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        </article>
+      </div>
+      <div class="cartoes" id="painel-mensal" role="tabpanel" aria-labelledby="aba-mensal" data-painel="mensal" hidden>
+        <article class="cartao cartao--laranja" data-cartao="base">
+          <div class="cartao__topo"><p class="cartao__rotulo">Assinatura mensal</p></div>
+          <div class="cartao__missao">
+            <svg class="emblema" viewBox="0 0 120 120" aria-hidden="true"><circle class="e-corpo" cx="60" cy="60" r="12"/><g class="e-anel"><circle class="e-traj" cx="60" cy="60" r="30"/><circle class="e-luz" cx="90" cy="60" r="4"/></g></svg>
+            <div><p class="cartao__num">Órbita 01</p><h3 class="cartao__nome">Base</h3></div>
+          </div>
+          <p class="cartao__de" data-de hidden><s></s><span class="cartao__off"></span></p>
+          <p class="cartao__preco" data-preco="89"><span class="cartao__moeda">R$</span><span class="cartao__valor">89</span><span class="cartao__por">/mês</span></p>
+          <p class="cartao__sub">Vence todo dia 10, no Pix ou boleto. Cancele com 30 dias de aviso, sem multa.</p>
+          <ul class="cartao__lista">
+            <li class="is-forte"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18a4 4 0 0 1-.5-8A6 6 0 0 1 18 9a4.5 4.5 0 0 1-.5 9z"/></svg><span>Hospedagem</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c2.5 2.5 2.5 13.5 0 16M12 4c-2.5 2.5-2.5 13.5 0 16"/></svg><span>Renovação do domínio</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Certificado de segurança</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4"/></svg><span>Backup</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L18 10l-4-4L4 16z"/><path d="M13 7l4 4"/></svg><span>Até 2 pequenas alterações por mês</span></li>
+          </ul>
+          <p class="cartao__nota"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg> Para o site ficar no ar sem você se preocupar.</p>
+          <a class="metal-btn cartao__cta" href="#contato" data-pedir="base"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Assinar o Base</span><span class="metal-btn__orb" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        </article>
+        <article class="cartao cartao--laranja is-recomendado" data-cartao="plus">
+          <div class="cartao__topo"><p class="cartao__rotulo">Assinatura mensal</p><span class="cartao__selo">Mais escolhido</span></div>
+          <div class="cartao__missao">
+            <svg class="emblema" viewBox="0 0 120 120" aria-hidden="true"><circle class="e-corpo" cx="60" cy="60" r="12"/><g class="e-anel"><circle class="e-traj" cx="60" cy="60" r="28"/><circle class="e-luz" cx="88" cy="60" r="4"/></g><g class="e-anel e-anel--2"><circle class="e-traj" cx="60" cy="60" r="44"/><circle class="e-sat" cx="60" cy="16" r="3"/></g></svg>
+            <div><p class="cartao__num">Órbita 02</p><h3 class="cartao__nome">Plus</h3></div>
+          </div>
+          <p class="cartao__de" data-de hidden><s></s><span class="cartao__off"></span></p>
+          <p class="cartao__preco" data-preco="189"><span class="cartao__moeda">R$</span><span class="cartao__valor">189</span><span class="cartao__por">/mês</span></p>
+          <p class="cartao__sub">Vence todo dia 10, no Pix ou boleto. Cancele com 30 dias de aviso, sem multa.</p>
+          <ul class="cartao__lista">
+            <li class="is-forte"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 7v5h4"/></svg><span>2 horas de alterações por mês</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2"/></svg><span>Google Meu Negócio sempre atualizado</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V11M12 19V5M19 19v-6"/></svg><span>Relatório mensal de visitas</span></li>
+            <li class="is-forte"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l4 4L19 6"/></svg><span>Tudo do Base</span></li>
+          </ul>
+          <p class="cartao__nota"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg> Para quem muda preço, horário ou cardápio com frequência.</p>
+          <a class="metal-btn cartao__cta cartao__cta--cheio" href="#contato" data-pedir="plus"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Assinar o Plus</span><span class="metal-btn__orb" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        </article>
+        <article class="cartao cartao--laranja" data-cartao="pro">
+          <div class="cartao__topo"><p class="cartao__rotulo">Assinatura mensal</p></div>
+          <div class="cartao__missao">
+            <svg class="emblema" viewBox="0 0 120 120" aria-hidden="true"><circle class="e-corpo" cx="60" cy="60" r="12"/><g class="e-anel"><circle class="e-traj" cx="60" cy="60" r="24"/><circle class="e-luz" cx="84" cy="60" r="4"/></g><g class="e-anel e-anel--2"><circle class="e-traj" cx="60" cy="60" r="37"/><circle class="e-sat" cx="60" cy="23" r="3"/></g><g class="e-anel e-anel--3"><circle class="e-traj" cx="60" cy="60" r="50"/><circle class="e-sat" cx="10" cy="60" r="3"/></g></svg>
+            <div><p class="cartao__num">Órbita 03</p><h3 class="cartao__nome">Pro</h3></div>
+          </div>
+          <p class="cartao__de" data-de hidden><s></s><span class="cartao__off"></span></p>
+          <p class="cartao__preco" data-preco="390"><span class="cartao__moeda">R$</span><span class="cartao__valor">390</span><span class="cartao__por">/mês</span></p>
+          <p class="cartao__sub">Vence todo dia 10, no Pix ou boleto. Cancele com 30 dias de aviso, sem multa.</p>
+          <ul class="cartao__lista">
+            <li class="is-forte"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h9l3 3v13H6z"/><path d="M9 11h6M9 15h6"/></svg><span>2 artigos de blog por mês</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg><span>Ajustes de SEO todo mês</span></li>
+            <li class="is-forte"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l4 4L19 6"/></svg><span>Tudo do Plus</span></li>
+          </ul>
+          <p class="cartao__nota"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg> Para subir no Google mês a mês.</p>
+          <a class="metal-btn cartao__cta" href="#contato" data-pedir="pro"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Assinar o Pro</span><span class="metal-btn__orb" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        </article>
+      </div>
+      <div class="cupom" data-cupom data-revela hidden>
+        <div class="cupom__bilhete">
+          <span class="cupom__rotulo">Cupom de lançamento</span>
+          <button class="cupom__codigo" type="button" data-cupom-copiar><b data-cupom-codigo></b><span data-cupom-copiado>Copiar</span></button>
+          <span class="cupom__texto" data-cupom-texto></span>
+        </div>
+        <form class="cupom__form" data-cupom-form novalidate>
+          <label for="cupom-campo">Tem um cupom?</label>
+          <div class="cupom__linha">
+            <input id="cupom-campo" name="cupom" placeholder="Digite o código" autocomplete="off" autocapitalize="characters" spellcheck="false">
+            <button class="botao" type="submit"><span class="rola">Aplicar</span></button>
+          </div>
+          <p class="cupom__estado" data-cupom-estado role="status"></p>
+        </form>
+      </div>
+      <a class="medida" href="#contato" data-pedir="medida" data-revela>
+        <span class="medida__rotulo">Sob medida</span>
+        <span class="medida__texto">Loja virtual, sistema ou app? Conte o que precisa e mandamos o orçamento em até 48 h.</span>
+        <span class="medida__acao">Pedir orçamento <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <p class="garantia" data-revela><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span><strong>Garantia de 30 dias:</strong> qualquer erro técnico depois do site no ar, a gente corrige sem custo.</span></p>
+      <div class="perguntas" data-revela>
+        <h3 class="perguntas__titulo">Perguntas</h3>
+        <details class="pergunta"><summary>Como funciona o pagamento?<span class="pergunta__mais" aria-hidden="true"></span></summary><p>Metade para começar e metade na entrega, depois da sua aprovação e antes do site ir ao ar, no Pix. Se preferir, parcelamos em até 3x no cartão, por link de pagamento.</p></details>
+        <details class="pergunta"><summary>Os prazos contam a partir de quando?<span class="pergunta__mais" aria-hidden="true"></span></summary><p>São dias úteis, contados depois que chega o material: textos, fotos e logo (ou o briefing, quando a Apolo escreve os textos). Quanto antes o material chega, antes o site sobe.</p></details>
+        <details class="pergunta"><summary>O site e o domínio ficam no meu nome?<span class="pergunta__mais" aria-hidden="true"></span></summary><p>Ficam. O domínio é registrado no seu CPF ou CNPJ, e no fim entregamos todos os logins e senhas do site, do domínio e do Google Meu Negócio.</p></details>
+        <details class="pergunta"><summary>Preciso assinar a manutenção?<span class="pergunta__mais" aria-hidden="true"></span></summary><p>Não, ela é opcional. Sem ela, o site é seu e você renova o domínio a partir do segundo ano. Com ela, a gente cuida de hospedagem, segurança, backup e alterações. Dá para cancelar com 30 dias de aviso, e entregamos todos os arquivos.</p></details>
+        <details class="pergunta"><summary>E se der algum erro depois que o site for ao ar?<span class="pergunta__mais" aria-hidden="true"></span></summary><p>Por 30 dias depois da publicação corrigimos sem custo qualquer erro técnico: página que não abre, botão ou formulário que não funciona, falha no celular.</p></details>
+        <details class="pergunta"><summary>Quero mais ajustes do que o pacote prevê. Pode?<span class="pergunta__mais" aria-hidden="true"></span></summary><p>Pode. Cada rodada é uma lista única de pedidos. Ajustes além das rodadas do pacote custam R$ 80 por hora, sempre com a estimativa de horas antes.</p></details>
+      </div>
+    </section>
+
+    <section class="relevo" id="diagnostico" aria-labelledby="relevo-titulo">
+      <div class="relevo__copy">
+        <span class="relevo__eyebrow">Diagnóstico grátis</span>
+        <h2 class="relevo__title" id="relevo-titulo">Já tem site? A gente abre ele por dentro.</h2>
+        <p class="relevo__texto">Mande o endereço e receba o raio-x do seu site: velocidade no celular, Google e LGPD. Sem compromisso.</p>
+        <form class="linha-form" data-migracao novalidate>
+          <div class="campo">
+            <label for="m-site">Endereço do site</label>
+            <input id="m-site" name="site" placeholder="seusite.com.br" autocomplete="url" inputmode="url" autocapitalize="none" spellcheck="false">
+            <span class="campo__erro" role="alert"></span>
+          </div>
+          <div class="campo">
+            <label for="m-nome">Seu nome</label>
+            <input id="m-nome" name="nome" placeholder="Como podemos te chamar" autocomplete="name">
+            <span class="campo__erro" role="alert"></span>
+          </div>
+          <button class="botao" type="submit"><span class="rola">Pedir diagnóstico</span></button>
+          <p class="linha-form__ok" role="status"></p>
+        </form>
+        <p class="migracao__lgpd">O pedido abre no WhatsApp. Usamos seus dados só para responder. <a class="link" href="/privacidade.html">Privacidade</a></p>
+      </div>
+      <div class="relevo__stage">
+        <div class="relevo__app" aria-hidden="true">
+          <div class="ra-top">
+            <span class="ra-logo"><svg class="ra-marca" viewBox="210 226 315 280" aria-hidden="true"><path d="M318 241h47L245 455l-25-45z"/><path d="M370 241h48l97 169-25 45z"/><path d="M245 455Q367.5 355 490 455l-20 38Q367.5 407 265 493z"/></svg>diagnóstico</span>
+            <span class="ra-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.5 17a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13ZM20 20l-4.6-4.6"/></svg><span data-raio-url>seusite.com.br</span><kbd>Padrão Apolo</kbd></span>
+            <span class="ra-actions"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h.01M12 12h.01M19 12h.01" stroke-width="3"/></svg></span>
+          </div>
+          <div class="ra-body">
+            <div class="ra-side">
+              <span class="ra-nav is-ativo"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg><span>Visão geral</span></span><span class="ra-nav"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3L5 14h6l-1 7 8-11h-6z"/></svg><span>Velocidade</span></span><span class="ra-nav"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.5 17a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13ZM20 20l-4.6-4.6"/></svg><span>Google</span></span><span class="ra-nav"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg><span>LGPD</span></span><span class="ra-nav"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 11h12v9H6zM8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg><span>Segurança</span></span><span class="ra-nav"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM11 18h2"/></svg><span>Celular</span></span>
+              <span class="ra-label">Relatório</span>
+              <span class="ra-nav"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 18.5 6 15a7.5 7.5 0 1 1 3 3z"/></svg><span>No WhatsApp</span></span>
+            </div>
+            <div class="ra-list">
+              <span class="ra-list-head"><span>O que conferimos</span><span class="ra-varre" aria-hidden="true"></span></span>
+              <div class="ra-rows"><span class="ra-item is-ativo" style="--i:0"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h7l4 4v13h-11zM13.5 3.5v4h4M9 13h6M9 16.5h6"/></svg><span class="ra-item-main"><b>Tempo para abrir no 4G</b><small>Velocidade</small></span><span class="ra-check" aria-hidden="true"></span></span><span class="ra-item" style="--i:1"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h7l4 4v13h-11zM13.5 3.5v4h4M9 13h6M9 16.5h6"/></svg><span class="ra-item-main"><b>Imagens pesadas demais</b><small>Velocidade</small></span><span class="ra-check" aria-hidden="true"></span></span><span class="ra-item" style="--i:2"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h7l4 4v13h-11zM13.5 3.5v4h4M9 13h6M9 16.5h6"/></svg><span class="ra-item-main"><b>Título e descrição no Google</b><small>Google</small></span><span class="ra-check" aria-hidden="true"></span></span><span class="ra-item" style="--i:3"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h7l4 4v13h-11zM13.5 3.5v4h4M9 13h6M9 16.5h6"/></svg><span class="ra-item-main"><b>Google Meu Negócio ligado ao site</b><small>Google</small></span><span class="ra-check" aria-hidden="true"></span></span><span class="ra-item" style="--i:4"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h7l4 4v13h-11zM13.5 3.5v4h4M9 13h6M9 16.5h6"/></svg><span class="ra-item-main"><b>Aviso de cookies e privacidade</b><small>LGPD</small></span><span class="ra-check" aria-hidden="true"></span></span><span class="ra-item" style="--i:5"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h7l4 4v13h-11zM13.5 3.5v4h4M9 13h6M9 16.5h6"/></svg><span class="ra-item-main"><b>Consentimento nos formulários</b><small>LGPD</small></span><span class="ra-check" aria-hidden="true"></span></span><span class="ra-item" style="--i:6"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h7l4 4v13h-11zM13.5 3.5v4h4M9 13h6M9 16.5h6"/></svg><span class="ra-item-main"><b>Cadeado de segurança (HTTPS)</b><small>Segurança</small></span><span class="ra-check" aria-hidden="true"></span></span><span class="ra-item" style="--i:7"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h7l4 4v13h-11zM13.5 3.5v4h4M9 13h6M9 16.5h6"/></svg><span class="ra-item-main"><b>Botões no tamanho do dedo</b><small>Celular</small></span><span class="ra-check" aria-hidden="true"></span></span></div>
+            </div>
+            <div class="ra-detail">
+              <h3>O seu relatório</h3>
+              <p class="ra-desc" aria-label="O que deixa o seu site lento no celular, o que impede ele de aparecer no Google e o que falta para ficar dentro da LGPD, na ordem do que corrigir primeiro."><span class="ra-typed"></span><span class="ra-caret"></span><span class="ra-rest">O que deixa o seu site lento no celular, o que impede ele de aparecer no Google e o que falta para ficar dentro da LGPD, na ordem do que corrigir primeiro.</span></p>
+              <dl class="ra-meta">
+                <div><dt><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM9 9.5c0-1 1-1.8 3-1.8s3 .8 3 2-1.3 1.7-3 2.1-3 .9-3 2.2 1 2 3 2 3-.8 3-1.8M12 6v1.7M12 16.3V18"/></svg> Custo</dt><dd>Grátis</dd></div>
+                <div><dt><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 18.5 6 15a7.5 7.5 0 1 1 3 3z"/></svg> Entrega</dt><dd>Pelo WhatsApp</dd></div>
+                <div><dt><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg> Base</dt><dd class="ra-tags"><span>velocidade</span><span>google</span><span>lgpd</span></dd></div>
+                <div><dt><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4.5 20.5c1-3.6 4-5.5 7.5-5.5s6.5 1.9 7.5 5.5"/></svg> Compromisso</dt><dd>Nenhum</dd></div>
+              </dl>
+              <h4 class="ra-vh-title">Como funciona</h4>
+              <ol class="ra-vh"><li class="is-atual" style="--i:0"><span class="ra-dot"></span><span class="ra-vh-body"><b>Você manda o endereço</b><span>Aqui ao lado, em dez segundos.</span></span></li><li class="" style="--i:1"><span class="ra-dot"></span><span class="ra-vh-body"><b>A gente passa o Padrão Apolo</b><span>Os mesmos 30 itens que conferimos nos nossos sites.</span></span></li><li class="" style="--i:2"><span class="ra-dot"></span><span class="ra-vh-body"><b>Você recebe e decide</b><span>Pelo WhatsApp. Corrigir com a gente é opcional.</span></span></li></ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="numeros" aria-label="Em números">
+      <div class="numero numero--a" data-numero>
+        <p class="numero__valor">7 dias</p>
+        <p class="numero__legenda">para um site de uma página ficar pronto.<br>Pacote Decolagem, depois do material.</p>
+      </div>
+      <div class="numero numero--b" data-numero>
+        <p class="numero__valor">30 itens</p>
+        <p class="numero__legenda">conferidos antes de cada site ir ao ar.<br>O Padrão Apolo, em todo pacote.</p>
+      </div>
+    </section>
+
+    <section class="suporte" id="contato" aria-labelledby="suporte-titulo">
+      <div class="suporte__horizonte" aria-hidden="true"></div>
+      <div class="suporte__conteudo">
+        <div class="numero numero--c" data-numero>
+          <p class="numero__valor suporte__relogio" data-relogio aria-label="Hora local"><span data-h>00</span><span class="suporte__dois">:</span><span data-m>00</span></p>
+          <p class="numero__legenda">é a hora aí. Do outro lado, um dos sócios.</p>
+        </div>
+        <h2 class="titulo" id="suporte-titulo" data-revela><span class="linha"><span>Fale com</span></span><span class="linha"><span>quem faz.</span></span></h2>
+        <p class="corpo" data-revela>Sem robô e sem fila. Escreva aqui e a mensagem abre pronta no WhatsApp, direto com quem constrói o seu site.</p>
+      </div>
+      <div class="conversa" data-revela>
+        <div class="conversa__topo">
+          <span class="conversa__avatar"><svg class="ra-marca" viewBox="210 226 315 280" aria-hidden="true"><path d="M318 241h47L245 455l-25-45z"/><path d="M370 241h48l97 169-25 45z"/><path d="M245 455Q367.5 355 490 455l-20 38Q367.5 407 265 493z"/></svg></span>
+          <span class="conversa__quem"><b>Apolo Studio</b><small><span class="ponto ponto--vivo" aria-hidden="true"></span> Agenda aberta</small></span>
+          <a class="link conversa__insta" href="https://www.instagram.com/apolostudio.br/" target="_blank" rel="noopener">@apolostudio.br</a>
+        </div>
+        <div class="conversa__mensagens" data-mensagens aria-live="polite">
+          <p class="balao balao--apolo">Oi! Conta pra gente o que você precisa: um site novo, um ajuste no que já tem ou só uma dúvida.</p>
+        </div>
+        <form class="caixa" data-caixa novalidate>
+          <div class="caixa__chips" role="group" aria-label="Assunto"><button type="button" class="chip" aria-pressed="true" data-assunto="Site novo">Site novo</button><button type="button" class="chip" aria-pressed="false" data-assunto="Manutenção">Manutenção</button><button type="button" class="chip" aria-pressed="false" data-assunto="Orçamento">Orçamento</button><button type="button" class="chip" aria-pressed="false" data-assunto="Só uma dúvida">Só uma dúvida</button></div>
+          <label class="sr" for="caixa-texto">Sua mensagem</label>
+          <textarea class="caixa__texto" id="caixa-texto" rows="1" placeholder="Ex.: tenho uma clínica e quero aparecer no Google"></textarea>
+          <div class="caixa__pe">
+            <small class="caixa__dica">Enter envia · Shift+Enter quebra a linha</small>
+            <button class="caixa__enviar" type="submit" aria-label="Enviar pelo WhatsApp" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="fecho" data-revela aria-label="Seu site">
+      <div class="fecho__nome">
+        <span class="ponto ponto--vivo fecho__ponto" aria-hidden="true"></span>
+        <p class="fecho__dominio" data-dominio data-ajusta>seunegocio.com.br</p>
+      </div>
+      <div class="fecho__linha">
+        <p class="fecho__texto">no ar em <strong data-fecho-prazo>14 dias</strong>, no pacote <strong data-plano-nome>Órbita</strong>.</p>
+        <div class="fecho__acoes">
+          <a class="metal-btn" href="#contato" data-whats-pedido target="_blank" rel="noopener"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Começar agora</span><span class="metal-btn__orb" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="rodape__chamada">
+      <p class="rodape__eyebrow"><span class="ponto ponto--vivo" aria-hidden="true"></span> Agenda aberta para novos projetos</p>
+      <h2 class="rodape__frase">O próximo site no ar <span>pode ser o seu.</span></h2>
+      <div class="rodape__acoes">
+        <a class="metal-btn" href="#contato" data-whats="Olá! Vim pelo site da Apolo e quero começar o meu site." target="_blank" rel="noopener"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Começar meu site</span><span class="metal-btn__orb" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <button class="botao botao--vazado" type="button" data-ir-plano="orbita"><span class="rola">Ver os pacotes</span></button>
+      </div>
+    </div>
+    <div class="rodape__grade">
+      <div class="rodape__marca">
+        <p class="rodape__logo"><svg viewBox="210 226 315 280" aria-hidden="true"><path d="M318 241h47L245 455l-25-45z"/><path d="M370 241h48l97 169-25 45z"/><path d="M245 455Q367.5 355 490 455l-20 38Q367.5 407 265 493z"/></svg><span>apolo</span></p>
+        <p class="rodape__sobre">Agência de desenvolvimento de sites para empresas de todos os ramos. Dois sócios, um faz e o outro confere.</p>
+      </div>
+      <nav class="rodape__coluna" aria-label="Pacotes"><p class="rodape__titulo">Criar meu site</p><button type="button" class="r-item" data-ir-plano="decolagem"><span>Decolagem</span><em>R$ 1.200</em><svg class="r-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button><button type="button" class="r-item" data-ir-plano="orbita"><span>Órbita</span><em>R$ 2.200</em><svg class="r-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button><button type="button" class="r-item" data-ir-plano="lua"><span>Lua</span><em>R$ 3.800</em><svg class="r-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button><button type="button" class="r-item" data-ir-medida><span>Sob medida</span><em>orçamento</em><svg class="r-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button></nav>
+      <nav class="rodape__coluna" aria-label="Manutenção"><p class="rodape__titulo">Manter no ar</p><button type="button" class="r-item" data-ir-plano="base"><span>Base</span><em>R$ 89/mês</em><svg class="r-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button><button type="button" class="r-item" data-ir-plano="plus"><span>Plus</span><em>R$ 189/mês</em><svg class="r-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button><button type="button" class="r-item" data-ir-plano="pro"><span>Pro</span><em>R$ 390/mês</em><svg class="r-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button><button type="button" class="r-item" data-ir-cupom><span>Cupom de lançamento</span><svg class="r-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button></nav>
+      <nav class="rodape__coluna" aria-label="Contato"><p class="rodape__titulo">Falar com a gente</p><a class="r-item" href="#contato" data-whats="Olá! Vim pelo site da Apolo e quero conversar sobre um site."><span>WhatsApp</span><svg class="r-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a><a class="r-item" href="https://www.instagram.com/apolostudio.br/" target="_blank" rel="noopener"><span>Instagram</span><em>@apolostudio.br</em><svg class="r-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a><a class="r-item" href="mailto:[preencher]@apolostudio.com.br"><span>E-mail</span><svg class="r-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a><button type="button" class="r-item" data-ir-campo="m-site"><span>Diagnóstico grátis</span><em>do seu site</em><svg class="r-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button><button type="button" class="r-item" data-ir-campo="busca-input"><span>Buscar meu domínio</span><svg class="r-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button></nav>
+    </div>
+    <div class="rodape__base">
+      <p>© 2026 Apolo Studio · Lua: NASA / LRO · os pontos acesos são pousos reais</p>
+      <p><a class="link" href="/privacidade.html">Privacidade</a> · <button type="button" class="link rodape__topo-btn" data-ir-topo>Voltar ao topo ↑</button></p>
+    </div>
+    <div class="reticula" aria-hidden="true"><canvas></canvas></div>
+  </footer>
+
+  <div class="barra" aria-hidden="true"><span class="barra__polegar"></span></div>
+  <svg class="filtros" width="0" height="0" aria-hidden="true"></svg>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://apolostudio.com.br/sitemap.xml
