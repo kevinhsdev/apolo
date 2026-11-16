@@ -15,7 +15,7 @@ import './sections/fecho.css';
 import './estilo.js';
 
 import { aCadaQuadro, tela } from './motion/rolagem.js';
-import { fraco, seLento, estaLento } from './desempenho.js';
+import { fraco, seLento, estaLento, podeMedir } from './desempenho.js';
 import { medirTudo, ajustarPalavras } from './motion/layout.js';
 import { iniciarToque, montarRola } from './motion/toque.js';
 import { numerarLinhas, iniciarRevelar } from './motion/revelar.js';
@@ -63,10 +63,9 @@ if (pacotes) {
   seLento(() => pacotes.classList.add('is-parado'));
 }
 const cromo = document.querySelector('[data-cromo]');
-// o cromo do cabeçalho fica sempre na tela: em aparelho lento ele não sobe (fica o símbolo liso)
+// o cromo do cabeçalho fica sempre na tela: só em aparelho fraco ele não sobe (fica o símbolo liso)
 if (cromo && !fraco) {
-  const desmontar = mountCromo(cromo, '', { simbolo: document.querySelector('.nav__marca .marca__simbolo').outerHTML });
-  seLento(desmontar);
+  mountCromo(cromo, '', { simbolo: document.querySelector('.nav__marca .marca__simbolo').outerHTML });
 }
 iniciarAcoes();
 iniciarReticula();
@@ -108,7 +107,7 @@ Promise.all([
   import('./motion/voo.js'),
   import('./motion/arrasto.js'),
 ]).then(([{ criarGlobo }, { criarCoreografia }, { criarVoo }, { criarArrasto }]) => {
-  const globo = criarGlobo(canvas, { leve });
+  const globo = criarGlobo(canvas, { leve, fraco });
   globo.medir(tela.w, tela.h);
   seLento(() => { globo.baixar(); globo.medir(tela.w, tela.h); });
   const coreografia = criarCoreografia(globo);
@@ -129,6 +128,7 @@ Promise.all([
   globo.onPronto = () => {
     canvas.classList.add('is-pronto');
     luaPronta();
+    podeMedir();
     coreografia.acender(performance.now() / 1000);
   };
   document.querySelector('[data-falha]').addEventListener('revelou', () => coreografia.falhar(), { once: true });

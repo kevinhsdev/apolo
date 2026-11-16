@@ -145,9 +145,10 @@ const fragPontos = /* glsl */ `
   }
 `;
 
-export function criarGlobo(canvas, { leve = false } = {}) {
+export function criarGlobo(canvas, { leve = false, fraco = false } = {}) {
   // densidade de pixels limitada: 1,5x já é nítido para a Lua; acima disso, a placa de vídeo paga quatro vezes mais
-  const dpr = Math.min(window.devicePixelRatio || 1, leve ? 1 : 1.5);
+  // celular: textura menor (dados), mas desenhada a 1,5x para a tela de alta densidade; só o aparelho fraco fica em 1x
+  const dpr = Math.min(window.devicePixelRatio || 1, fraco ? 1 : 1.5);
   const renderer = new WebGLRenderer({ canvas, antialias: dpr < 1.5 && !leve, alpha: true, powerPreference: 'high-performance' });
   renderer.setClearColor(0x000000, 0);
   renderer.setPixelRatio(dpr);

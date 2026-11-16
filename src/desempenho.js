@@ -1,5 +1,6 @@
-// Quanto o aparelho aguenta. "fraco" já na largada (poucos núcleos, pouca memória, economia de dados);
-// nos outros, mede os quadros depois que a página assenta: abaixo de ~40 fps, os enfeites pesados desligam.
+// Quanto o aparelho aguenta. "fraco" já na largada só nos casos claros (sem placa de vídeo, economia de dados,
+// 2 núcleos ou menos, 2 GB ou menos). O número de núcleos sozinho não serve: o Brave o sorteia (2 a 8) por privacidade.
+// Nos outros, mede os quadros depois que a Lua carregou: abaixo de 30 fps, os enfeites pesados desligam.
 const nav = navigator;
 // sem placa de vídeo de verdade (o navegador desenha no processador): SwiftShader, Basic Render Driver, llvmpipe
 function semPlaca() {
@@ -12,7 +13,7 @@ function semPlaca() {
     return /swiftshader|basic render|llvmpipe|software/i.test(nome);
   } catch { return true; }
 }
-export const fraco = (nav.hardwareConcurrency || 8) <= 4 || (nav.deviceMemory || 8) < 4 || nav.connection?.saveData === true || semPlaca();
+export const fraco = (nav.hardwareConcurrency || 8) <= 2 || (nav.deviceMemory || 8) <= 2 || nav.connection?.saveData === true || semPlaca();
 
 let lento = fraco;
 const avisos = new Set();
@@ -34,22 +35,28 @@ export function seLento(f) {
 }
 
 if (fraco) document.documentElement.classList.add('leve');
-else {
-  // espera 4 s (carregamento, texturas) e soma 3 s de quadros válidos. Intervalos acima de 250 ms são a aba em segundo plano
-  // ou a janela coberta (o navegador freia de propósito), não lentidão: ficam de fora. Lento = mediana acima de 25 ms (< 40 fps).
-  setTimeout(() => {
-    const dts = [];
-    let antes = 0;
-    const passo = t => {
-      if (antes && !document.hidden) { const dt = t - antes; if (dt < 250) dts.push(dt); }
-      antes = t;
-      const somado = dts.reduce((a, b) => a + b, 0);
-      if (somado < 3000 && t - inicio < 10000) return requestAnimationFrame(passo);
-      if (dts.length < 10) return; // quase tudo freado: não dá para saber, fica como está
-      dts.sort((a, b) => a - b);
-      if (dts[dts.length >> 1] > 25) virarLento();
-    };
-    const inicio = performance.now();
-    requestAnimationFrame(passo);
-  }, 4000);
+
+// Mede 3 s de quadros válidos. Intervalos acima de 250 ms são a aba em segundo plano ou a janela coberta (o navegador
+// freia de propósito), não lentidão: ficam de fora. Lento = mediana acima de 33 ms (< 30 fps).
+let medindo = false;
+function medir() {
+  if (fraco || medindo) return;
+  medindo = true;
+  const dts = [];
+  let antes = 0;
+  const inicio = performance.now();
+  const passo = t => {
+    if (antes && !document.hidden) { const dt = t - antes; if (dt < 250) dts.push(dt); }
+    antes = t;
+    const somado = dts.reduce((a, b) => a + b, 0);
+    if (somado < 3000 && t - inicio < 10000) return requestAnimationFrame(passo);
+    if (dts.length < 30) return; // quase tudo freado: não dá para saber, fica como está
+    dts.sort((a, b) => a - b);
+    if (dts[dts.length >> 1] > 33) virarLento();
+  };
+  requestAnimationFrame(passo);
 }
+
+/** começa a medir 1,5 s depois que o pesado (as texturas da Lua) carregou; sem esse aviso, mede aos 15 s */
+export const podeMedir = () => setTimeout(medir, 1500);
+setTimeout(medir, 15000);
