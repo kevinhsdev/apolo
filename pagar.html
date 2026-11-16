@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0a0a0a"><link rel="icon" href="./favicon.svg" type="image/svg+xml"><style>html{background:#0a0a0a}html:not(.com-estilo) body{visibility:hidden;animation:mostra 0s 4s forwards}@keyframes mostra{to{visibility:visible}}</style>
+  <title>Finalizar pedido · Apolo Studio</title>
+  <meta name="description" content="Escolha Pix ou cartão e finalize o pedido do seu site com a Apolo Studio.">
+  <meta name="robots" content="noindex">
+</head>
+<body class="pagar">
+  <header class="pagar__topo">
+    <a class="pagar__marca" href="./#pacotes" aria-label="Voltar para os pacotes da Apolo Studio">
+      <svg viewBox="210 226 315 280" aria-hidden="true"><path d="M318 241h100l97 169-25 45L367.5 302 245 455l-25-45z"/><path d="M245 455Q367.5 355 490 455l-20 38Q367.5 407 265 493z"/></svg>
+      <span><b>Apolo</b>Studio</span>
+    </a>
+    <a class="pagar__conta" href="./conta.html" data-so-conta hidden>Área do cliente</a>
+    <span class="pagar__seguro"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Pedido seguro</span>
+  </header>
+
+  <main class="pagar__grade">
+    <!-- resumo do pedido -->
+    <aside class="resumo" aria-labelledby="resumo-titulo">
+      <a class="resumo__voltar" href="./#pacotes">← Trocar de plano</a>
+      <p class="resumo__rotulo" data-r-tipo>Criação de site · pagamento único</p>
+      <h2 class="resumo__nome" id="resumo-titulo" data-r-nome>Órbita</h2>
+      <p class="resumo__prazo" data-r-prazo></p>
+      <ul class="resumo__itens" data-r-itens></ul>
+      <dl class="resumo__contas">
+        <div><dt>Plano</dt><dd data-r-subtotal></dd></div>
+        <div data-r-linha-cupom hidden><dt>Cupom <span data-r-cupom></span></dt><dd data-r-desconto></dd></div>
+        <div data-r-linha-forma><dt data-r-forma-rotulo>Forma</dt><dd data-r-forma></dd></div>
+        <div class="resumo__total"><dt>Total</dt><dd data-r-total></dd></div>
+      </dl>
+      <p class="resumo__hoje" data-r-hoje></p>
+    </aside>
+
+    <!-- dados e pagamento -->
+    <form class="checkout" data-checkout novalidate>
+      <h1 class="checkout__titulo">Finalizar pedido</h1>
+
+      <fieldset class="checkout__bloco">
+        <legend><span>1</span> Seus dados</legend>
+        <div class="campo"><label for="c-nome">Nome completo</label><input id="c-nome" name="nome" autocomplete="name" required></div>
+        <div class="campo-par">
+          <div class="campo"><label for="c-whats">WhatsApp</label><input id="c-whats" name="whats" type="tel" inputmode="tel" autocomplete="tel" placeholder="(11) 99999-9999" required></div>
+          <div class="campo"><label for="c-email">E-mail</label><input id="c-email" name="email" type="email" autocomplete="email" required></div>
+        </div>
+        <div class="campo" data-so-conta hidden><label for="c-doc">CPF ou CNPJ <small>(para emitir a cobrança)</small></label><input id="c-doc" name="doc" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00"></div>
+        <div class="campo"><label for="c-dominio">Endereço do site <small>(opcional)</small></label><input id="c-dominio" name="dominio" placeholder="seunegocio.com.br" autocapitalize="none" spellcheck="false"></div>
+      </fieldset>
+
+      <fieldset class="checkout__bloco">
+        <legend><span>2</span> Forma de pagamento</legend>
+        <div class="formas" data-formas role="radiogroup">
+          <!-- preenchido por src/paginas/pagar.js -->
+        </div>
+        <div class="campo" data-parcelas-campo hidden>
+          <label for="c-parcelas">Parcelas</label>
+          <select id="c-parcelas" name="parcelas" data-parcelas></select>
+        </div>
+        <div class="cupom-linha" data-cupom-linha>
+          <label for="c-cupom">Cupom</label>
+          <div class="cupom-linha__campo">
+            <input id="c-cupom" name="cupom" placeholder="Tem um cupom?" autocomplete="off" autocapitalize="characters" spellcheck="false">
+            <button type="button" data-cupom-aplicar>Aplicar</button>
+          </div>
+          <p class="cupom-linha__estado" data-cupom-estado role="status"></p>
+        </div>
+      </fieldset>
+
+      <div class="codigo" data-codigo hidden>
+        <p>Enviamos um código de 6 dígitos para <b data-codigo-email></b>. Ele também cria o seu acesso à área do cliente.</p>
+        <div class="campo"><label for="c-codigo">Código</label><input id="c-codigo" name="codigo" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000"></div>
+      </div>
+      <button class="checkout__botao" type="submit" data-finalizar>Finalizar pedido</button>
+      <p class="checkout__estado" data-estado role="status"></p>
+      <p class="checkout__nota">Ao finalizar, enviamos o link oficial de pagamento e combinamos o início do projeto. Seus dados são usados só para este pedido (<a href="./privacidade.html">privacidade</a>).</p>
+    </form>
+  </main>
+  <script type="module" src="./src/paginas/pagar.js"></script>
+</body>
+</html>

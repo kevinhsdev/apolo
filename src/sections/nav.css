@@ -83,3 +83,97 @@ html.is-pronto .nav__grupo, html.is-pronto .nav__marca { opacity: 1; }
 @keyframes cromo-entra { from { opacity: 0; } }
 @media (hover: hover) and (pointer: fine) { :where(html:not(.is-scrolling)) .nav__marca:hover .nav__cromo { animation: decola-cromo .7s var(--ease-out); } }
 @keyframes decola-cromo { 35% { transform: translateY(calc(-50% - 4px)) scale(1.02); } }
+
+/* conta: "Entrar" e avatar com menu (src/motion/usuario.js) */
+.conta-nav { position: relative; margin-left: 6px; }
+.conta-nav__entrar {
+  height: 42px; padding: 0 18px 0 14px; border-radius: 999px; display: inline-flex; align-items: center; gap: 8px;
+  font-size: 14px; font-weight: 600; color: #0a0a0a; background: var(--tinta);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -10px rgba(255, 255, 255, .35);
+  transition: transform .16s ease-out, box-shadow .3s;
+}
+.conta-nav__entrar[hidden], .conta-nav__avatar[hidden] { display: none; }
+.conta-nav__entrar svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; }
+@media (hover: hover) and (pointer: fine) {
+  :where(html:not(.is-scrolling)) .conta-nav__entrar:hover { box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(0, 0, 0, .4), 0 10px 30px -8px rgba(255, 255, 255, .5); }
+  :where(html:not(.is-scrolling)) .conta-nav__entrar:hover .rola__a { transform: translateY(-105%); }
+  :where(html:not(.is-scrolling)) .conta-nav__entrar:hover .rola__b { transform: none; }
+}
+.conta-nav__entrar:active, .conta-nav__avatar:active { transform: scale(.96); }
+.conta-nav__entrar:focus-visible, .conta-nav__avatar:focus-visible { outline: 2px solid var(--laranja); outline-offset: 3px; }
+
+/* avatar: iniciais num disco escuro com aro de cromo, que gira devagar no hover */
+@property --volta-aro { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.conta-nav__avatar {
+  position: relative; display: block; width: 42px; height: 42px; padding: 2px; border: 0; border-radius: 50%; cursor: pointer;
+  background: conic-gradient(from var(--volta-aro), #fff, #6b6b6b 25%, #e9e9e9 45%, #3a3a3a 70%, #fff);
+  transition: transform .16s ease-out;
+}
+.conta-nav__iniciais {
+  width: 100%; height: 100%; border-radius: 50%; display: grid; place-items: center;
+  font: 600 14px/1 'Sora Variable', var(--fonte); letter-spacing: -.02em; color: var(--tinta);
+  background: radial-gradient(120% 120% at 30% 20%, #2a2a2a, #0c0c0c 70%);
+}
+@media (hover: hover) and (pointer: fine) { .conta-nav__avatar:hover, .conta-nav__avatar[aria-expanded=true] { animation: aro 3s linear infinite; } }
+@keyframes aro { to { --volta-aro: 360deg; } }
+.conta-nav__alerta {
+  position: absolute; top: 0; right: 0; width: 11px; height: 11px; border-radius: 50%;
+  background: var(--laranja); box-shadow: 0 0 0 2.5px #0a0a0a, 0 0 12px var(--laranja-luz);
+}
+.conta-nav__alerta[hidden] { display: none; }
+
+/* menu da conta: nasce do avatar */
+.conta-menu {
+  position: absolute; top: calc(100% + 12px); right: 0; width: 290px; padding: 8px; border-radius: 18px;
+  background: rgba(20, 20, 20, .94); -webkit-backdrop-filter: blur(24px) saturate(1.4); backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, .1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06), 0 24px 60px -12px rgba(0, 0, 0, .8), 0 0 0 1px rgba(0, 0, 0, .5);
+  transform-origin: top right; transform: scale(.96) translateY(-4px); opacity: 0;
+  transition: transform .18s cubic-bezier(.23, 1, .32, 1), opacity .18s cubic-bezier(.23, 1, .32, 1);
+  font-size: 14px; font-weight: 500;
+}
+.conta-menu[hidden] { display: none; }
+.conta-menu.is-aberto { transform: none; opacity: 1; }
+.conta-menu__topo { display: flex; align-items: center; gap: 12px; padding: 10px 10px 14px; }
+.conta-menu__foto {
+  flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+  font: 600 14px/1 'Sora Variable', var(--fonte); background: radial-gradient(120% 120% at 30% 20%, #333, #111 70%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14);
+}
+.conta-menu__quem { display: grid; gap: 2px; min-width: 0; }
+.conta-menu__quem strong { font-size: 15px; font-weight: 600; letter-spacing: -.01em; }
+.conta-menu__quem small { font-size: 12.5px; color: var(--tinta-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.conta-menu__aviso {
+  display: flex; align-items: center; gap: 10px; margin: 0 2px 8px; padding: 10px 12px; border-radius: 12px;
+  font-size: 13px; color: #ffc3a8; background: rgba(255, 90, 31, .1); border: 1px solid rgba(255, 90, 31, .22);
+}
+.conta-menu__aviso[hidden] { display: none; }
+.conta-menu__aviso span:nth-child(2) { flex: 1; }
+.conta-menu__ponto { width: 7px; height: 7px; border-radius: 50%; background: var(--laranja); box-shadow: 0 0 10px var(--laranja-luz); }
+.conta-menu__itens { display: grid; padding: 6px 0; border-top: 1px solid rgba(255, 255, 255, .07); border-bottom: 1px solid rgba(255, 255, 255, .07); }
+.conta-menu__itens a, .conta-menu__sair {
+  display: flex; align-items: center; gap: 12px; width: 100%; height: 40px; padding: 0 10px; border: 0; border-radius: 10px;
+  color: var(--tinta); font: inherit; background: none; cursor: pointer; text-align: left;
+}
+.conta-menu__sair { margin-top: 6px; color: var(--tinta-2); }
+.conta-menu svg { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; opacity: .7; }
+.conta-menu__itens a:hover, .conta-menu__sair:hover, .conta-menu__itens a:focus-visible, .conta-menu__sair:focus-visible { background: rgba(255, 255, 255, .07); outline: none; }
+.conta-menu__aviso:focus-visible { outline: 2px solid var(--laranja); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .conta-menu { transition: opacity .12s; transform: none; } .conta-nav__avatar { animation: none !important; } }
+
+@media (max-width: 760px) {
+  .nav { grid-template-columns: 1fr auto auto; gap: 10px; }
+  .nav .nav__grupo--dir { display: flex; }
+  .nav__grupo--dir .nav__icone { display: none; }
+  .conta-nav { margin: 0; }
+  .conta-nav__entrar { height: 36px; padding: 0 14px 0 11px; font-size: 13.5px; gap: 6px; }
+  .conta-nav__entrar svg { width: 15px; height: 15px; }
+  .conta-nav__avatar { width: 36px; height: 36px; }
+  .conta-nav__iniciais { font-size: 12.5px; }
+  .conta-menu { position: fixed; top: var(--topo-menu, 72px); right: 12px; left: 12px; width: auto; }
+}
+/* telas estreitas: só o ícone, para a marca não apertar */
+@media (max-width: 420px) {
+  .conta-nav__entrar { width: 36px; padding: 0; justify-content: center; }
+  .conta-nav__entrar .rola { display: none; }
+}

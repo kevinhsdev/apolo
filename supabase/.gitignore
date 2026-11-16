@@ -1,0 +1,11 @@
+# Supabase
+.branches
+.temp
+
+# dotenvx
+.env.keys
+.env.local
+.env.*.local
+
+# segredos reais das funções (o .env.teste só tem valores falsos)
+functions/.env

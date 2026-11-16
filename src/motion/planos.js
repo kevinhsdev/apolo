@@ -2,24 +2,20 @@
 // com o domínio digitado e o plano, e o fecho (domínio + prazo + pacote).
 import { definir, ouvir, dominio, PLANOS } from './estado.js';
 import { linkConversa } from '../contato.js';
-import { textoCupom } from '../oferta.js';
+import { CATALOGO, precoCartao, brl } from '../precos.js';
 
-const PRECOS = {
-  decolagem: { avista: '1.200', parcelado: '400' },
-  orbita: { avista: '2.200', parcelado: '733,33' },
-  lua: { avista: '3.800', parcelado: '1.266,67' },
-  medida: {},
-};
-const MENSAIS = { base: ['Base', '89'], plus: ['Plus', '189'], pro: ['Pro', '390'] };
+const PRECOS = { medida: {} };
+for (const [id, p] of Object.entries(CATALOGO)) if (p.tipo === 'site') PRECOS[id] = { avista: brl(p.pix), parcelado: brl(precoCartao(p.pix) / 3) };
 
-function mensagem(id, d) {
-  if (MENSAIS[id]) {
-    const [nome, preco] = MENSAIS[id];
-    return `Olá! Quero assinar a manutenção ${nome} (R$ ${preco}/mês) para o site ${d}.`;
-  }
-  if (id === 'medida') return `Olá! Quero um orçamento de projeto sob medida (loja, sistema ou app) para ${d}.`;
-  return `Olá! Quero o site ${d} no pacote ${PLANOS[id].nome} (preço de lançamento).${textoCupom()}`;
+// os planos de site e os mensais vão para a tela de cobrança, com o domínio e o cupom
+function linkCobranca(id, e) {
+  const q = new URLSearchParams({ plano: id });
+  if (e.nome) q.set('dominio', dominio(e));
+  if (e.cupom) q.set('cupom', e.cupom);
+  return `pagar.html?${q}`;
 }
+// só o sob medida segue direto para a conversa
+const mensagem = (id, d) => `Olá! Quero um orçamento de projeto sob medida (loja, sistema ou app) para ${d}.`;
 
 export function iniciarPlanos() {
   definir({ precos: PRECOS });
@@ -81,8 +77,7 @@ export function iniciarPlanos() {
   // botões de pedir: escolhem o pacote e abrem a conversa
   const pedidos = [...document.querySelectorAll('[data-pedir]')];
   pedidos.forEach(a => {
-    a.target = '_blank';
-    a.rel = 'noopener';
+    if (a.dataset.pedir === 'medida') { a.target = '_blank'; a.rel = 'noopener'; }
     a.addEventListener('click', () => { if (PLANOS[a.dataset.pedir]) definir({ plano: a.dataset.pedir }); });
   });
 
@@ -91,7 +86,7 @@ export function iniciarPlanos() {
   const forte = t => Object.assign(document.createElement('strong'), { textContent: t });
   ouvir(e => {
     const d = dominio(e);
-    pedidos.forEach(a => { a.href = linkConversa(mensagem(a.dataset.pedir, d)); });
+    pedidos.forEach(a => { a.href = CATALOGO[a.dataset.pedir] ? linkCobranca(a.dataset.pedir, e) : linkConversa(mensagem(a.dataset.pedir, d)); });
     if (fechoDominio.textContent !== d) {
       fechoDominio.textContent = d;
       fechoDominio.dispatchEvent(new Event('mudou'));

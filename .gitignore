@@ -5,3 +5,7 @@ _pacote/
 *.log
 __pycache__/
 .taste-skill/
+
+# conexão local do Supabase para testes
+.env.local
+.env.*.local

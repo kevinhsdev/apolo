@@ -3,22 +3,13 @@
 // que valem DEPOIS da data. Para ser legal (CDC, art. 37), o preço cheio tem que passar a ser
 // cobrado quando a oferta acabar. Passou da data, a faixa, os riscados e o cupom somem sozinhos.
 import { definir, ler } from './motion/estado.js';
+import { precoCartao, descontoPix, OFERTA, ofertaNoAr } from './precos.js';
 
-export const OFERTA = {
-  ativa: true,
-  nome: 'Preço de lançamento',
-  ate: '2026-12-31T23:59:59-03:00', // [ajustar] fim da oferta
-  cheio: { decolagem: 1590, orbita: 2890, lua: 4990, base: 119, plus: 249, pro: 490 }, // [ajustar]
-  cupons: {
-    // [ajustar] código: desconto em % sobre o pacote do site (pagamento único)
-    APOLO10: { desconto: 10, texto: '10% a mais de desconto no pacote do site' },
-  },
-};
+export { OFERTA, ofertaNoAr };
 
 const brl = n => n.toLocaleString('pt-BR', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
 const num = t => Number(String(t).replace(/\./g, '').replace(',', '.'));
 const fim = new Date(OFERTA.ate);
-export const ofertaNoAr = () => OFERTA.ativa && Date.now() < fim.getTime();
 
 /** texto do cupom aplicado para a mensagem do WhatsApp ('' sem cupom) */
 export function textoCupom() {
@@ -69,7 +60,7 @@ export function iniciarOferta() {
 
   // pílula dos planos
   const pilula = document.querySelector('[data-pilula]');
-  if (pilula) pilula.textContent = `${OFERTA.nome} até ${data} · Pix ou 3x no cartão`;
+  if (pilula) pilula.textContent = `${OFERTA.nome} até ${data} · ${descontoPix(1200)}% off no Pix ou 3x sem juros`;
 
   // preços riscados e selo de desconto
   const cartoes = [...document.querySelectorAll('[data-cartao]')];
@@ -80,7 +71,7 @@ export function iniciarOferta() {
       const cheio = OFERTA.cheio[id];
       const elPreco = c.querySelector('[data-preco]');
       if (!cheio || !elPreco) return;
-      const unico = !c.querySelector('.cartao__por').textContent;
+      const unico = !!c.closest('[data-painel="site"]');
       let atual = num(elPreco.dataset.preco);
       if (cupom && unico) atual = Math.round(atual * (1 - cupom.desconto / 100) * 100) / 100;
       const de = c.querySelector('[data-de]');
@@ -90,8 +81,9 @@ export function iniciarOferta() {
       c.querySelector('.cartao__valor').textContent = brl(atual);
       c.classList.toggle('is-cupom', !!(cupom && unico));
       if (unico) {
-        c.querySelector('.cartao__sub').textContent =
-          `50% para começar e 50% na entrega, no Pix. Ou em até 3x de R$ ${brl(Math.round(atual / 3 * 100) / 100)} no cartão.`;
+        const cartao = precoCartao(atual);
+        c.querySelector('.cartao__sub').innerHTML =
+          `ou <b>3x de R$ ${brl(cartao / 3)} sem juros</b> no cartão (R$ ${brl(cartao)}). No Pix, 50% para começar e 50% na entrega.`;
       }
     });
   }

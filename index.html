@@ -91,6 +91,30 @@
     <div class="nav__grupo nav__grupo--dir">
       <a class="nav__icone" href="https://www.instagram.com/apolostudio.br/" target="_blank" rel="noopener" aria-label="Instagram da Apolo Studio" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5.2"/><circle cx="12" cy="12" r="4.1"/><circle class="cheio" cx="17.4" cy="6.6" r="1.1"/></svg></a>
       <a class="nav__icone" href="#contato" data-whats="Olá! Vim pelo site da Apolo e quero conversar sobre um site." aria-label="WhatsApp da Apolo Studio" title="WhatsApp"><svg class="nav__icone-cheio" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></a>
+      <!-- conta: "Entrar" para quem não está logado; avatar com menu para quem está (src/motion/usuario.js) -->
+      <div class="conta-nav" data-conta-nav>
+        <a class="conta-nav__entrar" href="./conta.html" aria-label="Entrar na área do cliente" data-entrar-nav>
+          <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="7" r="3.2"/><path d="M3.8 16.6c.9-2.9 3.3-4.4 6.2-4.4s5.3 1.5 6.2 4.4"/></svg>
+          <span class="rola" data-texto="Entrar">Entrar</span>
+        </a>
+        <button class="conta-nav__avatar" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="conta-menu" aria-label="Abrir menu da conta" data-avatar hidden>
+          <span class="conta-nav__iniciais" data-iniciais></span>
+          <span class="conta-nav__alerta" data-alerta hidden></span>
+        </button>
+        <div class="conta-menu" id="conta-menu" data-conta-menu hidden>
+          <div class="conta-menu__topo">
+            <span class="conta-menu__foto" data-iniciais aria-hidden="true"></span>
+            <span class="conta-menu__quem"><strong data-conta-nome>Sua conta</strong><small data-conta-email></small></span>
+          </div>
+          <a class="conta-menu__aviso" href="./conta.html#pedidos" data-aviso hidden><span class="conta-menu__ponto"></span><span data-aviso-texto></span><span aria-hidden="true">→</span></a>
+          <nav class="conta-menu__itens" aria-label="Sua conta">
+            <a href="./conta.html#pedidos"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 5.5h12M4 10h12M4 14.5h7"/></svg>Pedidos</a>
+            <a href="./conta.html#projeto"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="5" cy="5" r="1.6"/><circle cx="5" cy="15" r="1.6"/><path d="M5 6.6v6.8M8.5 5h7.5M8.5 15h7.5"/></svg>Meu projeto</a>
+            <a href="./conta.html#dados"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="7" r="3"/><path d="M4.2 16.4c.9-2.7 3.1-4.1 5.8-4.1s4.9 1.4 5.8 4.1"/></svg>Meus dados</a>
+          </nav>
+          <button class="conta-menu__sair" type="button" data-sair-nav><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8 4H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3M12.5 13.5 16 10l-3.5-3.5M16 10H8"/></svg>Sair</button>
+        </div>
+      </div>
     </div>
     <button class="nav__menu" type="button" aria-expanded="false" aria-controls="menu"><span class="rola" data-texto="Menu">Menu</span></button>
   </header>
@@ -105,7 +129,7 @@
       <a class="menu__link" href="#contato">Contato</a>
     </nav>
     <div class="menu__pe">
-      <a class="link" href="https://www.instagram.com/apolostudio.br/" target="_blank" rel="noopener">Instagram</a>
+      <a class="link" href="./conta.html">Área do cliente</a>
       <a class="botao" href="#contato" data-whats="Olá! Vim pelo site da Apolo e quero um site."><span class="rola">Quero meu site</span></a>
     </div>
   </div>
@@ -178,9 +202,35 @@
       </div>
     </section>
     <section class="planos" id="pacotes" aria-labelledby="planos-titulo">
+      <svg class="emblemas-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs>
+  <linearGradient id="em-cromo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a2a2e"/><stop offset=".22" stop-color="#f4f4f6"/><stop offset=".4" stop-color="#6d6d74"/><stop offset=".56" stop-color="#141416"/><stop offset=".74" stop-color="#d9d9de"/><stop offset=".82" stop-color="#ffffff"/><stop offset="1" stop-color="#55555b"/></linearGradient>
+  <radialGradient id="em-esfera" cx=".36" cy=".3" r=".8"><stop offset="0" stop-color="#4a4a52"/><stop offset=".55" stop-color="#1a1a1e"/><stop offset="1" stop-color="#0c0c0e"/></radialGradient>
+  <linearGradient id="em-brilho" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  <radialGradient id="em-halo"><stop offset="0" stop-color="#FF5A1F" stop-opacity=".22"/><stop offset="1" stop-color="#FF5A1F" stop-opacity="0"/></radialGradient>
+  <clipPath id="em-nucleo"><circle cx="60" cy="60" r="12"/></clipPath>
+<radialGradient id="em-globo" cx=".34" cy=".28" r=".9"><stop offset="0" stop-color="#6a6a74"/><stop offset=".35" stop-color="#2a2a30"/><stop offset=".8" stop-color="#0e0e10"/><stop offset="1" stop-color="#050506"/></radialGradient>
+  <radialGradient id="em-reflexo" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+  <linearGradient id="em-aresta" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".45" stop-color="#fff" stop-opacity=".12"/><stop offset=".8" stop-color="#FF5A1F" stop-opacity=".55"/><stop offset="1" stop-color="#FF5A1F" stop-opacity=".2"/></linearGradient>
+  
+
+  <clipPath id="em-frente"><rect x="-20" y="60" width="160" height="80"/></clipPath>
+  <clipPath id="em-lua-clip"><circle cx="60" cy="60" r="27"/></clipPath>
+  <linearGradient id="em-noite" x1=".2" y1=".15" x2=".95" y2=".9"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".85"/></linearGradient>
+  <radialGradient id="em-lua-luz" cx=".3" cy=".26" r=".95"><stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset=".4" stop-color="#000" stop-opacity="0"/><stop offset=".78" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity=".9"/></radialGradient>
+  <radialGradient id="em-atmosfera"><stop offset=".62" stop-color="#fff" stop-opacity=".09"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+  <radialGradient id="em-coroa"><stop offset=".59" stop-color="#fff" stop-opacity="0"/><stop offset=".6" stop-color="#fff" stop-opacity=".95"/><stop offset=".64" stop-color="#ffd2be" stop-opacity=".55"/><stop offset=".74" stop-color="#FF5A1F" stop-opacity=".22"/><stop offset="1" stop-color="#FF5A1F" stop-opacity="0"/></radialGradient>
+  <linearGradient id="em-aro-eclipse" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#ffd2be" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity=".25"/></linearGradient>
+  <radialGradient id="em-faisca"><stop offset="0" stop-color="#fff"/><stop offset=".2" stop-color="#fff"/><stop offset=".45" stop-color="#ffc9b0" stop-opacity=".7"/><stop offset="1" stop-color="#FF5A1F" stop-opacity="0"/></radialGradient>
+  <linearGradient id="em-traco" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FF5A1F" stop-opacity="0"/><stop offset=".42" stop-color="#FF5A1F" stop-opacity=".8"/><stop offset=".5" stop-color="#fff"/><stop offset=".58" stop-color="#FF5A1F" stop-opacity=".8"/><stop offset="1" stop-color="#FF5A1F" stop-opacity="0"/></linearGradient>
+  <linearGradient id="em-traco-v" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  <linearGradient id="em-horizonte" x1="0" y1="0" x2="0" y2=".35"><stop offset="0" stop-color="#3c3c44"/><stop offset=".5" stop-color="#16161a"/><stop offset="1" stop-color="#0b0b0c"/></linearGradient>
+  <linearGradient id="em-borda-h" x1="0" y1="0" x2="1" y2="0"><stop offset=".08" stop-color="#fff" stop-opacity="0"/><stop offset=".42" stop-color="#ffd2be"/><stop offset=".5" stop-color="#fff"/><stop offset=".62" stop-color="#ffd2be" stop-opacity=".7"/><stop offset=".92" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  <linearGradient id="em-chao-g" x1="0" y1="0" x2="0" y2="1"><stop offset=".62" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
+  <mask id="em-chao" maskUnits="userSpaceOnUse" x="-10" y="0" width="140" height="120"><rect x="-10" y="0" width="140" height="120" fill="url(#em-chao-g)"/></mask>
+</defs></svg>
       <div class="planos__cabeca" data-revela>
         <h2 class="planos__titulo" id="planos-titulo">Escolha a sua missão.</h2>
-        <p class="planos__intro">Pague uma vez e o site é seu para sempre; depois, se quiser, mantemos ele no ar todo mês. <b data-pilula>Pix ou até 3x no cartão</b>.</p>
+        <p class="planos__intro">Pague uma vez e o site é seu para sempre; depois, se quiser, mantemos ele no ar todo mês. <b data-pilula>6% off no Pix ou 3x sem juros no cartão</b>.</p>
         <div class="seletor" role="tablist" aria-label="Tipo de plano">
           <span class="seletor__fundo" aria-hidden="true"></span>
           <button type="button" role="tab" id="aba-site" aria-controls="painel-site" aria-selected="true" data-aba="site">Criar meu site <em>pagamento único</em></button>
@@ -191,12 +241,22 @@
         <article class="cartao cartao--laranja" data-cartao="decolagem">
           <div class="cartao__topo"></div>
           <div class="cartao__missao">
-            <svg class="emblema" viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="g-chama" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD2BE"/><stop offset=".35" stop-color="#FF5A1F"/><stop offset="1" stop-color="#FF5A1F" stop-opacity="0"/></linearGradient><linearGradient id="g-vento" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><circle class="e-estrela" cx="24" cy="30" r="0.9"/><circle class="e-estrela" cx="98" cy="22" r="0.8"/><g transform="rotate(32 60 62)"><path class="e-vento" d="M34 14v34M88 40v34M30 70v30"/><g class="e-foguete"><path class="e-chama" d="M54.5 82Q60 100 60 108Q60 100 65.5 82z"/><path class="e-bocal" d="M53.5 76l-1.5 5h16l-1.5-5"/><path class="e-corpo" d="M60 18C70 27 73.5 42 72 59l-1.6 17H49.6L48 59C46.5 42 50 27 60 18z"/><path class="e-asa" d="M48.6 62C42 66 39.5 72 39.5 81l10.6-5M71.4 62C78 66 80.5 72 80.5 81l-10.6-5"/><circle class="e-janela" cx="60" cy="45" r="5.5"/></g></g></svg>
-            <div><h3 class="cartao__nome">Decolagem</h3></div>
+            <svg class="emblema em em--1" viewBox="0 0 120 120" aria-hidden="true">
+  <g class="em-surge" mask="url(#em-chao)">
+    <circle cx="60" cy="162" r="80" fill="url(#em-horizonte)"/>
+    <circle cx="60" cy="162" r="80" fill="none" stroke="#FF5A1F" stroke-opacity=".16" stroke-width="7"/>
+    <circle cx="60" cy="162" r="80" fill="none" stroke="url(#em-borda-h)" stroke-width="1.4"/>
+  </g>
+  <path class="em-traj em-desenha" pathLength="1" d="M48 82C50 60 60 38 82 14" style="--d:.25s"/>
+  <path class="em-rastro em-rastro--sobe" pathLength="1" d="M48 82C50 60 60 38 82 14"/>
+  <circle class="em-luz em-sobe" r="3.6" style="offset-path:path('M48 82C50 60 60 38 82 14')"/>
+  <circle class="em-base-luz" cx="48" cy="82" r="6" fill="url(#em-faisca)"/>
+</svg>
+            <div><h3 class="cartao__nome">Decolagem</h3><p class="cartao__desc">Para quem precisa aparecer no Google já.</p></div>
           </div>
           <p class="cartao__de" data-de hidden><s></s><span class="cartao__off"></span></p>
-          <p class="cartao__preco" data-preco="1.200"><span class="cartao__moeda">R$</span><span class="cartao__valor">1.200</span><span class="cartao__por"></span></p>
-          <p class="cartao__sub">50% para começar e 50% na entrega, no Pix. Ou em até 3x de R$ 400 no cartão.</p>
+          <p class="cartao__preco" data-preco="1.200"><span class="cartao__moeda">R$</span><span class="cartao__valor">1.200</span><span class="cartao__por">no Pix</span></p>
+          <p class="cartao__sub">ou <b>3x de R$ 426 sem juros</b> no cartão (R$ 1.278). No Pix, 50% para começar e 50% na entrega.</p>
           <ul class="cartao__lista">
             <li class="is-forte"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h7l4 4v12H7z"/><path d="M14 4v4h4"/></svg><span>1 página com até 6 seções</span></li>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><span>Pronto em 7 dias úteis</span></li>
@@ -207,18 +267,35 @@
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c2.5 2.5 2.5 13.5 0 16M12 4c-2.5 2.5-2.5 13.5 0 16"/></svg><span>Domínio do 1º ano incluso, no seu nome</span></li>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Padrão Apolo: 30 itens conferidos</span></li>
           </ul>
-          <p class="cartao__nota"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg> Para quem precisa aparecer no Google já.</p>
           <a class="metal-btn cartao__cta" href="#contato" data-pedir="decolagem"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Quero o Decolagem</span><span class="metal-btn__orb" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
         </article>
         <article class="cartao cartao--laranja is-recomendado" data-cartao="orbita">
           <div class="cartao__topo"><span class="cartao__selo">Mais escolhido</span></div>
           <div class="cartao__missao">
-            <svg class="emblema" viewBox="0 0 120 120" aria-hidden="true"><circle class="e-estrela" cx="18" cy="34" r="0.8"/><circle class="e-estrela" cx="102" cy="26" r="0.9"/><circle class="e-estrela" cx="98" cy="94" r="0.7"/><g transform="rotate(-20 60 60)"><path class="e-anel-p" d="M38 60a22 5.5 0 0 1 44 0"/></g><circle class="e-corpo" cx="60" cy="60" r="14"/><path class="e-sombra" d="M60 46a14 14 0 0 1 0 28a9 14 0 0 0 0-28z"/><g transform="rotate(-20 60 60)"><path class="e-anel-p" d="M38 60a22 5.5 0 0 0 44 0"/><path class="e-traj" d="M14 60a46 17 0 1 0 92 0a46 17 0 1 0 -92 0"/><path class="e-rastro" d="M14 60a46 17 0 1 0 92 0a46 17 0 1 0 -92 0" pathLength="100" style="--dur:5s;--curva:linear"/><circle class="e-luz e-viaja" r="3.4" style="offset-path:path('M14 60a46 17 0 1 0 92 0a46 17 0 1 0 -92 0');--dur:5s;--curva:linear"/></g></svg>
-            <div><h3 class="cartao__nome">Órbita</h3></div>
+            <svg class="emblema em em--2" viewBox="0 0 120 120" aria-hidden="true">
+  <g transform="rotate(-18 60 60)">
+    <path class="em-traj em-desenha" pathLength="1" d="M14 60a46 13 0 1 0 92 0a46 13 0 1 0 -92 0" style="--d:.1s"/>
+    <path class="em-rastro em-rastro--gira" pathLength="1" d="M14 60a46 13 0 1 0 92 0a46 13 0 1 0 -92 0"/>
+    <circle class="em-luz em-gira" r="3.4" style="offset-path:path('M14 60a46 13 0 1 0 92 0a46 13 0 1 0 -92 0')"/>
+  </g>
+  <g class="em-surge">
+    <circle cx="60" cy="60" r="26" fill="url(#em-atmosfera)"/>
+    <circle cx="60" cy="60" r="17" fill="url(#em-globo)"/>
+    <circle cx="60" cy="60" r="17" fill="url(#em-noite)"/>
+    <ellipse cx="53.5" cy="52" rx="6" ry="3.8" fill="url(#em-reflexo)" transform="rotate(-32 53.5 52)"/>
+    <circle cx="60" cy="60" r="17" fill="none" stroke="url(#em-aresta)" stroke-width="1.1"/>
+  </g>
+  <g transform="rotate(-18 60 60)" clip-path="url(#em-frente)">
+    <path class="em-traj em-desenha" pathLength="1" d="M14 60a46 13 0 1 0 92 0a46 13 0 1 0 -92 0" style="--d:.1s"/>
+    <path class="em-rastro em-rastro--gira" pathLength="1" d="M14 60a46 13 0 1 0 92 0a46 13 0 1 0 -92 0"/>
+    <circle class="em-luz em-gira" r="3.4" style="offset-path:path('M14 60a46 13 0 1 0 92 0a46 13 0 1 0 -92 0')"/>
+  </g>
+</svg>
+            <div><h3 class="cartao__nome">Órbita</h3><p class="cartao__desc">O site completo de quem atende o bairro ou a cidade.</p></div>
           </div>
           <p class="cartao__de" data-de hidden><s></s><span class="cartao__off"></span></p>
-          <p class="cartao__preco" data-preco="2.200"><span class="cartao__moeda">R$</span><span class="cartao__valor">2.200</span><span class="cartao__por"></span></p>
-          <p class="cartao__sub">50% para começar e 50% na entrega, no Pix. Ou em até 3x de R$ 733,33 no cartão.</p>
+          <p class="cartao__preco" data-preco="2.200"><span class="cartao__moeda">R$</span><span class="cartao__valor">2.200</span><span class="cartao__por">no Pix</span></p>
+          <p class="cartao__sub">ou <b>3x de R$ 781 sem juros</b> no cartão (R$ 2.343). No Pix, 50% para começar e 50% na entrega.</p>
           <ul class="cartao__lista">
             <li class="is-forte"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h7l4 4v12H7z"/><path d="M14 4v4h4"/></svg><span>Até 5 páginas</span></li>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><span>Pronto em 14 dias úteis</span></li>
@@ -229,18 +306,34 @@
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V11M12 19V5M19 19v-6"/></svg><span>Google Analytics</span></li>
             <li class="is-forte"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l4 4L19 6"/></svg><span>Tudo do Decolagem</span></li>
           </ul>
-          <p class="cartao__nota"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg> O site completo de quem atende o bairro ou a cidade.</p>
           <a class="metal-btn cartao__cta cartao__cta--cheio" href="#contato" data-pedir="orbita"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Quero o Órbita</span><span class="metal-btn__orb" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
         </article>
-        <article class="cartao cartao--laranja" data-cartao="lua">
+        <article class="cartao cartao--laranja is-topo" data-cartao="lua">
           <div class="cartao__topo"></div>
           <div class="cartao__missao">
-            <svg class="emblema" viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="g-solo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#26262a"/><stop offset=".5" stop-color="#121214"/><stop offset="1" stop-color="#0b0b0c" stop-opacity="0"/></linearGradient><linearGradient id="g-borda" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><linearGradient id="g-bandeira" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF5A1F"/><stop offset="1" stop-color="#FF9466"/></linearGradient><radialGradient id="g-halo"><stop offset="0" stop-color="#FF5A1F" stop-opacity=".5"/><stop offset="1" stop-color="#FF5A1F" stop-opacity="0"/></radialGradient></defs><circle class="e-estrela" cx="50" cy="6" r="0.8"/><circle class="e-estrela" cx="106" cy="16" r="1"/><circle class="e-estrela" cx="104" cy="60" r="0.7"/><circle class="e-estrela" cx="12" cy="58" r="0.8"/><circle class="e-estrela" cx="86" cy="70" r="0.6"/><circle class="e-halo" cx="76" cy="42" r="30"/><circle class="e-terra" cx="22" cy="26" r="11"/><path class="e-sombra" d="M22 15a11 11 0 0 1 0 22a6 11 0 0 0 0-22z"/><path class="e-fio" d="M12.5 21.5q9.5 4 19 0M12 30q10 3.5 20 0"/><path class="e-solo" d="M-8 128V97Q60 74 128 97V128z"/><path class="e-borda" d="M-8 97Q60 74 128 97"/><ellipse class="e-crat" cx="22" cy="100" rx="9" ry="2.4"/><ellipse class="e-crat" cx="100" cy="99" rx="7" ry="2"/><ellipse class="e-crat" cx="80" cy="108" rx="4" ry="1.2"/><path class="e-passos" d="M56 89Q44 97 26 110"/><path class="e-mastro" d="M62 87V29"/><path class="e-bandeira" d="M62.6 31C70 28 80 35 92 31V50C80 54 70 47 62.6 50z"><animate attributeName="d" dur="2.6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1" values="M62.6 31C70 28 80 35 92 31V50C80 54 70 47 62.6 50z;M62.6 31C70 35 80 27 92 31V50C80 46 70 54 62.6 50z;M62.6 31C70 28 80 35 92 31V50C80 54 70 47 62.6 50z"/></path><path class="e-base" d="M56 87.5h12"/></svg>
-            <div><h3 class="cartao__nome">Lua</h3></div>
+            <svg class="emblema em em--3 em--lua" viewBox="0 0 120 120" aria-hidden="true">
+  <circle class="em-halo" cx="60" cy="60" r="60"/>
+  <g class="em-surge">
+    <circle class="em-coroa" cx="60" cy="60" r="40" fill="url(#em-coroa)"/>
+    <circle cx="60" cy="60" r="24" fill="#050506"/>
+    <image href="textures/lua-disco.webp" x="36" y="36" width="48" height="48" clip-path="url(#em-lua-clip)" opacity=".1"/>
+    <circle cx="60" cy="60" r="24" fill="none" stroke="url(#em-aro-eclipse)" stroke-width="1.2"/>
+  </g>
+  <path class="em-rastro em-rastro--aro" pathLength="1" d="M84 60a24 24 0 1 1 -48 0a24 24 0 1 1 48 0"/>
+  <g class="em-viaja-aro" style="offset-path:path('M84 60a24 24 0 1 1 -48 0a24 24 0 1 1 48 0')">
+    <g class="em-diamante">
+      <ellipse cx="0" cy="0" rx="38" ry="1.2" fill="url(#em-traco)"/>
+      <ellipse cx="0" cy="0" rx=".9" ry="12" fill="url(#em-traco-v)"/>
+      <circle cx="0" cy="0" r="11" fill="url(#em-faisca)"/>
+    </g>
+  </g>
+  <path class="em-brilho-estrela" d="M24 26v3.4M22.3 27.7h3.4M98 92v2.6M96.7 93.3h2.6M28 96v2M27 97h2"/>
+</svg>
+            <div><h3 class="cartao__nome">Lua</h3><p class="cartao__desc">Marca, site e conteúdo de uma vez só.</p></div>
           </div>
           <p class="cartao__de" data-de hidden><s></s><span class="cartao__off"></span></p>
-          <p class="cartao__preco" data-preco="3.800"><span class="cartao__moeda">R$</span><span class="cartao__valor">3.800</span><span class="cartao__por"></span></p>
-          <p class="cartao__sub">50% para começar e 50% na entrega, no Pix. Ou em até 3x de R$ 1.266,67 no cartão.</p>
+          <p class="cartao__preco" data-preco="3.800"><span class="cartao__moeda">R$</span><span class="cartao__valor">3.800</span><span class="cartao__por">no Pix</span></p>
+          <p class="cartao__sub">ou <b>3x de R$ 1.348 sem juros</b> no cartão (R$ 4.044). No Pix, 50% para começar e 50% na entrega.</p>
           <ul class="cartao__lista">
             <li class="is-forte"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h7l4 4v12H7z"/><path d="M14 4v4h4"/></svg><span>Até 10 páginas, com blog</span></li>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><span>Pronto em 21 dias úteis</span></li>
@@ -251,7 +344,6 @@
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18a4 4 0 0 1-.5-8A6 6 0 0 1 18 9a4.5 4.5 0 0 1-.5 9z"/></svg><span>1 mês de manutenção Plus</span></li>
             <li class="is-forte"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l4 4L19 6"/></svg><span>Tudo do Órbita</span></li>
           </ul>
-          <p class="cartao__nota"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg> Marca, site e conteúdo de uma vez só.</p>
           <a class="metal-btn cartao__cta" href="#contato" data-pedir="lua"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Quero o Lua</span><span class="metal-btn__orb" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
         </article>
       </div>
@@ -259,8 +351,12 @@
         <article class="cartao cartao--laranja" data-cartao="base">
           <div class="cartao__topo"></div>
           <div class="cartao__missao">
-            <svg class="emblema" viewBox="0 0 120 120" aria-hidden="true"><circle class="e-corpo" cx="60" cy="60" r="12"/><g class="e-anel"><circle class="e-traj" cx="60" cy="60" r="30"/><circle class="e-luz" cx="90" cy="60" r="4"/></g></svg>
-            <div><p class="cartao__num">Órbita 01</p><h3 class="cartao__nome">Base</h3></div>
+            <svg class="emblema em em--1" viewBox="0 0 120 120" aria-hidden="true">
+  <circle class="em-traj em-desenha" pathLength="1" cx="60" cy="60" r="34" style="--d:0s"/>
+  <circle class="em-nucleo-linha em-surge" cx="60" cy="60" r="7"/>
+  <g class="em-ciclo" style="--t:9s"><circle class="em-luz" cx="94" cy="60" r="3.6"/></g>
+</svg>
+            <div><p class="cartao__num">Órbita 01</p><h3 class="cartao__nome">Base</h3><p class="cartao__desc">Para o site ficar no ar sem você se preocupar.</p></div>
           </div>
           <p class="cartao__de" data-de hidden><s></s><span class="cartao__off"></span></p>
           <p class="cartao__preco" data-preco="89"><span class="cartao__moeda">R$</span><span class="cartao__valor">89</span><span class="cartao__por">/mês</span></p>
@@ -272,14 +368,19 @@
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4"/></svg><span>Backup</span></li>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L18 10l-4-4L4 16z"/><path d="M13 7l4 4"/></svg><span>Até 2 pequenas alterações por mês</span></li>
           </ul>
-          <p class="cartao__nota"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg> Para o site ficar no ar sem você se preocupar.</p>
           <a class="metal-btn cartao__cta" href="#contato" data-pedir="base"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Assinar o Base</span><span class="metal-btn__orb" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
         </article>
         <article class="cartao cartao--laranja is-recomendado" data-cartao="plus">
           <div class="cartao__topo"><span class="cartao__selo">Mais escolhido</span></div>
           <div class="cartao__missao">
-            <svg class="emblema" viewBox="0 0 120 120" aria-hidden="true"><circle class="e-corpo" cx="60" cy="60" r="12"/><g class="e-anel"><circle class="e-traj" cx="60" cy="60" r="28"/><circle class="e-luz" cx="88" cy="60" r="4"/></g><g class="e-anel e-anel--2"><circle class="e-traj" cx="60" cy="60" r="44"/><circle class="e-sat" cx="60" cy="16" r="3"/></g></svg>
-            <div><p class="cartao__num">Órbita 02</p><h3 class="cartao__nome">Plus</h3></div>
+            <svg class="emblema em em--2" viewBox="0 0 120 120" aria-hidden="true">
+  <circle class="em-traj em-desenha" pathLength="1" cx="60" cy="60" r="27" style="--d:0s"/>
+  <circle class="em-traj em-traj--fina em-desenha" pathLength="1" cx="60" cy="60" r="43" style="--d:.12s"/>
+  <circle class="em-esfera em-surge" cx="60" cy="60" r="11"/>
+  <g class="em-ciclo" style="--t:8s"><circle class="em-luz" cx="87" cy="60" r="3.4"/></g>
+  <g class="em-ciclo em-ciclo--volta" style="--t:14s"><circle class="em-sat" cx="60" cy="17" r="2.6"/></g>
+</svg>
+            <div><p class="cartao__num">Órbita 02</p><h3 class="cartao__nome">Plus</h3><p class="cartao__desc">Para quem muda preço, horário ou cardápio com frequência.</p></div>
           </div>
           <p class="cartao__de" data-de hidden><s></s><span class="cartao__off"></span></p>
           <p class="cartao__preco" data-preco="189"><span class="cartao__moeda">R$</span><span class="cartao__valor">189</span><span class="cartao__por">/mês</span></p>
@@ -290,14 +391,26 @@
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V11M12 19V5M19 19v-6"/></svg><span>Relatório mensal de visitas</span></li>
             <li class="is-forte"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l4 4L19 6"/></svg><span>Tudo do Base</span></li>
           </ul>
-          <p class="cartao__nota"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg> Para quem muda preço, horário ou cardápio com frequência.</p>
           <a class="metal-btn cartao__cta cartao__cta--cheio" href="#contato" data-pedir="plus"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Assinar o Plus</span><span class="metal-btn__orb" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
         </article>
-        <article class="cartao cartao--laranja" data-cartao="pro">
+        <article class="cartao cartao--laranja is-topo" data-cartao="pro">
           <div class="cartao__topo"></div>
           <div class="cartao__missao">
-            <svg class="emblema" viewBox="0 0 120 120" aria-hidden="true"><circle class="e-corpo" cx="60" cy="60" r="12"/><g class="e-anel"><circle class="e-traj" cx="60" cy="60" r="24"/><circle class="e-luz" cx="84" cy="60" r="4"/></g><g class="e-anel e-anel--2"><circle class="e-traj" cx="60" cy="60" r="37"/><circle class="e-sat" cx="60" cy="23" r="3"/></g><g class="e-anel e-anel--3"><circle class="e-traj" cx="60" cy="60" r="50"/><circle class="e-sat" cx="10" cy="60" r="3"/></g></svg>
-            <div><p class="cartao__num">Órbita 03</p><h3 class="cartao__nome">Pro</h3></div>
+            <svg class="emblema em em--3" viewBox="0 0 120 120" aria-hidden="true">
+  <circle class="em-halo" cx="60" cy="60" r="56"/>
+  <circle class="em-traj em-desenha" pathLength="1" cx="60" cy="60" r="24" style="--d:0s"/>
+  <circle class="em-traj em-traj--fina em-desenha" pathLength="1" cx="60" cy="60" r="37" style="--d:.1s"/>
+  <circle class="em-aro em-desenha" pathLength="1" cx="60" cy="60" r="52" style="--d:.2s"/>
+  <circle class="em-marcas" cx="60" cy="60" r="47"/>
+  <g clip-path="url(#em-nucleo)" class="em-surge">
+    <circle cx="60" cy="60" r="12" fill="url(#em-cromo)"/>
+    <rect class="em-varre" x="-30" y="40" width="14" height="40" fill="url(#em-brilho)"/>
+  </g>
+  <g class="em-ciclo" style="--t:7s"><circle class="em-luz" cx="84" cy="60" r="3.4"/></g>
+  <g class="em-ciclo em-ciclo--volta" style="--t:12s"><circle class="em-sat" cx="60" cy="23" r="2.4"/></g>
+  <g class="em-ciclo" style="--t:20s"><circle class="em-sat" cx="8" cy="60" r="2"/></g>
+</svg>
+            <div><p class="cartao__num">Órbita 03</p><h3 class="cartao__nome">Pro</h3><p class="cartao__desc">Para subir no Google mês a mês.</p></div>
           </div>
           <p class="cartao__de" data-de hidden><s></s><span class="cartao__off"></span></p>
           <p class="cartao__preco" data-preco="390"><span class="cartao__moeda">R$</span><span class="cartao__valor">390</span><span class="cartao__por">/mês</span></p>
@@ -307,7 +420,6 @@
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg><span>Ajustes de SEO todo mês</span></li>
             <li class="is-forte"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l4 4L19 6"/></svg><span>Tudo do Plus</span></li>
           </ul>
-          <p class="cartao__nota"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg> Para subir no Google mês a mês.</p>
           <a class="metal-btn cartao__cta" href="#contato" data-pedir="pro"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Assinar o Pro</span><span class="metal-btn__orb" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
         </article>
       </div>
@@ -473,7 +585,7 @@
     </div>
     <div class="rodape__base">
       <p>© 2026 Apolo Studio · Lua: NASA / LRO · os pontos acesos são pousos reais</p>
-      <p><a class="link" href="./privacidade.html">Privacidade</a> · <button type="button" class="link rodape__topo-btn" data-ir-topo>Voltar ao topo ↑</button></p>
+      <p><a class="link" href="./conta.html">Área do cliente</a> · <a class="link" href="./privacidade.html">Privacidade</a> · <button type="button" class="link rodape__topo-btn" data-ir-topo>Voltar ao topo ↑</button></p>
     </div>
     <div class="reticula" aria-hidden="true"><canvas></canvas></div>
   </footer>

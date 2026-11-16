@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0a0a0a"><link rel="icon" href="./favicon.svg" type="image/svg+xml"><style>html{background:#0a0a0a}html:not(.com-estilo) body{visibility:hidden;animation:mostra 0s 4s forwards}@keyframes mostra{to{visibility:visible}}</style>
+  <title>Área do cliente · Apolo Studio</title>
+  <meta name="description" content="Acompanhe seus pedidos e o andamento do seu site com a Apolo Studio.">
+  <meta name="robots" content="noindex">
+</head>
+<body class="pagar conta">
+  <header class="pagar__topo">
+    <a class="pagar__marca" href="./" aria-label="Apolo Studio, página inicial">
+      <svg viewBox="210 226 315 280" aria-hidden="true"><path d="M318 241h100l97 169-25 45L367.5 302 245 455l-25-45z"/><path d="M245 455Q367.5 355 490 455l-20 38Q367.5 407 265 493z"/></svg>
+      <span><b>Apolo</b>Studio</span>
+    </a>
+    <button class="conta__sair" type="button" data-sair hidden>Sair</button>
+  </header>
+
+  <main class="conta__miolo">
+    <!-- área desligada (src/supabase.js sem configuração) -->
+    <section class="conta__cartao" data-vista="desligada" hidden>
+      <h1 class="conta__titulo">Área do cliente</h1>
+      <p class="conta__texto">Ainda estamos preparando a área do cliente. Para falar do seu pedido, chame a gente pelo Instagram <a href="https://www.instagram.com/apolostudio.br/">@apolostudio.br</a>.</p>
+    </section>
+
+    <!-- entrar: duas colunas (base: Sign In Page, ProfitizeBuild), adaptada ao login por código no e-mail -->
+    <section class="entrada" data-vista="entrar" hidden>
+      <div class="entrada__inner">
+        <div class="entrada__form-col">
+          <a class="pagar__marca entrada__marca" href="./" aria-label="Apolo Studio, página inicial">
+            <svg viewBox="210 226 315 280" aria-hidden="true"><path d="M318 241h100l97 169-25 45L367.5 302 245 455l-25-45z"/><path d="M245 455Q367.5 355 490 455l-20 38Q367.5 407 265 493z"/></svg>
+            <span><b>Apolo</b>Studio</span>
+          </a>
+          <div class="entrada__form-wrap">
+            <h1 class="entrada__titulo e-in" style="--d:100ms"><span class="entrada__leve">Boas-vindas</span></h1>
+            <p class="entrada__desc e-in" style="--d:200ms" data-entrar-desc>Entre para acompanhar seus pedidos e o andamento do seu site.</p>
+
+            <form class="entrada__form" data-entrar novalidate>
+              <div class="e-in" style="--d:300ms">
+                <label class="entrada__rotulo" for="e-email">E-mail</label>
+                <div class="vidro"><input class="vidro__campo" id="e-email" name="email" type="email" autocomplete="email" placeholder="Digite seu e-mail" required></div>
+              </div>
+              <div class="entrada__codigo" data-entrar-codigo hidden>
+                <label class="entrada__rotulo" for="e-codigo">Código de 6 dígitos</label>
+                <div class="vidro"><input class="vidro__campo vidro__campo--codigo" id="e-codigo" name="codigo" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="000000"></div>
+                <p class="entrada__ajuda"><span data-entrar-para></span> · <button type="button" class="entrada__link" data-trocar>Trocar e-mail</button> · <button type="button" class="entrada__link" data-reenviar disabled>Reenviar</button></p>
+              </div>
+              <button class="entrada__botao e-in" style="--d:400ms" type="submit" data-entrar-botao>Receber código</button>
+              <p class="entrada__estado" data-entrar-estado role="status"></p>
+            </form>
+
+            <div class="entrada__divisor e-in" style="--d:500ms">Sem senha para decorar</div>
+            <p class="entrada__nota e-in" style="--d:600ms">Ainda não é cliente? <a class="entrada__link" href="./#pacotes">Ver os pacotes</a></p>
+          </div>
+        </div>
+
+        <div class="entrada__foto-col" aria-hidden="true">
+          <div class="entrada__foto e-in-dir" style="--d:300ms">
+            <div class="entrada__lua"><img src="./textures/lua-entrada.webp" alt="" decoding="async"></div>
+          </div>
+          <div class="entrada__cartoes">
+            <figure class="cartao-vidro e-in-up" style="--d:1000ms">
+              <span class="cartao-vidro__icone"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg></span>
+              <figcaption><strong>Sem senha</strong><span>Você entra com um código que chega no seu e-mail.</span></figcaption>
+            </figure>
+            <figure class="cartao-vidro cartao-vidro--xl e-in-up" style="--d:1200ms">
+              <span class="cartao-vidro__icone"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><path d="M6 8v8M11 6h9M11 18h9M11 12h6"/></svg></span>
+              <figcaption><strong>Cada etapa à vista</strong><span>Do briefing ao site no ar, você acompanha tudo por aqui.</span></figcaption>
+            </figure>
+            <figure class="cartao-vidro cartao-vidro--2xl e-in-up" style="--d:1400ms">
+              <span class="cartao-vidro__icone"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
+              <figcaption><strong>Pagamento protegido</strong><span>Cobranças pelo Asaas: o cartão nunca passa pelo nosso site.</span></figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- painel -->
+    <section data-vista="painel" hidden>
+      <h1 class="conta__ola" data-ola>Olá</h1>
+      <div class="conta__abas" role="tablist" aria-label="Área do cliente">
+        <button role="tab" id="aba-pedidos" aria-controls="painel-pedidos" aria-selected="true">Pedidos</button>
+        <button role="tab" id="aba-projeto" aria-controls="painel-projeto" aria-selected="false" tabindex="-1">Meu projeto</button>
+        <button role="tab" id="aba-dados" aria-controls="painel-dados" aria-selected="false" tabindex="-1">Meus dados</button>
+      </div>
+
+      <div role="tabpanel" id="painel-pedidos" aria-labelledby="aba-pedidos">
+        <ul class="pedidos" data-pedidos></ul>
+        <p class="conta__vazio" data-pedidos-vazio hidden>Você ainda não fez nenhum pedido. <a href="./#pacotes">Ver os pacotes</a></p>
+      </div>
+
+      <div role="tabpanel" id="painel-projeto" aria-labelledby="aba-projeto" hidden>
+        <div class="conta__cartao">
+          <p class="resumo__rotulo" data-projeto-rotulo></p>
+          <h2 class="conta__titulo" data-projeto-nome></h2>
+          <ol class="etapas" data-etapas></ol>
+          <p class="conta__vazio" data-projeto-vazio hidden>Quando o pagamento do seu site for confirmado, o andamento aparece aqui.</p>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="painel-dados" aria-labelledby="aba-dados" hidden>
+        <form class="checkout conta__cartao" data-dados novalidate>
+          <div class="campo"><label for="d-nome">Nome completo</label><input id="d-nome" name="nome" autocomplete="name" required></div>
+          <div class="campo-par">
+            <div class="campo"><label for="d-whats">WhatsApp</label><input id="d-whats" name="whats" type="tel" autocomplete="tel" required></div>
+            <div class="campo"><label for="d-email">E-mail</label><input id="d-email" type="email" readonly></div>
+          </div>
+          <div class="campo"><label for="d-doc">CPF ou CNPJ</label><input id="d-doc" readonly></div>
+          <button class="checkout__botao" type="submit">Salvar</button>
+          <p class="checkout__estado" data-dados-estado role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="./src/paginas/conta.js"></script>
+</body>
+</html>

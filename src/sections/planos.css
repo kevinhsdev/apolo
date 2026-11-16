@@ -83,56 +83,60 @@
 
 /* emblema de missão + nome */
 .cartao__missao { display: flex; align-items: center; gap: 16px; margin: 18px 0; }
-.emblema { width: 76px; height: 76px; flex: none; overflow: visible; }
-.emblema * { fill: none; stroke-linecap: round; stroke-linejoin: round; }
-.e-chao { stroke: rgba(255, 255, 255, .4); stroke-width: 1.3; }
-.e-traj { stroke: rgba(255, 255, 255, .3); stroke-width: 1.2; stroke-dasharray: 3 4; transition: stroke .4s; }
-.e-corpo { stroke: var(--tinta); stroke-width: 1.8; fill: #0d0d0d; }
-.e-crat { stroke: rgba(255, 255, 255, .35); stroke-width: 1.1; fill: rgba(0, 0, 0, .35); }
-.e-sat { fill: var(--tinta); stroke: none; }
-.e-luz { fill: var(--laranja); stroke: none; filter: drop-shadow(0 0 4px rgba(255, 90, 31, .9)); }
-.e-anel { transform-origin: 60px 60px; animation: gira 7s linear infinite; }
-.e-anel--2 { animation-duration: 11s; animation-direction: reverse; }
-.e-anel--3 { animation-duration: 16s; }
-@keyframes gira { to { transform: rotate(360deg); } }
+.emblemas-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.emblema { width: 84px; height: 84px; flex: none; overflow: visible; }
+.emblema :where(*:not([fill])) { fill: none; }
+.emblema * { stroke-linecap: round; stroke-linejoin: round; }
 
-/* criação de site: traço fino, luz laranja com rastro correndo pela trajetória */
-.e-estrela { fill: #fff; stroke: none; opacity: .55; animation: brilha 3s ease-in-out infinite; }
-.e-estrela:nth-of-type(2n) { animation-delay: -1.5s; }
-@keyframes brilha { 50% { opacity: .12; } }
-.e-hachura { stroke: rgba(255, 255, 255, .18); stroke-width: 1; }
-.e-base { stroke: var(--tinta); stroke-width: 1.4; }
-.e-fio { stroke: rgba(255, 255, 255, .35); stroke-width: 1; }
-.e-sombra { fill: rgba(0, 0, 0, .55); stroke: none; }
-.e-anel-p { stroke: var(--tinta); stroke-width: 1.4; }
-.e-rastro {
-  stroke: var(--laranja); stroke-width: 2.2; stroke-dasharray: 14 86; stroke-dashoffset: 14;
-  animation: rastro var(--dur) var(--curva) infinite;
+/* traços comuns */
+.em-linha { stroke: rgba(255, 255, 255, .22); stroke-width: 1.2; }
+.em-traj { stroke: rgba(255, 255, 255, .42); stroke-width: 1.4; }
+.em-traj--fina { stroke: rgba(255, 255, 255, .22); stroke-width: 1.1; }
+.em-ponto { fill: var(--tinta); stroke: none; }
+.em-nucleo-linha { stroke: var(--tinta); stroke-width: 1.6; }
+.em-sat { fill: var(--tinta); stroke: none; }
+.em-luz { fill: var(--laranja); stroke: none; }
+.em-esfera { fill: url(#em-esfera); stroke: rgba(255, 255, 255, .55); stroke-width: 1.2; }
+.em-aro { stroke: rgba(255, 255, 255, .5); stroke-width: 1; }
+.em-marcas { stroke: rgba(255, 255, 255, .2); stroke-width: 3; stroke-dasharray: .6 7.4; }   /* aro de mostrador */
+.emblema .em-halo { fill: url(#em-halo); stroke: none; }
+.em-rastro { stroke: var(--laranja); stroke-width: 2; stroke-dasharray: .14 .86; stroke-dashoffset: .14; opacity: .85; }
+
+/* movimento contínuo: suave, um por emblema; o laço corre junto com a luz (mesma curva e duração) */
+.em-sobe { animation: sobe-luz 3.6s cubic-bezier(.55, 0, .35, 1) 1.2s infinite both; }
+.em-rastro--sobe { animation: sobe-rastro 3.6s cubic-bezier(.55, 0, .35, 1) 1.2s infinite both; }
+@keyframes sobe-luz { 0% { offset-distance: 0%; opacity: 0; } 8% { opacity: 1; } 78% { opacity: 1; } 92%, 100% { offset-distance: 100%; opacity: 0; } }
+@keyframes sobe-rastro { 0% { stroke-dashoffset: .14; opacity: 0; } 8% { opacity: .85; } 78% { opacity: .85; } 92%, 100% { stroke-dashoffset: -.86; opacity: 0; } }
+.em-gira { offset-rotate: 0deg; animation: gira-luz 6s linear 1s infinite both; }
+.em-rastro--gira { animation: gira-rastro 6s linear 1s infinite both; }
+@keyframes gira-luz { from { offset-distance: 0%; } to { offset-distance: 100%; } }
+@keyframes gira-rastro { from { stroke-dashoffset: .14; } to { stroke-dashoffset: -.86; } }
+.em-ciclo { transform-origin: 60px 60px; animation: ciclo var(--t, 9s) linear infinite; }
+.em-ciclo--volta { animation-direction: reverse; }
+@keyframes ciclo { to { transform: rotate(360deg); } }
+.em-varre { animation: varre 5.5s cubic-bezier(.65, 0, .35, 1) 1.4s infinite both; }
+@keyframes varre { 0% { transform: translateX(0) skewX(-18deg); } 45%, 100% { transform: translateX(150px) skewX(-18deg); } }
+.emblema .em-halo { animation: respira 6s ease-in-out infinite; }
+@keyframes respira { 50% { opacity: .5; } }
+
+/* entrada: cada vez que o cartão entra na tela, o emblema se desenha (src/main.js põe is-visto) */
+.planos.tem-entrada .cartao:not(.is-visto) .em-desenha { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.planos.tem-entrada .cartao:not(.is-visto) .em-surge { opacity: 0; transform: scale(.82); }
+.planos.tem-entrada .cartao:not(.is-visto) .em-luz, .planos.tem-entrada .cartao:not(.is-visto) .em-sat,
+.planos.tem-entrada .cartao:not(.is-visto) .em-faisca, .planos.tem-entrada .cartao:not(.is-visto) .em-rastro { opacity: 0; }
+.em-desenha { stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 1.3s var(--ease-out) calc(var(--d, 0s) + var(--atraso, 0s)); }
+.em-surge { transform-box: fill-box; transform-origin: center; transition: opacity .9s var(--ease-out) calc(.35s + var(--atraso, 0s)), transform 1.1s var(--ease-out) calc(.35s + var(--atraso, 0s)); }
+.cartao:nth-child(2) { --atraso: .12s; }
+.cartao:nth-child(3) { --atraso: .24s; }
+
+/* fora da tela, ou em aparelho lento: tudo parado (src/main.js) */
+.planos.is-parado .emblema * { animation-play-state: paused !important; }
+@media (prefers-reduced-motion: reduce) {
+  .emblema * { animation: none !important; transition: none !important; }
+  .planos.tem-entrada .cartao .em-desenha { stroke-dashoffset: 0; }
+  .planos.tem-entrada .cartao .em-surge, .planos.tem-entrada .cartao .em-luz, .planos.tem-entrada .cartao .em-sat { opacity: 1; transform: none; }
+  .em-sobe { offset-distance: 70%; } .em-rastro { opacity: 0; }
 }
-@keyframes rastro { from { stroke-dashoffset: 14; } to { stroke-dashoffset: -86; } }
-.e-viaja { offset-rotate: 0deg; animation: viaja var(--dur) var(--curva) infinite; }
-@keyframes viaja { from { offset-distance: 0%; } to { offset-distance: 100%; } }
-.e-onda { stroke: var(--laranja); stroke-width: 1; transform-box: fill-box; transform-origin: center; animation: onda 2.8s ease-out infinite; }
-@keyframes onda { from { transform: scale(1); opacity: .9; } 60%, to { transform: scale(4.5); opacity: 0; } }
-:where(html:not(.is-scrolling)) .cartao:hover .e-traj { stroke: rgba(255, 90, 31, .6); }
-/* Decolagem: foguete */
-.e-foguete { animation: flutua 2.6s ease-in-out infinite; }
-@keyframes flutua { 50% { transform: translateY(-2px); } }
-.e-asa, .e-bocal { stroke: var(--tinta); stroke-width: 1.8; }
-.e-janela { stroke: var(--tinta); stroke-width: 1.6; fill: #0d0d0d; }
-.emblema .e-chama { fill: url(#g-chama); stroke: none; transform-box: fill-box; transform-origin: 50% 0; animation: chama .16s ease-in-out infinite alternate; }
-@keyframes chama { to { transform: scaleY(.72) scaleX(.9); } }
-.emblema .e-vento { stroke: url(#g-vento); stroke-width: 1.2; stroke-dasharray: 16 40; animation: vento 1s linear infinite; }
-@keyframes vento { to { stroke-dashoffset: -56; } }
-/* Lua: bandeira, rota e solo */
-.emblema .e-solo { fill: url(#g-solo); stroke: none; }
-.e-borda { stroke: url(#g-borda); stroke-width: 1.7; }
-.e-terra { stroke: var(--tinta); stroke-width: 1.6; fill: #3a3a3f; }
-.e-mastro { stroke: var(--tinta); stroke-width: 1.6; }
-.emblema .e-bandeira { fill: url(#g-bandeira); stroke: none; } /* sem drop-shadow: animado, repintava o filtro a cada quadro; o halo já dá o brilho */
-.e-passos { stroke: rgba(255, 255, 255, .4); stroke-width: 1.5; stroke-dasharray: 0 4.6; }
-.emblema .e-halo { fill: url(#g-halo); stroke: none; transform-box: fill-box; transform-origin: center; animation: halo 6s ease-in-out infinite; }
-@keyframes halo { 50% { opacity: .55; transform: scale(.9); } }
 .cartao__num { font-size: 11.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--laranja); }
 .cartao__nome { margin-top: 4px; font-size: clamp(32px, 2.7vw, 42px); font-weight: 600; letter-spacing: -.04em; line-height: 1; }
 
@@ -146,7 +150,7 @@
 .cartao__preco { display: flex; align-items: flex-start; gap: 6px; }
 .cartao__moeda { font-size: 16px; color: var(--tinta-2); padding-top: .55em; }
 .cartao__valor { font-size: clamp(46px, 3.8vw, 60px); font-weight: 300; letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; transition: color .4s; }
-.cartao__por { align-self: flex-end; font-size: 15px; color: var(--tinta-2); padding-bottom: .35em; }
+.cartao__por { align-self: flex-end; font-size: 15px; color: var(--tinta-2); padding-bottom: .35em; white-space: nowrap; }
 .cartao__sub { margin-top: 10px; font-size: 13.5px; color: var(--tinta-3); line-height: 1.45; min-height: 3em; }
 
 .cartao__lista { list-style: none; margin: 22px 0 0; padding: 20px 0 0; border-top: 1px solid rgba(255, 255, 255, .07); display: flex; flex-direction: column; gap: 11px; flex: 1; }
@@ -244,7 +248,69 @@
   .seletor__fundo { height: calc(100% - 8px); }
   .cartao { padding: 22px 20px 20px; }
 }
-@media (prefers-reduced-motion: reduce) { .emblema * { animation: none !important; } }
-/* fora da tela, ou em aparelho lento: emblemas parados (src/main.js) */
-.planos.is-parado .emblema * { animation-play-state: paused !important; }
-html.leve .emblema * { filter: none !important; }
+
+/* Lua */
+.em-brilho-estrela { stroke: rgba(255, 255, 255, .7); stroke-width: .8; animation: brilha 3.4s ease-in-out infinite; }
+.em--lua .em-luz { filter: drop-shadow(0 0 3px rgba(255, 90, 31, .9)); }
+
+/* ── destaque dos cartões (referências: Raycast, Linear) ── */
+/* nome na fonte da marca, com brilho metálico; frase do plano logo abaixo */
+.cartao__nome {
+  font-family: 'Sora Variable', 'Figtree Variable', sans-serif; font-weight: 600; letter-spacing: -.05em;
+  background: linear-gradient(180deg, #fff 30%, #9c9ca4); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.cartao__desc { margin-top: 8px; font-size: 13.5px; line-height: 1.4; color: var(--tinta-3); max-width: 24ch; }
+.cartao__missao { align-items: center; }
+/* preço com peso, como o Raycast */
+.cartao__valor { font-weight: 600; letter-spacing: -.05em; }
+
+/* "Mais escolhido": borda de luz laranja que corre em volta, fundo mais aceso, um pouco mais alto */
+@property --volta { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.cartao.is-recomendado {
+  border: 1px solid transparent;
+  background:
+    radial-gradient(80% 36% at 50% 0%, rgba(var(--c-rgb), .2), transparent 72%) padding-box,
+    linear-gradient(180deg, #181410, #0c0b0b 60%) padding-box,
+    conic-gradient(from var(--volta), rgba(255, 90, 31, .25), #FF5A1F 8%, #ffd2be 12%, #FF5A1F 16%, rgba(255, 90, 31, .25) 30%, rgba(255, 90, 31, .25)) border-box;
+  animation: volta 6s linear infinite;
+  box-shadow: 0 40px 100px -30px rgba(var(--c-rgb), .5), 0 0 0 1px rgba(0, 0, 0, .4);
+}
+@keyframes volta { to { --volta: 360deg; } }
+@media (min-width: 900px) { .cartao.is-recomendado { transform: translateY(-14px); } :where(html:not(.is-scrolling)) .cartao.is-recomendado:hover { transform: translateY(-20px); } }
+.cartao.is-recomendado .cartao__nome { background-image: linear-gradient(180deg, #fff 35%, #ffb08e); }
+
+/* topo de linha (Lua, Pro): borda cromada e nome em cromo */
+.cartao.is-topo {
+  border: 1px solid transparent;
+  background:
+    radial-gradient(70% 30% at 50% 0%, rgba(255, 255, 255, .06), transparent 72%) padding-box,
+    linear-gradient(180deg, #131315, #0b0b0c 60%) padding-box,
+    linear-gradient(140deg, #f4f4f6, #4a4a50 22%, #18181a 45%, #8a8a92 70%, #2a2a2e 85%, #d9d9de) border-box;
+}
+.cartao.is-topo .cartao__nome { background-image: linear-gradient(100deg, #8a8a92, #fff 30%, #6d6d74 55%, #f4f4f6 80%, #9c9ca4); }
+.planos.is-parado .cartao.is-recomendado { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .cartao.is-recomendado { animation: none; } }
+.cartao__missao { flex-direction: column; align-items: flex-start; gap: 14px; margin: 6px 0 22px; }
+.cartao__missao .emblema { width: 96px; height: 96px; margin-left: -6px; }
+.cartao__desc { max-width: 30ch; }
+.cartao__missao > div { display: flex; flex-direction: column; gap: 10px; }
+.cartao__missao .cartao__nome, .cartao__missao .cartao__desc { margin: 0; }
+.cartao__missao .cartao__nome { padding-bottom: .06em; }
+/* Lua: eclipse com anel de diamante (o mesmo traço da ignição do vídeo de abertura) */
+.emblema .em-coroa { transform-box: fill-box; transform-origin: center; animation: coroa 5s ease-in-out infinite; }
+@keyframes coroa { 50% { transform: scale(1.06); opacity: .8; } }
+.em-diamante { transform-box: fill-box; transform-origin: 50% 50%; animation: diamante 3.6s cubic-bezier(.45, 0, .55, 1) 1.2s infinite both; }
+@keyframes diamante { 0%, 100% { transform: scale(.82); opacity: .8; } 50% { transform: scale(1); opacity: 1; } }
+.planos.tem-entrada .cartao:not(.is-visto) .em-diamante { opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .em-diamante { opacity: 1; } }
+/* Decolagem: o clarão na base acompanha cada subida da luz */
+.emblema .em-base-luz { transform-box: fill-box; transform-origin: center; animation: base-luz 3.6s cubic-bezier(.55, 0, .35, 1) 1.2s infinite both; }
+@keyframes base-luz { 0% { transform: scale(.4); opacity: 0; } 6% { transform: scale(1.3); opacity: 1; } 40%, 100% { transform: scale(.5); opacity: 0; } }
+.planos.tem-entrada .cartao:not(.is-visto) .em-base-luz { opacity: 0; }
+/* o diamante percorre a borda do eclipse; o traço fica sempre na horizontal */
+.em-viaja-aro { offset-rotate: 0deg; animation: gira-luz 9s linear 1s infinite both; }
+.em-rastro--aro { stroke: #ffd2be; stroke-width: 1.6; stroke-dasharray: .22 .78; animation: aro-rastro 9s linear 1s infinite both; }
+@keyframes aro-rastro { from { stroke-dashoffset: .22; } to { stroke-dashoffset: -.78; } }
+.planos.tem-entrada .cartao:not(.is-visto) .em-viaja-aro { opacity: 0; }
+.em-viaja-aro { transition: opacity .8s var(--ease-out) calc(.6s + var(--atraso, 0s)); }
+@media (prefers-reduced-motion: reduce) { .em-viaja-aro { offset-distance: 87.5%; } }

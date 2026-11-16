@@ -31,6 +31,7 @@ import { iniciarAcoes, iniciarReticula } from './motion/rodape.js';
 import { iniciarRelogio } from './motion/relogio.js';
 import { iniciarNumeros } from './motion/numeros.js';
 import { iniciarNav } from './motion/nav.js';
+import { iniciarUsuario } from './motion/usuario.js';
 import { iniciarBarra } from './motion/barra.js';
 import { iniciarContato } from './contato.js';
 
@@ -46,16 +47,20 @@ iniciarOferta();
 iniciarProjetos();
 iniciarMetal();
 
-// emblemas dos planos (foguete, órbita, Lua): animam só com os pacotes na tela; em aparelho lento ficam parados
+// emblemas dos planos: cada cartão se desenha quando entra na tela (e de novo quando volta);
+// fora da tela, ou em aparelho lento, as animações contínuas param
 const pacotes = document.querySelector('#pacotes');
 if (pacotes) {
-  const svgs = [...pacotes.querySelectorAll('svg.emblema')];
+  pacotes.classList.add('tem-entrada');
+  const vista = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting && e.intersectionRatio > 0.3) e.target.classList.add('is-visto');
+    else if (!e.isIntersecting) e.target.classList.remove('is-visto');
+  }), { threshold: [0, 0.3] });
+  pacotes.querySelectorAll('.cartao').forEach(c => vista.observe(c));
   new IntersectionObserver(([e]) => {
-    const parar = !e.isIntersecting || document.documentElement.classList.contains('leve');
-    pacotes.classList.toggle('is-parado', parar);
-    svgs.forEach(s => (parar ? s.pauseAnimations() : s.unpauseAnimations()));
+    pacotes.classList.toggle('is-parado', !e.isIntersecting || document.documentElement.classList.contains('leve'));
   }, { rootMargin: '100px' }).observe(pacotes);
-  seLento(() => { pacotes.classList.add('is-parado'); svgs.forEach(s => s.pauseAnimations()); });
+  seLento(() => pacotes.classList.add('is-parado'));
 }
 const cromo = document.querySelector('[data-cromo]');
 // o cromo do cabeçalho fica sempre na tela: em aparelho lento ele não sobe (fica o símbolo liso)
@@ -68,6 +73,7 @@ iniciarReticula();
 iniciarRelogio();
 iniciarToque();
 iniciarNav();
+iniciarUsuario();
 iniciarBarra();
 iniciarNumeros();
 medirTudo();
