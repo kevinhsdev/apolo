@@ -161,12 +161,12 @@ export function criarGlobo(canvas, { leve = false } = {}) {
   let faltam = 2;
   let aoCarregar = null;
   const pronto = () => { if (--faltam === 0 && aoCarregar) aoCarregar(); };
-  const texCor = carregador.load(`/textures/lua-cor-${tam}.webp`, pronto);
+  const texCor = carregador.load(`textures/lua-cor-${tam}.webp`, pronto);
   texCor.colorSpace = SRGBColorSpace;
   texCor.anisotropy = aniso;
   texCor.minFilter = LinearMipmapLinearFilter;
   texCor.magFilter = LinearFilter;
-  const texRelevo = carregador.load(`/textures/lua-relevo-${tam}.webp`, pronto);
+  const texRelevo = carregador.load(`textures/lua-relevo-${tam}.webp`, pronto);
   texRelevo.anisotropy = aniso;
 
   const laranja = new Color('#ff5a1f'); // vira linear dentro do Three (ColorManagement)

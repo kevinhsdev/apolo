@@ -74,7 +74,7 @@ diagnostico = f'''    <section class="relevo" id="diagnostico" aria-labelledby="
           <button class="botao" type="submit"><span class="rola">Pedir diagnóstico</span></button>
           <p class="linha-form__ok" role="status"></p>
         </form>
-        <p class="migracao__lgpd">O pedido abre no WhatsApp. Usamos seus dados só para responder. <a class="link" href="/privacidade.html">Privacidade</a></p>
+        <p class="migracao__lgpd">O pedido abre no WhatsApp. Usamos seus dados só para responder. <a class="link" href="./privacidade.html">Privacidade</a></p>
       </div>
       <div class="relevo__stage">
         <div class="relevo__app" aria-hidden="true">

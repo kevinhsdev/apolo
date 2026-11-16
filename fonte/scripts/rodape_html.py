@@ -56,7 +56,7 @@ rodape = f'''  <footer class="rodape">
     </div>
     <div class="rodape__base">
       <p>© 2026 Apolo Studio · Lua: NASA / LRO · os pontos acesos são pousos reais</p>
-      <p><a class="link" href="/privacidade.html">Privacidade</a> · <button type="button" class="link rodape__topo-btn" data-ir-topo>Voltar ao topo ↑</button></p>
+      <p><a class="link" href="./privacidade.html">Privacidade</a> · <button type="button" class="link rodape__topo-btn" data-ir-topo>Voltar ao topo ↑</button></p>
     </div>
     <div class="reticula" aria-hidden="true"><canvas></canvas></div>
   </footer>'''

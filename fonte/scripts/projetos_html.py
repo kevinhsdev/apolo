@@ -17,7 +17,7 @@ secao = f'''    <section class="projetos" id="projetos" aria-labelledby="projeto
       </div>
       <div class="projetos__grade" data-projetos-destaque></div>
       <div class="projetos__acao">
-        <a class="metal-btn" href="/projetos.html"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Ver a biblioteca de projetos (<span data-projetos-total>0</span>)</span><span class="metal-btn__orb" aria-hidden="true">{SETA}{SETA}</span></a>
+        <a class="metal-btn" href="./projetos.html"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Ver a biblioteca de projetos (<span data-projetos-total>0</span>)</span><span class="metal-btn__orb" aria-hidden="true">{SETA}{SETA}</span></a>
       </div>
     </section>
 '''

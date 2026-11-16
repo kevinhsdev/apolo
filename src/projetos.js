@@ -6,10 +6,10 @@ import { linkConversa, WHATSAPP } from './contato.js';
 
 export const PROJETOS = [
   { slug: 'rumo', nome: 'Rumo', categoria: 'Agência de viagens', url: 'https://kevinhsdev.github.io/rumo/',
-    capa: '/projetos/rumo.jpg', video: '/projetos/rumo.mp4',
+    capa: 'projetos/rumo.jpg', video: 'projetos/rumo.mp4',
     resumo: 'Viagens sob medida: voos, hotéis e passeios num roteiro só, com um especialista pelo WhatsApp.' },
   { slug: 'kevinhs', nome: 'Kevin Henrique', categoria: 'Portfólio', url: 'https://www.kevinhs.dev/pt',
-    capa: '/projetos/kevinhs.jpg', video: '/projetos/kevinhs.mp4',
+    capa: 'projetos/kevinhs.jpg', video: 'projetos/kevinhs.mp4',
     resumo: 'Portfólio de engenharia de software, com a trajetória contada num globo 3D enquanto se rola.' },
 ];
 

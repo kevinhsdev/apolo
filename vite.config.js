@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import { resolve } from 'node:path';
 
 export default defineConfig({
+  base: './', // caminhos relativos: funciona em /apolo/ (GitHub Pages) e num domínio próprio
   build: {
     chunkSizeWarningLimit: 800,
     rollupOptions: {
