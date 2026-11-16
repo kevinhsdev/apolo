@@ -26,7 +26,7 @@ def i(n, t=16):
     return f'<svg viewBox="0 0 24 24" width="{t}" height="{t}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{IC[n]}</svg>'
 
 
-MARCA = '<svg class="ra-marca" viewBox="210 226 315 280" aria-hidden="true"><path d="M318 241h47L245 455l-25-45z"/><path d="M370 241h48l97 169-25 45z"/><path d="M245 455Q367.5 355 490 455l-20 38Q367.5 407 265 493z"/></svg>'
+MARCA = '<svg class="ra-marca" viewBox="210 226 315 280" aria-hidden="true"><path d="M318 241h100l97 169-25 45L367.5 302 245 455l-25-45z"/><path d="M245 455Q367.5 355 490 455l-20 38Q367.5 407 265 493z"/></svg>'
 
 NAV = [('grade', 'Visão geral', True), ('raio', 'Velocidade', False), ('busca', 'Google', False),
        ('escudo', 'LGPD', False), ('cadeado', 'Segurança', False), ('cel', 'Celular', False)]

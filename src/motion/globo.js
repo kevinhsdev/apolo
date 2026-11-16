@@ -146,9 +146,10 @@ const fragPontos = /* glsl */ `
 `;
 
 export function criarGlobo(canvas, { leve = false } = {}) {
-  const renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+  // densidade de pixels limitada: 1,5x já é nítido para a Lua; acima disso, a placa de vídeo paga quatro vezes mais
+  const dpr = Math.min(window.devicePixelRatio || 1, leve ? 1 : 1.5);
+  const renderer = new WebGLRenderer({ canvas, antialias: dpr < 1.5 && !leve, alpha: true, powerPreference: 'high-performance' });
   renderer.setClearColor(0x000000, 0);
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
   renderer.setPixelRatio(dpr);
 
   const cena = new Scene();
@@ -263,5 +264,7 @@ export function criarGlobo(canvas, { leve = false } = {}) {
     desenhar,
     estado,
     set onPronto(fn) { aoCarregar = fn; if (faltam === 0) fn(); },
+    /** aparelho lento: desenha a 1x */
+    baixar() { renderer.setPixelRatio(1); },
   };
 }

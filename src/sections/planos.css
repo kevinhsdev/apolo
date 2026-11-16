@@ -17,7 +17,8 @@
 .pilula .ponto { width: 7px; height: 7px; }
 .planos__titulo { font-size: clamp(36px, 4.4vw, 68px); font-weight: 500; letter-spacing: -.04em; line-height: 1.04; max-width: 15ch; }
 .planos__titulo span { display: block; color: var(--tinta-3); }
-.planos__intro { margin-top: 18px; font-size: clamp(15px, 1.1vw, 18px); color: var(--tinta-2); max-width: 48ch; }
+.planos__intro { margin: 18px auto 0; font-size: clamp(16px, 1.2vw, 19px); color: var(--tinta-2); max-width: 48ch; }
+.planos__intro b { color: var(--tinta); font-weight: 500; }
 
 .seletor {
   position: relative; display: inline-flex; margin-top: 34px; padding: 4px; border-radius: 999px;
@@ -73,7 +74,7 @@
 }
 .cartao > * { position: relative; z-index: 1; }
 
-.cartao__topo { display: flex; justify-content: space-between; align-items: center; min-height: 26px; }
+.cartao__topo { display: flex; justify-content: flex-end; align-items: center; min-height: 26px; }
 .cartao__rotulo { font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--tinta-3); font-weight: 500; }
 .cartao__selo {
   height: 26px; padding: 0 11px; border-radius: 999px; display: inline-flex; align-items: center;
@@ -106,7 +107,6 @@
 .e-anel-p { stroke: var(--tinta); stroke-width: 1.4; }
 .e-rastro {
   stroke: var(--laranja); stroke-width: 2.2; stroke-dasharray: 14 86; stroke-dashoffset: 14;
-  filter: drop-shadow(0 0 3px rgba(255, 90, 31, .8));
   animation: rastro var(--dur) var(--curva) infinite;
 }
 @keyframes rastro { from { stroke-dashoffset: 14; } to { stroke-dashoffset: -86; } }
@@ -120,7 +120,7 @@
 @keyframes flutua { 50% { transform: translateY(-2px); } }
 .e-asa, .e-bocal { stroke: var(--tinta); stroke-width: 1.8; }
 .e-janela { stroke: var(--tinta); stroke-width: 1.6; fill: #0d0d0d; }
-.emblema .e-chama { fill: url(#g-chama); stroke: none; transform-box: fill-box; transform-origin: 50% 0; animation: chama .16s ease-in-out infinite alternate; filter: drop-shadow(0 0 5px rgba(255, 90, 31, .85)); }
+.emblema .e-chama { fill: url(#g-chama); stroke: none; transform-box: fill-box; transform-origin: 50% 0; animation: chama .16s ease-in-out infinite alternate; }
 @keyframes chama { to { transform: scaleY(.72) scaleX(.9); } }
 .emblema .e-vento { stroke: url(#g-vento); stroke-width: 1.2; stroke-dasharray: 16 40; animation: vento 1s linear infinite; }
 @keyframes vento { to { stroke-dashoffset: -56; } }
@@ -129,7 +129,7 @@
 .e-borda { stroke: url(#g-borda); stroke-width: 1.7; }
 .e-terra { stroke: var(--tinta); stroke-width: 1.6; fill: #3a3a3f; }
 .e-mastro { stroke: var(--tinta); stroke-width: 1.6; }
-.emblema .e-bandeira { fill: url(#g-bandeira); stroke: none; filter: drop-shadow(0 0 6px rgba(255, 90, 31, .55)); }
+.emblema .e-bandeira { fill: url(#g-bandeira); stroke: none; } /* sem drop-shadow: animado, repintava o filtro a cada quadro; o halo já dá o brilho */
 .e-passos { stroke: rgba(255, 255, 255, .4); stroke-width: 1.5; stroke-dasharray: 0 4.6; }
 .emblema .e-halo { fill: url(#g-halo); stroke: none; transform-box: fill-box; transform-origin: center; animation: halo 6s ease-in-out infinite; }
 @keyframes halo { 50% { opacity: .55; transform: scale(.9); } }
@@ -162,8 +162,6 @@
 /* botão do cartão: Mercúrio de largura inteira; o recomendado leva a sombra laranja mais forte */
 .cartao__cta.metal-btn { margin-top: 18px; width: 100%; justify-content: space-between; height: 56px; padding: 0 6px 0 24px; font-size: 15px; font-weight: 600; box-shadow: inset 0 0 0 1px rgba(246, 236, 230, 0.22); }
 .cartao__cta.metal-btn .metal-btn__orb { --orb: 44px; }
-.cartao__cta--cheio.metal-btn { box-shadow: inset 0 0 0 1px rgba(246, 236, 230, 0.3), 0 18px 50px -14px rgba(255, 90, 31, 0.7); }
-.cartao__cta--cheio.metal-btn .metal-btn__orb { background: linear-gradient(160deg, #ffb08e 0%, #ff7a45 45%, #e2470f 100%); color: #120600; box-shadow: inset 0 1px 0 #ffd3bd, inset 0 -2px 5px rgba(0, 0, 0, 0.25), 0 4px 18px -4px rgba(255, 90, 31, .8); }
 
 /* cupom: bilhete destacável + campo para aplicar */
 .cupom {
@@ -247,3 +245,6 @@
   .cartao { padding: 22px 20px 20px; }
 }
 @media (prefers-reduced-motion: reduce) { .emblema * { animation: none !important; } }
+/* fora da tela, ou em aparelho lento: emblemas parados (src/main.js) */
+.planos.is-parado .emblema * { animation-play-state: paused !important; }
+html.leve .emblema * { filter: none !important; }

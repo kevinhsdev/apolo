@@ -61,7 +61,7 @@ main > section > *, .rodape > * { position: relative; z-index: 2; }
   line-height: 1.04;
   letter-spacing: -.035em;
 }
-.corpo { font-size: clamp(15px, 1.05vw, 17px); color: var(--tinta-2); max-width: 34ch; line-height: 1.5; }
+.corpo { font-size: clamp(16px, 1.2vw, 19px); color: var(--tinta-2); max-width: 34ch; line-height: 1.5; }
 .linha { display: block; overflow: hidden; padding: .14em 0 .22em; margin: -.14em 0 -.22em; }
 .linha > span { display: inline-block; white-space: nowrap; transform: translateY(112%); transition: transform .9s var(--ease-out); transition-delay: calc(var(--i, 0) * 70ms); }
 .is-visivel .linha > span, html.is-pronto .hero .linha > span { transform: none; }
@@ -182,4 +182,10 @@ html.tem-faixa .nav { top: 38px; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .001s !important; animation-iteration-count: 1 !important; transition-duration: .001s !important; }
   .linha > span, [data-revela] { transform: none !important; }
+  /* movimento reduzido: a página já nasce pronta, sem esperar as fontes */
+  .nav__grupo, .nav__marca, .hero__palavra, .hero__acoes { opacity: 1 !important; }
 }
+
+/* aparelho lento (src/desempenho.js): sem desfoque de fundo, que repinta a cada rolagem */
+html.leve .nav.is-solida, html.leve .conversa { -webkit-backdrop-filter: none; backdrop-filter: none; }
+html.leve .nav.is-solida { background: rgba(10, 10, 10, .96); }

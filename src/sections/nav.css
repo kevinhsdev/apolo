@@ -9,14 +9,25 @@
 .nav.is-solida { background: rgba(10, 10, 10, .74); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
 .nav__grupo { display: flex; gap: clamp(18px, 2.2vw, 36px); opacity: 0; transition: opacity 1s var(--ease-out) .3s; }
 html.is-pronto .nav__grupo, html.is-pronto .nav__marca { opacity: 1; }
-.nav__grupo--dir { justify-content: flex-end; }
+.nav__grupo--dir { justify-content: flex-end; align-items: center; gap: 10px; }
+/* Instagram e WhatsApp como ícones dos apps */
+.nav__icone {
+  width: 42px; height: 42px; display: grid; place-items: center; border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .14); color: var(--tinta); background: rgba(255, 255, 255, .02);
+  transition: border-color .2s, background-color .2s, transform .16s ease-out;
+}
+.nav__icone svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.nav__icone .cheio { fill: currentColor; stroke: none; }
+.nav__icone svg.nav__icone-cheio { width: 19px; height: 19px; fill: currentColor; stroke: none; }
+@media (hover: hover) and (pointer: fine) { :where(html:not(.is-scrolling)) .nav__icone:hover { border-color: rgba(255, 255, 255, .4); background: rgba(255, 255, 255, .07); } }
+.nav__icone:active { transform: scale(.94); }
+.nav__icone:focus-visible { outline: 2px solid var(--laranja); outline-offset: 3px; }
 .nav__marca {
   display: inline-flex; align-items: center; gap: .3em;
   font-size: clamp(28px, 2.6vw, 40px); font-weight: 600; letter-spacing: -.045em; line-height: 1;
   opacity: 0; transition: opacity 1s var(--ease-out) .15s;
 }
 .marca__simbolo { width: auto; height: 1.08em; fill: currentColor; transition: transform .6s var(--ease-snap); }
-:where(html:not(.is-scrolling)) .nav__marca:hover .marca__simbolo { transform: translateY(-3px) rotate(-6deg); }
 .nav__menu { display: none; }
 
 .menu {
@@ -51,13 +62,24 @@ html.is-pronto .nav__grupo, html.is-pronto .nav__marca { opacity: 1; }
   .nav__menu[aria-expanded='true'] { background: var(--tinta); color: #0a0a0a; border-color: var(--tinta); }
 }
 
-/* logo com aberração cromática: franja leve parada, separa e treme no hover */
-.nav__marca { filter: drop-shadow(-.7px 0 rgba(255, 42, 85, .55)) drop-shadow(.7px 0 rgba(0, 208, 255, .55)); }
-:where(html:not(.is-scrolling)) .nav__marca:hover { animation: crom-logo .9s steps(1) infinite; }
-@keyframes crom-logo {
-  0% { filter: drop-shadow(-3px 0 rgba(255, 42, 85, .9)) drop-shadow(3px 0 rgba(0, 208, 255, .9)); }
-  25% { filter: drop-shadow(-1.5px 1px rgba(255, 42, 85, .9)) drop-shadow(2px -1px rgba(0, 208, 255, .9)); }
-  50% { filter: drop-shadow(-4px 0 rgba(255, 42, 85, .8)) drop-shadow(4px 0 rgba(0, 208, 255, .8)); }
-  75% { filter: drop-shadow(-2px -1px rgba(255, 42, 85, .9)) drop-shadow(1.5px 1px rgba(0, 208, 255, .9)); }
+/* logo: no hover o símbolo dá um pequeno salto de decolagem e o nome vem logo atrás, como rastro */
+.nav__marca > span:not(.nav__cromo) { display: inline-block; transition: transform .6s var(--ease-out) .05s; }
+@media (hover: hover) and (pointer: fine) {
+  :where(html:not(.is-scrolling)) .nav__marca:hover .marca__simbolo { animation: decola .7s var(--ease-out); }
+  :where(html:not(.is-scrolling)) .nav__marca:hover > span:not(.nav__cromo) { transform: translateX(2px); }
 }
-@media (prefers-reduced-motion: reduce) { .nav__marca:hover { animation: none; } }
+@keyframes decola { 0% { transform: none; } 35% { transform: translateY(-5px) scale(1.04); } 100% { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .nav__marca:hover .marca__simbolo { animation: none; } .nav__marca > span:not(.nav__cromo) { transition: none; } }
+
+/* nome: Apolo em negrito, Studio normal e apagado */
+.nav__nome { font-family: 'Sora Variable', 'Figtree Variable', sans-serif; font-size: .74em; font-weight: 300; letter-spacing: -.04em; color: var(--tinta-3); }
+.nav__nome b { font-weight: 700; color: var(--tinta); }
+/* símbolo cromado: metal líquido (prompt Cromo, LiquidMetal da Paper) por cima da logo; a logo normal some quando ele fica pronto */
+.nav__marca { position: relative; }
+.nav__cromo { position: absolute; left: -.2em; top: 50%; height: 1.48em; aspect-ratio: var(--cromo-proporcao, 3.4); transform: translateY(-50%); pointer-events: none; }
+.nav__cromo > canvas { display: block; }
+.nav__marca:has(.nav__cromo[data-ready]) > svg { opacity: .22; }
+.nav__marca:has(.nav__cromo[data-ready]) .nav__cromo { animation: cromo-entra .8s var(--ease-out); }
+@keyframes cromo-entra { from { opacity: 0; } }
+@media (hover: hover) and (pointer: fine) { :where(html:not(.is-scrolling)) .nav__marca:hover .nav__cromo { animation: decola-cromo .7s var(--ease-out); } }
+@keyframes decola-cromo { 35% { transform: translateY(calc(-50% - 4px)) scale(1.02); } }

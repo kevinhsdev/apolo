@@ -9,7 +9,10 @@
   text-align: center; font-size: var(--palavra-tam, 22vw);
   opacity: 0; transition: opacity 1.4s var(--ease-out);
   /* a marca em contorno fino: assina a página sem disputar com a Lua */
-  color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, .2); font-weight: 400;
+  color: #fff; font-weight: 400; /* o filtro deixa só a borda, a 22% */
+  font-family: 'Sora Variable', 'Figtree Variable', sans-serif; letter-spacing: .01em;
+  /* contorno pelo filtro: desenha a letra cheia e tira o miolo, então os traços sobrepostos da fonte não aparecem */
+  filter: url(#contorno-palavra);
 }
 html.is-pronto .hero__palavra { opacity: 1; }
 .hero__lead {

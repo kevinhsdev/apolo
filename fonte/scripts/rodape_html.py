@@ -8,7 +8,7 @@ s = open(p, encoding='utf-8').read()
 a = s.index('  <footer class="rodape">')
 b = s.index('</footer>', a) + len('</footer>')
 
-MARCA = '<svg viewBox="210 226 315 280" aria-hidden="true"><path d="M318 241h47L245 455l-25-45z"/><path d="M370 241h48l97 169-25 45z"/><path d="M245 455Q367.5 355 490 455l-20 38Q367.5 407 265 493z"/></svg>'
+MARCA = '<svg viewBox="210 226 315 280" aria-hidden="true"><path d="M318 241h100l97 169-25 45L367.5 302 245 455l-25-45z"/><path d="M245 455Q367.5 355 490 455l-20 38Q367.5 407 265 493z"/></svg>'
 SETA = '<svg class="r-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>'
 
 

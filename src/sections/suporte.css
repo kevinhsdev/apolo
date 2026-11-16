@@ -17,6 +17,13 @@
 }
 .numero--c { display: block; margin-bottom: 6vh; }
 .suporte__relogio { font-size: var(--gigante); font-variant-numeric: tabular-nums; }
+/* relógio digital de 7 segmentos: traço aceso na tinta, apagado quase sumindo */
+.seg7 { display: inline-flex; align-items: stretch; gap: .06em; height: .82em; transform: skewX(-6deg); }
+.seg7__dig { height: 100%; width: auto; aspect-ratio: 64 / 100; overflow: visible; }
+.seg7__dig polygon { fill: rgba(255, 255, 255, .055); transition: fill .25s; }
+.seg7__dig polygon.aceso { fill: var(--tinta); }
+.seg7__dois { display: flex; flex-direction: column; justify-content: center; gap: .2em; padding: 0 .04em; }
+.seg7__dois i { width: .075em; height: .075em; background: var(--laranja); }
 .suporte__dois { animation: pisca 2s steps(1) infinite; }
 .numero--c .numero__legenda { margin-top: 14px; }
 .suporte__conteudo .titulo { margin-bottom: 18px; }
@@ -47,6 +54,18 @@
 .caixa { margin: 0 12px 12px; padding: 12px 12px 10px; border-radius: 18px; background: rgba(255, 255, 255, .04); border: 1px solid rgba(255, 255, 255, .09); transition: border-color .3s, box-shadow .3s; }
 .caixa:focus-within { border-color: rgba(255, 90, 31, .55); box-shadow: 0 0 0 4px rgba(255, 90, 31, .1); }
 .caixa__chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+/* mensagens prontas: aparecem em cascata quando o assunto muda */
+.caixa__presets { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.preset {
+  padding: 7px 12px; border-radius: 10px; border: 1px dashed rgba(255, 255, 255, .18); background: rgba(255, 255, 255, .03);
+  font: inherit; font-size: 13px; line-height: 1.3; color: var(--tinta-2); text-align: left; cursor: pointer;
+  animation: preset-entra .32s cubic-bezier(.23, 1, .32, 1) both; animation-delay: calc(var(--i) * 45ms);
+  transition: border-color .2s, color .2s, background-color .2s, transform .16s ease-out;
+}
+@keyframes preset-entra { from { opacity: 0; transform: translateY(4px); } }
+@media (hover: hover) and (pointer: fine) { .preset:hover { border-color: rgba(255, 90, 31, .55); color: var(--tinta); background: rgba(255, 90, 31, .06); } }
+.preset:active { transform: scale(.97); }
+@media (prefers-reduced-motion: reduce) { .preset { animation: none; } }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .caixa__texto {
   display: block; width: 100%; resize: none; border: 0; outline: 0; background: none; padding: 4px 2px; min-height: 28px;

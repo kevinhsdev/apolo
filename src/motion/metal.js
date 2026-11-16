@@ -8,6 +8,7 @@ import {
   ShaderFitOptions,
   LiquidMetalShapes,
 } from '@paper-design/shaders';
+import { fraco, seLento } from '../desempenho.js';
 
 function ringMask(w, h, ring) {
   const k = 4;
@@ -83,23 +84,38 @@ async function mountMetalRing(el) {
     ['u_image'],
   );
   el.classList.add('is-ready');
-  return () => { mount.dispose(); el.classList.remove('is-ready'); };
+  return () => {
+    const gl = mount.canvasElement.getContext('webgl2');
+    mount.dispose();
+    gl?.getExtension('WEBGL_lose_context')?.loseContext(); // libera o contexto na hora
+    el.classList.remove('is-ready');
+  };
 }
 
-function start(el) {
-  if (el.offsetWidth === 0) return; // escondido (menu fechado etc.): fica o anel liso
-  mountMetalRing(el).catch(err => console.warn('metal: ficou o anel liso', err));
-}
-
+// Cada anel é um contexto WebGL animando sem parar; com uns 20 botões na página, isso derrubava PCs medianos.
+// Agora o anel só existe enquanto o botão está na tela (sai da tela, desmonta) e, em aparelho lento, nem sobe:
+// fica o anel liso de 1 px.
 export function iniciarMetal(root = document) {
-  if (typeof OffscreenCanvas === 'undefined') return;
-  root.querySelectorAll('.metal-btn__metal').forEach(el => {
-    // só monta quando aparece: vale para a aba escondida, que monta ao ser aberta
-    const io = new IntersectionObserver(([e]) => {
-      if (!e.isIntersecting || el.offsetWidth === 0) return;
-      io.disconnect();
-      setTimeout(() => start(el), 300);
-    }, { rootMargin: '300px' });
-    io.observe(el);
+  if (typeof OffscreenCanvas === 'undefined' || fraco) return;
+  const vivos = new Map(); // el -> promessa da função de desmontar
+  let desligado = false;
+  const io = new IntersectionObserver(entradas => {
+    for (const e of entradas) {
+      const el = e.target;
+      if (e.isIntersecting && el.offsetWidth > 0 && !vivos.has(el)) {
+        vivos.set(el, mountMetalRing(el).catch(err => { console.warn('metal: ficou o anel liso', err); return () => {}; }));
+      } else if (!e.isIntersecting && vivos.has(el)) {
+        vivos.get(el).then(d => d());
+        vivos.delete(el);
+      }
+    }
+  }, { rootMargin: '120px' });
+  root.querySelectorAll('.metal-btn__metal').forEach(el => io.observe(el));
+  seLento(() => {
+    if (desligado) return;
+    desligado = true;
+    io.disconnect();
+    vivos.forEach(p => p.then(d => d()));
+    vivos.clear();
   });
 }

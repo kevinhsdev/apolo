@@ -4,3 +4,4 @@ _pacote/
 .DS_Store
 *.log
 __pycache__/
+.taste-skill/
