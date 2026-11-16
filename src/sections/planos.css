@@ -115,10 +115,24 @@
 .e-onda { stroke: var(--laranja); stroke-width: 1; transform-box: fill-box; transform-origin: center; animation: onda 2.8s ease-out infinite; }
 @keyframes onda { from { transform: scale(1); opacity: .9; } 60%, to { transform: scale(4.5); opacity: 0; } }
 :where(html:not(.is-scrolling)) .cartao:hover .e-traj { stroke: rgba(255, 90, 31, .6); }
-/* a onda do pouso sai quando a luz toca o solo */
-.e-solo { fill: #0d0d0f; stroke: none; }
-.e-onda--pouso { animation: pouso-onda 3.6s cubic-bezier(.23, 1, .32, 1) infinite; }
-@keyframes pouso-onda { 0%, 92% { transform: scale(1); opacity: 0; } 93% { opacity: .95; } 100% { transform: scale(5); opacity: 0; } }
+/* Decolagem: foguete */
+.e-foguete { animation: flutua 2.6s ease-in-out infinite; }
+@keyframes flutua { 50% { transform: translateY(-2px); } }
+.e-asa, .e-bocal { stroke: var(--tinta); stroke-width: 1.8; }
+.e-janela { stroke: var(--tinta); stroke-width: 1.6; fill: #0d0d0d; }
+.emblema .e-chama { fill: url(#g-chama); stroke: none; transform-box: fill-box; transform-origin: 50% 0; animation: chama .16s ease-in-out infinite alternate; filter: drop-shadow(0 0 5px rgba(255, 90, 31, .85)); }
+@keyframes chama { to { transform: scaleY(.72) scaleX(.9); } }
+.emblema .e-vento { stroke: url(#g-vento); stroke-width: 1.2; stroke-dasharray: 16 40; animation: vento 1s linear infinite; }
+@keyframes vento { to { stroke-dashoffset: -56; } }
+/* Lua: bandeira, rota e solo */
+.emblema .e-solo { fill: url(#g-solo); stroke: none; }
+.e-borda { stroke: url(#g-borda); stroke-width: 1.7; }
+.e-terra { stroke: var(--tinta); stroke-width: 1.6; fill: #3a3a3f; }
+.e-mastro { stroke: var(--tinta); stroke-width: 1.6; }
+.emblema .e-bandeira { fill: url(#g-bandeira); stroke: none; filter: drop-shadow(0 0 6px rgba(255, 90, 31, .55)); }
+.e-passos { stroke: rgba(255, 255, 255, .4); stroke-width: 1.5; stroke-dasharray: 0 4.6; }
+.emblema .e-halo { fill: url(#g-halo); stroke: none; transform-box: fill-box; transform-origin: center; animation: halo 6s ease-in-out infinite; }
+@keyframes halo { 50% { opacity: .55; transform: scale(.9); } }
 .cartao__num { font-size: 11.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--laranja); }
 .cartao__nome { margin-top: 4px; font-size: clamp(32px, 2.7vw, 42px); font-weight: 600; letter-spacing: -.04em; line-height: 1; }
 
