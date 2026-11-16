@@ -26,7 +26,7 @@ Enquanto `src/supabase-config.js` estiver vazio, a área do cliente fica desliga
    (cria as tabelas e as regras de acesso de `supabase/migrations/`).
 3. **E-mail com código**: Supabase › Authentication › Emails › Templates. Em "Magic Link" e em
    "Confirm signup", cole o HTML de `supabase/templates/codigo.html` (assunto: "Seu código de acesso · Apolo Studio").
-   Em Authentication › URL Configuration, ponha o endereço do site em Site URL.
+   Em Authentication › URL Configuration, ponha `https://apolostudio.com.br` em Site URL.
 4. **Asaas**: crie a chave de API (Integrações › Chaves de API). Comece pela conta sandbox
    (sandbox.asaas.com) para testar sem dinheiro de verdade.
 5. **Segredos das funções**: `npx supabase secrets set ASAAS_API_KEY=<chave> ASAAS_WEBHOOK_TOKEN=<uma senha longa sua>`
