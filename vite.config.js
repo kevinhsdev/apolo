@@ -29,6 +29,7 @@ export default defineConfig({
         reembolso: resolve(import.meta.dirname, 'reembolso.html'),
         acessibilidade: resolve(import.meta.dirname, 'acessibilidade.html'),
         admin: resolve(import.meta.dirname, 'admin.html'),
+        obrigado: resolve(import.meta.dirname, 'obrigado.html'),
       },
     },
   },

@@ -61,7 +61,7 @@ Deno.serve(async req => {
       const a = await mp('/preapproval_plan', {
         reason: `Manutenção ${item.nome} · Apolo Studio`,
         auto_recurring: { frequency: 1, frequency_type: 'months', transaction_amount: valor, currency_id: 'BRL' },
-        back_url: `${SITE}/conta.html`,
+        back_url: `${SITE}/obrigado.html?pedido=${pedido.id}`,
       });
       cobranca = a.id; link = a.init_point;
     } else {
@@ -75,7 +75,8 @@ Deno.serve(async req => {
           unit_price: ePix ? Math.round(pix / 2 * 100) / 100 : valor,
         }],
         payer: { name: cliente.nome, ...pagador }, external_reference: pedido.id,
-        back_urls: { success: `${SITE}/conta.html`, pending: `${SITE}/conta.html`, failure: `${SITE}/conta.html` }, auto_return: 'approved',
+        // volta para a tela de agradecimento; o Mercado Pago acrescenta status e collection_status
+        back_urls: Object.fromEntries(['success', 'pending', 'failure'].map(k => [k, `${SITE}/obrigado.html?pedido=${pedido.id}`])), auto_return: 'approved',
         payment_methods: ePix
           ? { installments: 1, excluded_payment_types: [{ id: 'credit_card' }, { id: 'debit_card' }, { id: 'prepaid_card' }, { id: 'ticket' }] }
           : { installments: PARCELAS_SEM_JUROS, excluded_payment_types: [{ id: 'ticket' }, { id: 'bank_transfer' }, { id: 'debit_card' }, { id: 'prepaid_card' }] },
