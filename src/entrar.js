@@ -23,6 +23,16 @@ export function montarEntrada(raiz, aoEntrar) {
     const { error } = await enviarCodigo(email);
     if (error) throw new Error('Não conseguimos enviar o código. Tente de novo em instantes.');
     $('[data-entrar-para]').textContent = `Enviado para ${email}`;
+    // a Microsoft às vezes segura e-mails por alguns minutos: avisa antes que a pessoa desista
+    let dica = $('[data-entrar-dica]');
+    if (!dica) {
+      dica = Object.assign(document.createElement('p'), { className: 'entrada__ajuda' });
+      dica.setAttribute('data-entrar-dica', '');
+      $('[data-entrar-para]').closest('p').after(dica);
+    }
+    dica.textContent = /@(outlook|hotmail|live|msn)\./i.test(email)
+      ? 'No Outlook e no Hotmail o código pode levar alguns minutos para chegar. Confira também o lixo eletrônico.'
+      : 'Não chegou? Confira a caixa de spam e a aba Promoções.';
     eEmail.readOnly = true;
     eCodigo.hidden = false;
     eBotao.textContent = 'Entrar';
