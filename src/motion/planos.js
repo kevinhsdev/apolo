@@ -2,10 +2,10 @@
 // com o domínio digitado e o plano, e o fecho (domínio + prazo + pacote).
 import { definir, ouvir, dominio, PLANOS } from './estado.js';
 import { linkConversa } from '../contato.js';
-import { CATALOGO, precoCartao, brl } from '../precos.js';
+import { CATALOGO, precoCartao, brl, PARCELAS_SEM_JUROS } from '../precos.js';
 
 const PRECOS = { medida: {} };
-for (const [id, p] of Object.entries(CATALOGO)) if (p.tipo === 'site') PRECOS[id] = { avista: brl(p.pix), parcelado: brl(precoCartao(p.pix) / 3) };
+for (const [id, p] of Object.entries(CATALOGO)) if (p.tipo === 'site') PRECOS[id] = { avista: brl(p.pix), parcelado: brl(precoCartao(p.pix) / PARCELAS_SEM_JUROS) };
 
 // os planos de site e os mensais vão para a tela de cobrança, com o domínio e o cupom
 function linkCobranca(id, e) {

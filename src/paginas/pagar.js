@@ -1,6 +1,6 @@
-// Tela de cobrança: resumo do pedido + dados + Pix ou cartão (até 3x sem juros).
+// Tela de cobrança: resumo do pedido + dados + Pix ou cartão (até 6x sem juros); manutenção no cartão.
 // Com a área do cliente ligada (src/supabase.js), confirma o e-mail por código, cria a cobrança no servidor
-// e leva à página oficial de pagamento do Asaas. Desligada, o pedido segue pela conversa já escrita.
+// e leva à página oficial de pagamento do Mercado Pago. Desligada, o pedido segue pela conversa já escrita.
 import '@fontsource-variable/figtree';
 import '@fontsource-variable/sora';
 import '../styles/tokens.css';
@@ -17,7 +17,7 @@ const q = new URLSearchParams(location.search);
 const id = CATALOGO[q.get('plano')] ? q.get('plano') : 'orbita';
 const plano = CATALOGO[id];
 const site = plano.tipo === 'site';
-const estado = { forma: site ? 'pix' : 'pix', parcelas: PARCELAS_SEM_JUROS, cupom: '' };
+const estado = { forma: site ? 'pix' : 'cartao', parcelas: PARCELAS_SEM_JUROS, cupom: '' };
 
 // preço do Pix: o de lançamento enquanto a oferta vale; depois, o cheio (oferta.js)
 const base = site ? (ofertaNoAr() ? plano.pix : OFERTA.cheio[id]) : plano.mes;
@@ -30,7 +30,7 @@ const comCupom = () => {
 document.title = `${plano.nome} · Finalizar pedido · Apolo Studio`;
 $('[data-r-nome]').textContent = plano.nome;
 $('[data-r-tipo]').textContent = site ? 'Criação de site · pagamento único' : 'Manutenção mensal';
-$('[data-r-prazo]').textContent = site ? `Pronto em ${plano.prazo}` : 'Vence todo dia 10. Cancele com 30 dias de aviso, sem multa.';
+$('[data-r-prazo]').textContent = site ? `Pronto em ${plano.prazo}` : 'Cobrado todo mês no cartão. Cancele com 30 dias de aviso, sem multa.';
 $('[data-r-itens]').replaceChildren(...plano.itens.map(t => Object.assign(document.createElement('li'), { textContent: t })));
 if (q.get('dominio')) $('#c-dominio').value = q.get('dominio');
 if (!site) $('[data-cupom-linha]').hidden = true;
@@ -53,7 +53,7 @@ if (site) {
     opcao('cartao', 'Cartão de crédito', `Até ${PARCELAS_SEM_JUROS}x sem juros`),
   );
 } else {
-  formas.append(opcao('pix', 'Pix', 'Todo dia 10'), opcao('boleto', 'Boleto', 'Todo dia 10'));
+  formas.append(opcao('cartao', 'Cartão de crédito', 'Cobrança automática todo mês'));
 }
 formas.querySelector('input').checked = true;
 formas.addEventListener('change', e => { estado.forma = e.target.value; pintar(); });
@@ -62,7 +62,7 @@ $('[data-parcelas]').addEventListener('change', e => { estado.parcelas = +e.targ
 function pintar() {
   const pix = comCupom();
   const cartao = precoCartao(pix);
-  const valores = { pix: site ? pix : base, cartao, boleto: base };
+  const valores = { pix, cartao: site ? cartao : base };
   formas.querySelectorAll('.forma').forEach(l => {
     const v = l.querySelector('input').value;
     l.querySelector('.forma__valor').textContent = site ? `R$ ${brl(valores[v])}` : `R$ ${brl(base)}/mês`;
@@ -74,22 +74,22 @@ function pintar() {
     const n = i + 1;
     return new Option(`${n}x de R$ ${brl(Math.round(cartao / n * 100) / 100)}${n > 1 ? ' sem juros' : ''}`, n, false, n === estado.parcelas);
   }));
-  $('[data-parcelas-campo]').hidden = estado.forma !== 'cartao';
+  $('[data-parcelas-campo]').hidden = !site || estado.forma !== 'cartao';
 
   const total = valores[estado.forma];
   const c = OFERTA.cupons[estado.cupom];
   $('[data-r-subtotal]').textContent = site ? `R$ ${brl(base)}` : `R$ ${brl(base)}/mês`;
   $('[data-r-linha-cupom]').hidden = !(c && site);
   if (c && site) { $('[data-r-cupom]').textContent = estado.cupom; $('[data-r-desconto]').textContent = `− R$ ${brl(base - pix)}`; }
-  const forma = { pix: 'Pix', cartao: `Cartão em ${estado.parcelas}x`, boleto: 'Boleto' }[estado.forma];
-  $('[data-r-forma]').textContent = estado.forma === 'cartao' ? `${forma} · + R$ ${brl(cartao - pix)}` : forma;
+  const forma = !site ? 'Cartão, todo mês' : estado.forma === 'pix' ? 'Pix' : `Cartão em ${estado.parcelas}x`;
+  $('[data-r-forma]').textContent = site && estado.forma === 'cartao' ? `${forma} · + R$ ${brl(cartao - pix)}` : forma;
   $('[data-r-total]').textContent = site ? `R$ ${brl(total)}` : `R$ ${brl(base)}/mês`;
-  $('[data-r-hoje]').textContent = !site ? 'A primeira cobrança vence no próximo dia 10.'
+  $('[data-r-hoje]').textContent = !site ? 'A primeira mensalidade é cobrada hoje, no cartão.'
     : estado.forma === 'pix' ? `Hoje você paga R$ ${brl(pix / 2)} (50%). O restante, na entrega.`
     : `${estado.parcelas}x de R$ ${brl(Math.round(cartao / estado.parcelas * 100) / 100)} no cartão, sem juros.`;
   // "Pagar" só quando a cobrança é gerada de verdade (área do cliente ligada); sem ela, o botão envia o pedido
   $('[data-finalizar]').textContent = !ligado ? (site ? 'Finalizar pedido' : 'Assinar')
-    : estado.forma === 'pix' && site ? `Pagar R$ ${brl(pix / 2)} no Pix` : estado.forma === 'cartao' ? `Pagar em ${estado.parcelas}x no cartão` : `Assinar no ${estado.forma === 'pix' ? 'Pix' : 'boleto'}`;
+    : !site ? 'Assinar no cartão' : estado.forma === 'pix' ? `Pagar R$ ${brl(pix / 2)} no Pix` : `Pagar em até ${estado.parcelas}x no cartão`;
 }
 
 // cupom (só nos planos de site, enquanto a oferta vale)
@@ -161,7 +161,7 @@ async function pagarComConta(d) {
 
 async function pedirPelaConversa(d) {
   const pix = comCupom(), cartao = precoCartao(pix);
-  const pagamento = !site ? `${estado.forma === 'pix' ? 'Pix' : 'Boleto'}, R$ ${brl(base)}/mês`
+  const pagamento = !site ? `Cartão, R$ ${brl(base)}/mês`
     : estado.forma === 'pix' ? `Pix, R$ ${brl(pix)} (50% agora, 50% na entrega)`
     : `Cartão em ${estado.parcelas}x de R$ ${brl(Math.round(cartao / estado.parcelas * 100) / 100)} sem juros (total R$ ${brl(cartao)})`;
   const texto = [

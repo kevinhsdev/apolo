@@ -1,6 +1,7 @@
 // Contato da Apolo num lugar só. Preencha o WhatsApp (55 + DDD + número, só dígitos).
 // Enquanto estiver vazio, os botões abrem a conversa no Direct do Instagram.
 import { ouvir, dominio, PLANOS } from './motion/estado.js';
+import { PARCELAS_SEM_JUROS } from './precos.js';
 
 export const WHATSAPP = ''; // [preencher] ex.: '5511999999999'
 export const INSTAGRAM = 'apolostudio.br';
@@ -13,7 +14,7 @@ export function linkConversa(texto) {
 export function textoPreco(e) {
   const p = e.precos[e.plano];
   if (!p || !p.avista) return '';
-  return e.ciclo === 'parcelado' ? `3x de R$ ${p.parcelado}` : `R$ ${p.avista} à vista`;
+  return e.ciclo === 'parcelado' ? `${PARCELAS_SEM_JUROS}x de R$ ${p.parcelado}` : `R$ ${p.avista} à vista`;
 }
 
 export function iniciarContato() {

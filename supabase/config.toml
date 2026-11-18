@@ -428,8 +428,8 @@ enabled = true
 # and column/key alignment. Set to "null" to emit raw, unformatted SQL.
 # format_options = "{\"keywordCase\":\"upper\",\"indent\":2,\"maxWidth\":180,\"commaStyle\":\"trailing\"}"
 
-# o Asaas chama o webhook sem login do Supabase; a função confere o token próprio do Asaas
-[functions.asaas-webhook]
+# o Mercado Pago chama o webhook sem login do Supabase; a função confere a assinatura secreta
+[functions.mercadopago-webhook]
 verify_jwt = false
 
 # e-mail com o código de 6 dígitos (o padrão manda só um link); copie este HTML também no painel:

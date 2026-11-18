@@ -3,7 +3,7 @@
 // que valem DEPOIS da data. Para ser legal (CDC, art. 37), o preço cheio tem que passar a ser
 // cobrado quando a oferta acabar. Passou da data, a faixa, os riscados e o cupom somem sozinhos.
 import { definir, ler } from './motion/estado.js';
-import { precoCartao, descontoPix, OFERTA, ofertaNoAr } from './precos.js';
+import { precoCartao, descontoPix, OFERTA, ofertaNoAr, PARCELAS_SEM_JUROS } from './precos.js';
 
 export { OFERTA, ofertaNoAr };
 
@@ -60,7 +60,7 @@ export function iniciarOferta() {
 
   // pílula dos planos
   const pilula = document.querySelector('[data-pilula]');
-  if (pilula) pilula.textContent = `${OFERTA.nome} até ${data} · ${descontoPix(1200)}% off no Pix ou 3x sem juros`;
+  if (pilula) pilula.textContent = `${OFERTA.nome} até ${data} · ${descontoPix(1200)}% off no Pix ou ${PARCELAS_SEM_JUROS}x sem juros`;
 
   // preços riscados e selo de desconto
   const cartoes = [...document.querySelectorAll('[data-cartao]')];
@@ -83,7 +83,7 @@ export function iniciarOferta() {
       if (unico) {
         const cartao = precoCartao(atual);
         c.querySelector('.cartao__sub').innerHTML =
-          `ou <b>3x de R$ ${brl(cartao / 3)} sem juros</b> no cartão (R$ ${brl(cartao)}). No Pix, 50% para começar e 50% na entrega.`;
+          `ou <b>${PARCELAS_SEM_JUROS}x de R$ ${brl(cartao / PARCELAS_SEM_JUROS)} sem juros</b> no cartão (R$ ${brl(cartao)}). No Pix, 50% para começar e 50% na entrega.`;
       }
     });
   }
