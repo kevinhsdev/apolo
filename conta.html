@@ -76,43 +76,189 @@
       </div>
     </section>
 
-    <!-- painel -->
-    <section data-vista="painel" hidden>
-      <h1 class="conta__ola" data-ola>Olá</h1>
-      <div class="conta__abas" role="tablist" aria-label="Área do cliente">
-        <button role="tab" id="aba-pedidos" aria-controls="painel-pedidos" aria-selected="true">Pedidos</button>
-        <button role="tab" id="aba-projeto" aria-controls="painel-projeto" aria-selected="false" tabindex="-1">Meu projeto</button>
-        <button role="tab" id="aba-dados" aria-controls="painel-dados" aria-selected="false" tabindex="-1">Meus dados</button>
-      </div>
-
-      <div role="tabpanel" id="painel-pedidos" aria-labelledby="aba-pedidos">
-        <ul class="pedidos" data-pedidos></ul>
-        <p class="conta__vazio" data-pedidos-vazio hidden>Você ainda não fez nenhum pedido. <a href="./#pacotes">Ver os pacotes</a></p>
-      </div>
-
-      <div role="tabpanel" id="painel-projeto" aria-labelledby="aba-projeto" hidden>
-        <div class="conta__cartao">
-          <p class="resumo__rotulo" data-projeto-rotulo></p>
-          <h2 class="conta__titulo" data-projeto-nome></h2>
-          <ol class="etapas" data-etapas></ol>
-          <p class="conta__vazio" data-projeto-vazio hidden>Quando o pagamento do seu site for confirmado, o andamento aparece aqui.</p>
+    <!-- painel: menu lateral (barra inferior no celular) e uma seção por vez, escolhida pelo #hash -->
+    <section class="painel" data-vista="painel" hidden>
+      <nav class="painel__menu" aria-label="Área do cliente">
+        <a class="painel__marca" href="./" aria-label="Apolo Studio, página inicial">
+          <svg viewBox="210 226 315 280" aria-hidden="true"><path d="M318 241h100l97 169-25 45L367.5 302 245 455l-25-45z"/><path d="M245 455Q367.5 355 490 455l-20 38Q367.5 407 265 493z"/></svg>
+          <span><b>Apolo</b>Studio</span>
+        </a>
+        <p class="painel__escopo">Área do cliente</p>
+        <ul class="painel__itens">
+          <li><a href="#inicio" data-ir="inicio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 5l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5h-5v5H5a1 1 0 0 1-1-1z"/></svg><span>Visão geral</span></a></li>
+          <li><a href="#pedidos" data-ir="pedidos"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg><span>Pedidos e pagamentos</span><em class="painel__conta" data-conta-pendentes hidden></em></a></li>
+          <li><a href="#projeto" data-ir="projeto"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><path d="M6 8v8M11 6h9M11 18h9M11 12h6"/></svg><span>Meu projeto</span></a></li>
+          <li><a href="#manutencao" data-ir="manutencao"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v4h-4"/></svg><span>Manutenção</span></a></li>
+        </ul>
+        <ul class="painel__itens painel__itens--conta">
+          <li><a href="#dados" data-ir="dados"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.5 3.6-5.5 7-5.5s6.2 2 7 5.5"/></svg><span>Meus dados</span></a></li>
+          <li><a href="#privacidade" data-ir="privacidade"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z"/><path d="m9 12 2 2 4-4"/></svg><span>Privacidade e segurança</span></a></li>
+          <li><a href="#preferencias" data-ir="preferencias"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg><span>Preferências</span></a></li>
+          <li><a href="#ajuda" data-ir="ajuda"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17h.01"/></svg><span>Ajuda</span></a></li>
+        </ul>
+        <div class="painel__usuario">
+          <p><strong data-menu-nome></strong><span data-menu-email></span></p>
+          <button class="painel__sair" type="button" data-sair>Sair</button>
         </div>
+      </nav>
+
+      <!-- celular: barra inferior com 4 destinos + Mais -->
+      <nav class="painel__barra" aria-label="Área do cliente (atalhos)">
+        <a href="#inicio" data-ir="inicio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 5l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5h-5v5H5a1 1 0 0 1-1-1z"/></svg><span>Início</span></a>
+        <a href="#pedidos" data-ir="pedidos"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg><span>Pedidos</span></a>
+        <a href="#projeto" data-ir="projeto"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><path d="M6 8v8M11 6h9M11 18h9M11 12h6"/></svg><span>Projeto</span></a>
+        <a href="#ajuda" data-ir="ajuda"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17h.01"/></svg><span>Ajuda</span></a>
+        <button type="button" data-mais aria-expanded="false" aria-controls="painel-mais"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Mais</span></button>
+      </nav>
+      <div class="painel__folha" id="painel-mais" hidden>
+        <a href="#manutencao" data-ir="manutencao">Manutenção</a>
+        <a href="#dados" data-ir="dados">Meus dados</a>
+        <a href="#privacidade" data-ir="privacidade">Privacidade e segurança</a>
+        <a href="#preferencias" data-ir="preferencias">Preferências</a>
+        <button type="button" data-sair>Sair</button>
       </div>
 
-      <div role="tabpanel" id="painel-dados" aria-labelledby="aba-dados" hidden>
-        <form class="checkout conta__cartao" data-dados novalidate>
-          <div class="campo"><label for="d-nome">Nome completo</label><input id="d-nome" name="nome" autocomplete="name" required></div>
-          <div class="campo-par">
-            <div class="campo"><label for="d-whats">WhatsApp</label><input id="d-whats" name="whats" type="tel" autocomplete="tel" required></div>
-            <div class="campo"><label for="d-email">E-mail</label><input id="d-email" type="email" readonly></div>
+      <div class="painel__conteudo checkout">
+        <!-- Visão geral -->
+        <section class="secao" id="s-inicio" data-secao="inicio" tabindex="-1" aria-labelledby="t-inicio" hidden>
+          <h1 class="secao__titulo" id="t-inicio" data-ola>Olá</h1>
+          <p class="secao__sub" data-ola-sub>Aqui está o andamento do seu site e o que falta fazer.</p>
+          <div class="passo" data-passo>
+            <div><p class="passo__rotulo" data-passo-rotulo>Próximo passo</p><p class="passo__texto" data-passo-texto></p></div>
+            <a class="botao-acao" data-passo-acao hidden></a>
           </div>
-          <div class="campo"><label for="d-doc">CPF ou CNPJ</label><input id="d-doc" readonly></div>
-          <button class="checkout__botao" type="submit">Salvar</button>
-          <p class="checkout__estado" data-dados-estado role="status"></p>
-        </form>
+          <div class="visao">
+            <article class="bloco bloco--projeto" data-projeto-resumo>
+              <h2 class="bloco__titulo">Seu projeto</h2>
+              <p class="bloco__nome" data-resumo-nome></p>
+              <div class="progresso" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Andamento do projeto" data-resumo-barra><span></span></div>
+              <p class="bloco__meta" data-resumo-etapa></p>
+              <a class="bloco__link" href="#projeto">Ver todas as etapas</a>
+            </article>
+            <article class="bloco">
+              <h2 class="bloco__titulo">Pagamentos</h2>
+              <dl class="numeros">
+                <div><dt>Pago</dt><dd data-resumo-pago>R$ 0</dd></div>
+                <div><dt>Aguardando</dt><dd data-resumo-pendente>0</dd></div>
+              </dl>
+              <a class="bloco__link" href="#pedidos">Ver pedidos</a>
+            </article>
+            <article class="bloco">
+              <h2 class="bloco__titulo">Manutenção</h2>
+              <p class="bloco__nome" data-resumo-manutencao></p>
+              <p class="bloco__meta" data-resumo-manutencao-meta></p>
+              <a class="bloco__link" href="#manutencao">Ver manutenção</a>
+            </article>
+          </div>
+        </section>
+
+        <!-- Pedidos e pagamentos -->
+        <section class="secao" id="s-pedidos" data-secao="pedidos" tabindex="-1" aria-labelledby="t-pedidos" hidden>
+          <h1 class="secao__titulo" id="t-pedidos">Pedidos e pagamentos</h1>
+          <p class="secao__sub">Tudo o que você contratou, com o status de cada cobrança. Os pagamentos são feitos na página do Mercado Pago.</p>
+          <div class="filtros" role="group" aria-label="Filtrar pedidos">
+            <button type="button" data-filtro="todos" aria-pressed="true">Todos</button>
+            <button type="button" data-filtro="aguardando" aria-pressed="false">Aguardando</button>
+            <button type="button" data-filtro="pago" aria-pressed="false">Pagos</button>
+            <button type="button" data-filtro="cancelado" aria-pressed="false">Cancelados</button>
+          </div>
+          <ul class="pedidos" data-pedidos></ul>
+          <div class="vazio" data-pedidos-vazio hidden>
+            <p class="vazio__titulo" data-pedidos-vazio-titulo>Nenhum pedido ainda</p>
+            <p data-pedidos-vazio-texto>Quando você contratar um site ou uma manutenção, ele aparece aqui.</p>
+            <a class="botao-acao botao-acao--neutro" href="./#pacotes">Ver os pacotes</a>
+          </div>
+        </section>
+
+        <!-- Meu projeto -->
+        <section class="secao" id="s-projeto" data-secao="projeto" tabindex="-1" aria-labelledby="t-projeto" hidden>
+          <h1 class="secao__titulo" id="t-projeto">Meu projeto</h1>
+          <p class="secao__sub">Cada etapa, do briefing ao site no ar. Atualizamos aqui a cada avanço.</p>
+          <div class="campo campo--escolha" data-projeto-escolha-caixa hidden>
+            <label for="p-escolha">Projeto</label>
+            <select id="p-escolha" data-projeto-escolha></select>
+          </div>
+          <article class="bloco bloco--largo" data-projeto-cartao>
+            <p class="bloco__meta" data-projeto-rotulo></p>
+            <h2 class="bloco__nome bloco__nome--grande" data-projeto-nome></h2>
+            <div class="progresso" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Andamento do projeto" data-projeto-barra><span></span></div>
+            <ol class="etapas" data-etapas></ol>
+          </article>
+          <div class="vazio" data-projeto-vazio hidden>
+            <p class="vazio__titulo">Nenhum projeto em andamento</p>
+            <p>Quando o pagamento do seu site for confirmado, as etapas aparecem aqui.</p>
+            <a class="botao-acao botao-acao--neutro" href="#pedidos">Ver pedidos</a>
+          </div>
+        </section>
+
+        <!-- Manutenção -->
+        <section class="secao" id="s-manutencao" data-secao="manutencao" tabindex="-1" aria-labelledby="t-manutencao" hidden>
+          <h1 class="secao__titulo" id="t-manutencao">Manutenção</h1>
+          <p class="secao__sub">Hospedagem, domínio, segurança e alterações do mês, cobrados no cartão todo mês.</p>
+          <article class="bloco bloco--largo" data-manutencao></article>
+        </section>
+
+        <!-- Meus dados -->
+        <section class="secao" id="s-dados" data-secao="dados" tabindex="-1" aria-labelledby="t-dados" hidden>
+          <h1 class="secao__titulo" id="t-dados">Meus dados</h1>
+          <p class="secao__sub">Usamos estes dados para emitir as cobranças e falar com você sobre o projeto.</p>
+          <form class="bloco bloco--largo formulario" data-dados novalidate>
+            <div class="campo"><label for="d-nome">Nome completo</label><input id="d-nome" name="nome" autocomplete="name" required></div>
+            <div class="campo-par">
+              <div class="campo"><label for="d-whats">WhatsApp</label><input id="d-whats" name="whats" type="tel" autocomplete="tel" required></div>
+              <div class="campo"><label for="d-email">E-mail</label><input id="d-email" type="email" readonly aria-describedby="d-email-ajuda"><small id="d-email-ajuda">É o e-mail de entrada; para trocar, fale com a gente.</small></div>
+            </div>
+            <div class="campo"><label for="d-doc">CPF ou CNPJ</label><input id="d-doc" inputmode="numeric" readonly aria-describedby="d-doc-ajuda"><small id="d-doc-ajuda" data-doc-ajuda>Vinculado às suas cobranças; para corrigir, fale com a gente.</small></div>
+            <div class="formulario__acoes"><button class="botao-acao" type="submit">Salvar</button><p class="formulario__estado" data-dados-estado role="status"></p></div>
+          </form>
+        </section>
+
+        <!-- Privacidade e segurança -->
+        <section class="secao" id="s-privacidade" data-secao="privacidade" tabindex="-1" aria-labelledby="t-privacidade" hidden>
+          <h1 class="secao__titulo" id="t-privacidade">Privacidade e segurança</h1>
+          <p class="secao__sub">Seus dados ficam protegidos e só você os vê. Entrada sem senha, por código no e-mail.</p>
+          <ul class="ajustes">
+            <li><div><strong>Último acesso</strong><span data-ultimo-acesso>—</span></div></li>
+            <li><div><strong>Baixar meus dados</strong><span>Um arquivo com seu cadastro, pedidos e etapas do projeto.</span></div><button type="button" class="botao-acao botao-acao--neutro" data-baixar-dados>Baixar</button></li>
+            <li><div><strong>Sair de todos os aparelhos</strong><span>Encerra a sessão em qualquer celular ou computador em que você tenha entrado.</span></div><button type="button" class="botao-acao botao-acao--neutro" data-sair-todos>Sair de todos</button></li>
+            <li><div><strong>Excluir minha conta</strong><span>Apagamos seu cadastro. Pedidos pagos ficam guardados pelo prazo que a lei exige para registros fiscais.</span></div><button type="button" class="botao-acao botao-acao--perigo" data-pedir-exclusao>Pedir exclusão</button></li>
+          </ul>
+          <p class="formulario__estado" data-privacidade-estado role="status"></p>
+          <p class="secao__nota">Saiba mais na nossa <a href="./privacidade.html">política de privacidade</a>.</p>
+        </section>
+
+        <!-- Preferências -->
+        <section class="secao" id="s-preferencias" data-secao="preferencias" tabindex="-1" aria-labelledby="t-preferencias" hidden>
+          <h1 class="secao__titulo" id="t-preferencias">Preferências</h1>
+          <p class="secao__sub">Ajustes de leitura deste aparelho. Valem para o site inteiro.</p>
+          <div class="bloco bloco--largo pref" data-preferencias></div>
+        </section>
+
+        <!-- Ajuda -->
+        <section class="secao" id="s-ajuda" data-secao="ajuda" tabindex="-1" aria-labelledby="t-ajuda" hidden>
+          <h1 class="secao__titulo" id="t-ajuda">Ajuda</h1>
+          <p class="secao__sub">As dúvidas mais comuns. Não achou a sua? Fale com a gente.</p>
+          <div class="ajuda">
+            <div class="perguntas">
+              <details><summary>Quanto tempo leva para o meu site ficar pronto?</summary><p>Decolagem em até 7 dias úteis, Órbita em até 14 e Lua em até 21, contados a partir do briefing completo (textos, logo, fotos e acessos). Você acompanha cada etapa em Meu projeto.</p></details>
+              <details><summary>Quais são as formas de pagamento?</summary><p>Pix, com 50% de entrada e 50% na entrega, ou cartão de crédito em até 6x sem juros. A manutenção é mensal, no cartão. Tudo é processado pelo Mercado Pago.</p></details>
+              <details><summary>Posso desistir e pedir o dinheiro de volta?</summary><p>Sim. Em até 7 dias do pagamento, devolvemos tudo. Depois disso, veja as regras em <a href="./reembolso.html">Reembolso e cancelamento</a>.</p></details>
+              <details><summary>Como peço uma alteração no site?</summary><p>Pelo WhatsApp ou Instagram. Os ajustes incluídos no seu pacote e na sua manutenção são feitos sem custo extra.</p></details>
+              <details><summary>Como cancelo a manutenção?</summary><p>Em Manutenção, toque em "Alterar ou cancelar" e mande a mensagem. Não tem multa, e o serviço segue até o fim do mês pago.</p></details>
+              <details><summary>Meu pagamento é seguro?</summary><p>Sim. O pagamento acontece na página do Mercado Pago. Os dados do seu cartão nunca passam pelo nosso site nem ficam com a gente.</p></details>
+            </div>
+            <aside class="bloco contato">
+              <h2 class="bloco__titulo">Fale com a gente</h2>
+              <p class="bloco__meta">Respondemos em horário comercial, de segunda a sexta.</p>
+              <a class="botao-acao" href="#" data-whats="Olá! Sou cliente da Apolo e preciso de ajuda.">Abrir conversa</a>
+              <a class="bloco__link" href="mailto:[preencher]@apolostudio.com.br">[preencher]@apolostudio.com.br</a>
+            </aside>
+          </div>
+        </section>
       </div>
     </section>
   </main>
+  <!-- partial:rodape-confianca -->
   <script type="module" src="./src/paginas/conta.js"></script>
 </body>
 </html>
