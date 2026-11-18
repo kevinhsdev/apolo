@@ -8,6 +8,8 @@
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import { CATALOGO, PARCELAS_SEM_JUROS, precoCartao, precoPix } from '../_shared/precos.js';
 import { mp, MP_TOKEN } from '../_shared/mercadopago.ts';
+import { montarAviso } from '../_shared/aviso.js';
+import { avisarAdmins } from '../_shared/avisar.ts';
 
 const SITE = Deno.env.get('SITE_URL') ?? 'https://apolostudio.com.br';
 const cors = {
@@ -82,6 +84,7 @@ Deno.serve(async req => {
       cobranca = c.id; link = c.init_point;
     }
     await db.from('pedidos').update({ cobranca, link_fatura: link }).eq('id', pedido.id);
+    await avisarAdmins(montarAviso({ evento: 'criado', pedido, cliente, site: SITE }));
     return resposta({ pedido: pedido.id, link });
   } catch (e) {
     console.error(e);

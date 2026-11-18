@@ -4,6 +4,8 @@
 // Segredo: MP_WEBHOOK_SECRET (a "assinatura secreta" do webhook no painel). Publicar com --no-verify-jwt.
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import { mp } from '../_shared/mercadopago.ts';
+import { montarAviso } from '../_shared/aviso.js';
+import { avisarAdmins } from '../_shared/avisar.ts';
 
 const SEGREDO = Deno.env.get('MP_WEBHOOK_SECRET') ?? '';
 
@@ -46,7 +48,7 @@ Deno.serve(async req => {
     return new Response('erro', { status: 500 }); // falha passageira: o Mercado Pago tenta de novo
   }
 
-  const campos = 'id, status, tipo, forma, valor';
+  const campos = 'id, status, tipo, forma, valor, cliente_id, plano, parcelas, dominio';
   const { data: pedido } = pedidoId ? await db.from('pedidos').select(campos).eq('id', pedidoId).maybeSingle()
     : plano ? await db.from('pedidos').select(campos).eq('cobranca', plano).maybeSingle()
     : { data: null };
@@ -57,6 +59,8 @@ Deno.serve(async req => {
   if (pago && pedido.status === 'aguardando' && recebido >= esperado - 0.01) {
     await db.from('pedidos').update({ status: 'pago', ...(parcelas && pedido.forma === 'cartao' ? { parcelas } : {}) }).eq('id', pedido.id);
     await db.from('etapas').update({ feita: true, atualizado_em: new Date().toISOString() }).eq('pedido_id', pedido.id).eq('ordem', 1);
+    const { data: cliente } = await db.from('clientes').select('nome, email, whatsapp').eq('id', pedido.cliente_id).maybeSingle();
+    await avisarAdmins(montarAviso({ evento: 'pago', pedido: { ...pedido, ...(parcelas && pedido.forma === 'cartao' ? { parcelas } : {}) }, cliente, site: Deno.env.get('SITE_URL') ?? 'https://apolostudio.com.br' }));
   } else if (desfeito) {
     await db.from('pedidos').update({ status: 'cancelado' }).eq('id', pedido.id);
   }
