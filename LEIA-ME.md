@@ -50,6 +50,9 @@ As portas locais são 55321+ para não brigar com outros projetos.
 
 `apolostudio.com.br/admin.html`: todos os pedidos, a ficha de cada um (contato do cliente, status, etapas e notas). O cliente vê na área dele cada etapa marcada e cada nota. A página não aparece no Google (noindex) e só mostra dados para quem está na tabela `admins` do banco.
 
+- **Painel:** Visão geral (receita do mês, meta, líquido, a receber, MRR, gráfico de 6 meses, "O que fazer hoje", funil e planos), Pedidos e Clientes (tabelas com busca, ordem e exportar CSV) e a ficha de cada pedido. A meta do mês fica em `META_MENSAL` (`src/paginas/admin-dados.js`).
+- **Pix 50% + 50%:** o Mercado Pago só cobra a entrada. Quando o restante entrar, abra o pedido e clique em "Marcar restante recebido" para ele entrar nas contas.
+- **Limpar pedidos de teste:** em Pedidos, marque os pedidos e clique em "Cancelar" (só os aguardando). Depois, filtre por Cancelados, marque e clique em "Excluir" (para sempre). Se alguém pagar um pedido cancelado pelo link, ele volta sozinho como pago.
 - **Dar acesso a alguém:** a pessoa entra uma vez em `/admin.html` com o e-mail dela (vai ver "Sem acesso"). Depois, no PowerShell, na pasta `site`: `node supabase/admin.mjs email@dela.com`. Ela recarrega a página e vê os pedidos.
 - **Avisos por e-mail:** a cada pedido criado e a cada pedido pago, chega um e-mail com o link direto para a ficha. Segredos no Supabase: `RESEND_API_KEY` (chave do Resend) e `ADMIN_EMAILS` (e-mails separados por vírgula). Para mudar quem recebe: `npx supabase secrets set ADMIN_EMAILS=a@x.com,b@y.com --yes`. Se o e-mail falhar, o pedido e o pagamento seguem normalmente.
 - **Teste do banco (local):** `docker exec -i supabase_db_site psql -U postgres -q -v ON_ERROR_STOP=1 < supabase/teste-admin.sql` precisa imprimir `ok: cliente comum` e `ok: admin`.

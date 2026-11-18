@@ -56,8 +56,9 @@ Deno.serve(async req => {
 
   // confere o valor: no Pix do site a entrada é metade do total
   const esperado = pedido.tipo === 'site' && pedido.forma === 'pix' ? Number(pedido.valor) / 2 : Number(pedido.valor);
-  if (pago && pedido.status === 'aguardando' && recebido >= esperado - 0.01) {
-    await db.from('pedidos').update({ status: 'pago', ...(parcelas && pedido.forma === 'cartao' ? { parcelas } : {}) }).eq('id', pedido.id);
+  // cancelado também: o admin pode cancelar um pedido parado, mas o link do Mercado Pago continua valendo
+  if (pago && ['aguardando', 'cancelado'].includes(pedido.status) && recebido >= esperado - 0.01) {
+    await db.from('pedidos').update({ status: 'pago', pago_em: new Date().toISOString(), ...(parcelas && pedido.forma === 'cartao' ? { parcelas } : {}) }).eq('id', pedido.id);
     await db.from('etapas').update({ feita: true, atualizado_em: new Date().toISOString() }).eq('pedido_id', pedido.id).eq('ordem', 1);
     const { data: cliente } = await db.from('clientes').select('nome, email, whatsapp').eq('id', pedido.cliente_id).maybeSingle();
     await avisarAdmins(montarAviso({ evento: 'pago', pedido: { ...pedido, ...(parcelas && pedido.forma === 'cartao' ? { parcelas } : {}) }, cliente, site: Deno.env.get('SITE_URL') ?? 'https://apolostudio.com.br' }));

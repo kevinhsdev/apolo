@@ -47,6 +47,19 @@ do $$ begin
     raise exception 'admin renomeou etapa';
   exception when insufficient_privilege then null;
   end;
+  -- painel: marca o restante do Pix; apaga só o que está cancelado
+  update public.pedidos set restante_em = now() where id = '00000000-0000-0000-0000-00000000aaa1';
+  assert (select restante_em from public.pedidos where id = '00000000-0000-0000-0000-00000000aaa1') is not null, 'admin não marcou o restante';
+  begin
+    update public.pedidos set pago_em = now() where id = '00000000-0000-0000-0000-00000000aaa1';
+    raise exception 'admin mudou pago_em';
+  exception when insufficient_privilege then null;
+  end;
+  delete from public.pedidos where id = '00000000-0000-0000-0000-00000000aaa1';
+  assert (select count(*) from public.pedidos where id = '00000000-0000-0000-0000-00000000aaa1') = 1, 'admin apagou pedido não cancelado';
+  update public.pedidos set status = 'cancelado' where id = '00000000-0000-0000-0000-00000000aaa1';
+  delete from public.pedidos where id = '00000000-0000-0000-0000-00000000aaa1';
+  assert (select count(*) from public.pedidos where id = '00000000-0000-0000-0000-00000000aaa1') = 0, 'admin não apagou o cancelado';
   raise notice 'ok: admin';
 end $$;
 rollback;

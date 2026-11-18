@@ -7,20 +7,20 @@
   <!-- partial:a11y-cedo -->
 </head>
 <body class="pagar admin">
-  <header class="adm__topo">
+  <!-- entrar, sem acesso e erro: tela simples, sem o painel -->
+  <header class="adm__topo" data-topo>
     <a class="painel__marca" href="./" aria-label="Apolo Studio, página inicial">
       <svg viewBox="210 226 315 280" aria-hidden="true"><path d="M318 241h100l97 169-25 45L367.5 302 245 455l-25-45z"/><path d="M245 455Q367.5 355 490 455l-20 38Q367.5 407 265 493z"/></svg>
       <span><b>Apolo</b>Studio</span>
     </a>
     <span class="adm__escopo">Admin</span>
-    <div class="adm__acoes" data-acoes hidden>
-      <button type="button" class="botao-acao botao-acao--neutro" data-atualizar>Atualizar</button>
-      <button type="button" class="botao-acao botao-acao--neutro" data-sair>Sair</button>
-    </div>
   </header>
 
-  <main class="adm">
-    <!-- entrar: o mesmo código no e-mail da área do cliente -->
+  <main class="adm" data-simples>
+    <section class="adm__cartao" data-vista="carregando" aria-busy="true">
+      <p class="secao__sub">Carregando…</p>
+    </section>
+
     <section class="adm__cartao" data-vista="entrar" hidden>
       <h1 class="secao__titulo">Entrar no admin</h1>
       <p class="secao__sub">Só para a equipe Apolo. Enviamos um código para o seu e-mail.</p>
@@ -46,49 +46,229 @@
     </section>
 
     <section class="adm__cartao" data-vista="erro" hidden>
-      <h1 class="secao__titulo">Não conseguimos carregar os pedidos</h1>
+      <h1 class="secao__titulo">Não conseguimos carregar os dados</h1>
       <p class="secao__sub">Pode ser a conexão ou uma instabilidade do Supabase.</p>
       <button type="button" class="botao-acao" data-tentar>Tentar de novo</button>
     </section>
-
-    <!-- lista -->
-    <section data-vista="lista" hidden>
-      <h1 class="secao__titulo">Pedidos</h1>
-      <p class="secao__sub" data-lista-sub></p>
-      <div class="filtro-pedidos" role="group" aria-label="Filtrar pedidos">
-        <button type="button" data-filtro="aguardando" aria-pressed="false">Aguardando <em data-conta="aguardando"></em></button>
-        <button type="button" data-filtro="producao" aria-pressed="true">Em produção <em data-conta="producao"></em></button>
-        <button type="button" data-filtro="entregue" aria-pressed="false">Entregues <em data-conta="entregue"></em></button>
-        <button type="button" data-filtro="todos" aria-pressed="false">Todos <em data-conta="todos"></em></button>
-      </div>
-      <ul class="pedidos adm__lista" data-lista></ul>
-      <div class="vazio" data-lista-vazio hidden><p class="vazio__titulo">Nenhum pedido aqui</p><p>Escolha outro filtro.</p></div>
-    </section>
-
-    <!-- ficha -->
-    <section data-vista="ficha" hidden>
-      <a class="adm__voltar" href="#">← Pedidos</a>
-      <h1 class="secao__titulo" data-f-titulo tabindex="-1"></h1>
-      <p class="secao__sub" data-f-sub></p>
-      <div class="adm__ficha">
-        <article class="bloco">
-          <h2 class="bloco__titulo">Cliente</h2>
-          <p class="bloco__nome" data-f-cliente></p>
-          <dl class="adm__dados" data-f-dados></dl>
-          <div class="plano__acoes" data-f-contato></div>
-        </article>
-        <article class="bloco">
-          <h2 class="bloco__titulo">Status</h2>
-          <div class="filtro-pedidos adm__status" role="group" aria-label="Status do pedido" data-f-status></div>
-          <p class="bloco__meta" data-f-status-ajuda></p>
-          <p class="formulario__estado" data-f-status-estado role="status"></p>
-        </article>
-      </div>
-      <h2 class="adm__subtitulo">Etapas</h2>
-      <p class="secao__sub">O cliente vê cada mudança na hora. Um link na nota vira o botão "Abrir" na área do cliente.</p>
-      <ol class="adm__etapas" data-f-etapas></ol>
-    </section>
   </main>
+
+  <!-- painel -->
+  <div class="painel" data-vista="painel" hidden>
+    <nav class="painel__menu" aria-label="Admin">
+      <a class="painel__marca" href="./" aria-label="Apolo Studio, página inicial">
+        <svg viewBox="210 226 315 280" aria-hidden="true"><path d="M318 241h100l97 169-25 45L367.5 302 245 455l-25-45z"/><path d="M245 455Q367.5 355 490 455l-20 38Q367.5 407 265 493z"/></svg>
+        <span><b>Apolo</b>Studio</span>
+      </a>
+      <p class="painel__escopo">Admin</p>
+      <ul class="painel__itens">
+        <li><a href="#visao" data-ir="visao"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Visão geral</span></a></li>
+        <li><a href="#pedidos" data-ir="pedidos"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg><span>Pedidos</span><em class="painel__conta" data-badge hidden></em></a></li>
+        <li><a href="#clientes" data-ir="clientes"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg><span>Clientes</span></a></li>
+      </ul>
+      <div class="painel__usuario">
+        <p><strong>Equipe Apolo</strong><span data-email></span></p>
+        <div class="adm__menu-acoes">
+          <button class="painel__sair" type="button" data-atualizar>Atualizar</button>
+          <button class="painel__sair" type="button" data-sair>Sair</button>
+        </div>
+      </div>
+    </nav>
+
+    <nav class="painel__barra adm__barra" aria-label="Admin (atalhos)">
+      <a href="#visao" data-ir="visao"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Visão</span></a>
+      <a href="#pedidos" data-ir="pedidos"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg><span>Pedidos</span></a>
+      <a href="#clientes" data-ir="clientes"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg><span>Clientes</span></a>
+      <button type="button" data-sair><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 16l-4-4 4-4M6 12h10"/></svg><span>Sair</span></button>
+    </nav>
+
+    <main class="painel__conteudo">
+      <!-- visão geral -->
+      <section class="secao" data-secao="visao" tabindex="-1" aria-labelledby="t-visao">
+        <header class="adm__cab">
+          <div>
+            <h1 class="secao__titulo" id="t-visao">Visão geral</h1>
+            <p class="secao__sub" data-v-sub></p>
+          </div>
+        </header>
+
+        <div class="adm__hero">
+          <article class="adm__meta">
+            <p class="adm__rotulo" data-v-mes></p>
+            <p class="adm__numero" data-v-recebido></p>
+            <p class="adm__variacao" data-v-variacao></p>
+            <div class="adm__barra-meta" role="progressbar" aria-label="Meta do mês" aria-valuemin="0" aria-valuemax="100" data-v-meta-barra><span data-v-meta-fill></span></div>
+            <p class="adm__meta-texto" data-v-meta-texto></p>
+          </article>
+          <dl class="adm__kpis" data-v-kpis></dl>
+        </div>
+
+        <div class="adm__grade">
+          <div class="adm__pilha">
+          <article class="bloco adm__grafico">
+            <div class="adm__bloco-cab">
+              <h2 class="bloco__titulo">Receita por mês</h2>
+              <span class="adm__legenda"><i class="adm__ponto"></i>Bruto recebido</span>
+            </div>
+            <div class="adm__barras" data-v-barras></div>
+            <details class="adm__tabela-mini">
+              <summary>Ver em tabela</summary>
+              <table><thead><tr><th scope="col">Mês</th><th scope="col">Bruto</th><th scope="col">Líquido estimado</th></tr></thead><tbody data-v-tabela-mes></tbody></table>
+            </details>
+          </article>
+
+          <article class="bloco">
+            <h2 class="bloco__titulo">Funil de vendas</h2>
+            <ol class="adm__hbarras" data-v-funil></ol>
+          </article>
+          </div>
+          <div class="adm__pilha">
+          <article class="bloco adm__acoes-dia">
+            <div class="adm__bloco-cab">
+              <h2 class="bloco__titulo">O que fazer hoje</h2>
+              <span class="adm__legenda" data-v-alertas-n></span>
+            </div>
+            <ul class="adm__alertas" data-v-alertas></ul>
+          </article>
+
+          <article class="bloco">
+            <h2 class="bloco__titulo">Receita por plano</h2>
+            <ol class="adm__hbarras" data-v-planos></ol>
+          </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- pedidos -->
+      <section class="secao" data-secao="pedidos" tabindex="-1" aria-labelledby="t-pedidos" hidden>
+        <header class="adm__cab">
+          <div>
+            <h1 class="secao__titulo" id="t-pedidos">Pedidos</h1>
+            <p class="secao__sub" data-p-sub></p>
+          </div>
+          <button type="button" class="botao-acao botao-acao--neutro" data-exportar="pedidos">Exportar CSV</button>
+        </header>
+        <div class="adm__ferramentas">
+          <label class="adm__busca"><span class="sr">Buscar pedidos</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input type="search" placeholder="Buscar cliente, e-mail, plano ou domínio" data-p-busca>
+          </label>
+          <label class="adm__select"><span class="sr">Tipo</span>
+            <select data-p-tipo><option value="">Sites e manutenção</option><option value="site">Só sites</option><option value="mensal">Só manutenção</option></select>
+          </label>
+        </div>
+        <div class="filtro-pedidos" role="group" aria-label="Filtrar por status">
+          <button type="button" data-filtro="aguardando" aria-pressed="false">Aguardando <em data-conta="aguardando"></em></button>
+          <button type="button" data-filtro="producao" aria-pressed="false">Em produção <em data-conta="producao"></em></button>
+          <button type="button" data-filtro="entregue" aria-pressed="false">Entregues <em data-conta="entregue"></em></button>
+          <button type="button" data-filtro="cancelado" aria-pressed="false">Cancelados <em data-conta="cancelado"></em></button>
+          <button type="button" data-filtro="todos" aria-pressed="true">Todos <em data-conta="todos"></em></button>
+        </div>
+        <div class="adm__lote" data-lote hidden>
+          <span data-lote-texto></span>
+          <button type="button" class="botao-acao botao-acao--perigo" data-lote-cancelar hidden></button>
+          <button type="button" class="botao-acao botao-acao--perigo" data-lote-excluir hidden></button>
+          <button type="button" class="botao-acao botao-acao--neutro" data-lote-limpar>Limpar seleção</button>
+        </div>
+        <div class="adm__tabela-caixa">
+          <table class="adm__tabela">
+            <thead><tr>
+              <th scope="col" class="adm__col-marca"><input type="checkbox" aria-label="Selecionar todos os pedidos visíveis" data-p-todos></th>
+              <th scope="col" data-ordem="cliente">Cliente</th>
+              <th scope="col" data-ordem="plano_nome">Plano</th>
+              <th scope="col" data-ordem="forma_txt">Pagamento</th>
+              <th scope="col" data-ordem="valor_n" class="adm__num">Valor</th>
+              <th scope="col" data-ordem="status">Status</th>
+              <th scope="col">Andamento</th>
+              <th scope="col" data-ordem="criado_em" aria-sort="descending">Criado</th>
+            </tr></thead>
+            <tbody data-p-linhas></tbody>
+          </table>
+        </div>
+        <div class="vazio" data-p-vazio hidden><p class="vazio__titulo">Nenhum pedido aqui</p><p>Mude o filtro ou a busca.</p></div>
+      </section>
+
+      <!-- clientes -->
+      <section class="secao" data-secao="clientes" tabindex="-1" aria-labelledby="t-clientes" hidden>
+        <header class="adm__cab">
+          <div>
+            <h1 class="secao__titulo" id="t-clientes">Clientes</h1>
+            <p class="secao__sub" data-c-sub></p>
+          </div>
+          <button type="button" class="botao-acao botao-acao--neutro" data-exportar="clientes">Exportar CSV</button>
+        </header>
+        <div class="adm__ferramentas">
+          <label class="adm__busca"><span class="sr">Buscar clientes</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input type="search" placeholder="Buscar nome, e-mail ou WhatsApp" data-c-busca>
+          </label>
+        </div>
+        <div class="adm__tabela-caixa">
+          <table class="adm__tabela">
+            <thead><tr>
+              <th scope="col" data-ordem="nome">Nome</th>
+              <th scope="col">Contato</th>
+              <th scope="col" data-ordem="pedidos" class="adm__num">Pedidos</th>
+              <th scope="col" data-ordem="gasto" class="adm__num" aria-sort="descending">Total pago</th>
+              <th scope="col" data-ordem="manutencao">Manutenção</th>
+              <th scope="col" data-ordem="ultimo">Último pedido</th>
+            </tr></thead>
+            <tbody data-c-linhas></tbody>
+          </table>
+        </div>
+        <div class="vazio" data-c-vazio hidden><p class="vazio__titulo">Nenhum cliente encontrado</p><p>Tente outra busca.</p></div>
+      </section>
+
+      <!-- ficha do pedido -->
+      <section class="secao" data-secao="ficha" tabindex="-1" aria-labelledby="t-ficha" hidden>
+        <a class="adm__voltar" href="#pedidos">← Pedidos</a>
+        <header class="adm__cab">
+          <div>
+            <h1 class="secao__titulo" id="t-ficha" data-f-titulo></h1>
+            <p class="secao__sub" data-f-sub></p>
+          </div>
+          <span class="pedido__status" data-f-selo></span>
+        </header>
+        <div class="adm__ficha">
+          <article class="bloco">
+            <h2 class="bloco__titulo">Cliente</h2>
+            <p class="bloco__nome" data-f-cliente></p>
+            <dl class="adm__dados" data-f-dados></dl>
+            <div class="plano__acoes" data-f-contato></div>
+          </article>
+          <article class="bloco">
+            <h2 class="bloco__titulo">Financeiro</h2>
+            <dl class="adm__dados" data-f-financeiro></dl>
+            <div class="plano__acoes" data-f-dinheiro></div>
+            <p class="formulario__estado" data-f-dinheiro-estado role="status"></p>
+          </article>
+          <article class="bloco">
+            <h2 class="bloco__titulo">Status</h2>
+            <div class="filtro-pedidos adm__status" role="group" aria-label="Status do pedido" data-f-status></div>
+            <p class="bloco__meta" data-f-status-ajuda></p>
+            <div class="plano__acoes" data-f-perigo></div>
+            <p class="formulario__estado" data-f-status-estado role="status"></p>
+          </article>
+        </div>
+        <h2 class="adm__subtitulo">Etapas</h2>
+        <p class="secao__sub">O cliente vê cada mudança na hora. Um link na nota vira o botão "Abrir" na área do cliente.</p>
+        <ol class="adm__etapas" data-f-etapas></ol>
+      </section>
+    </main>
+  </div>
+
+  <!-- confirmação de ações que não se desfazem -->
+  <dialog class="adm__dialogo" data-dialogo aria-labelledby="d-titulo">
+    <form method="dialog">
+      <h2 class="bloco__nome" id="d-titulo" data-d-titulo></h2>
+      <p class="bloco__meta" data-d-texto></p>
+      <div class="plano__acoes">
+        <button class="botao-acao botao-acao--neutro" value="nao" autofocus>Voltar</button>
+        <button class="botao-acao botao-acao--perigo" value="sim" data-d-sim></button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="adm__dica" data-dica role="tooltip" hidden></div>
   <script type="module" src="./src/paginas/admin.js"></script>
 </body>
 </html>
