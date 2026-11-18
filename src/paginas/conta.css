@@ -86,10 +86,10 @@
 .numeros dd { margin: 0; font: 600 22px/1.1 'Sora Variable', var(--fonte); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
 
 /* filtros */
-.filtros { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
-.filtros button { height: 34px; padding: 0 14px; border-radius: 999px; font: inherit; font-size: 13px; color: #b4b4b4; background: transparent; border: 1px solid #2e2e2e; cursor: pointer; }
-.filtros button:hover { color: var(--tinta); border-color: #444; }
-.filtros button[aria-pressed="true"] { color: #0a0a0a; background: var(--tinta); border-color: var(--tinta); }
+.filtro-pedidos { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+.filtro-pedidos button { height: 34px; padding: 0 14px; border-radius: 999px; font: inherit; font-size: 13px; color: #b4b4b4; background: transparent; border: 1px solid #2e2e2e; cursor: pointer; }
+.filtro-pedidos button:hover { color: var(--tinta); border-color: #444; }
+.filtro-pedidos button[aria-pressed="true"] { color: #0a0a0a; background: var(--tinta); border-color: var(--tinta); }
 
 /* pedidos */
 .pedidos { list-style: none; margin: 0; padding: 0; border-radius: 16px; background: #111; border: 1px solid #222; overflow: hidden; }
@@ -314,3 +314,8 @@
   .e-in, .e-in-dir, .e-in-up, .entrada__codigo { opacity: 1; filter: none; transform: none; animation: none; }
   .entrada__lua img { animation: none; }
 }
+
+/* visão geral: últimos pedidos */
+.ultimos { margin-top: 28px; display: grid; gap: 12px; }
+.ultimos__topo { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.ultimos__topo .bloco__link { margin: 0; padding: 0; }

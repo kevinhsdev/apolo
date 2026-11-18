@@ -68,3 +68,6 @@ body.conta .a11y-painel { bottom: calc(72px + var(--barra-conta, 0px)); }
 .pref__restaurar { background: none; border: 0; padding: 8px 0; color: var(--tinta-2); font: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: .2em; }
 .pref__restaurar:hover, .pref__sobre:hover { color: var(--tinta); }
 .pref__sobre { color: var(--tinta-2); }
+/* no painel da conta o pé do menu lateral tem o botão Sair: o botão vai para a direita */
+body.conta.is-painel .a11y-botao { left: auto; right: 16px; }
+body.conta.is-painel .a11y-painel { left: auto; right: 16px; }
