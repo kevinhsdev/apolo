@@ -1,9 +1,10 @@
-// Botão de acessibilidade (todas as páginas): texto maior, alto contraste, menos animação, links sublinhados.
+// Botão de acessibilidade (todas as páginas): tema, texto maior, alto contraste, menos animação, links sublinhados.
 // montarPainelPreferencias também é usado na seção Preferências da área do cliente.
 import './acessibilidade.css';
-import { PADRAO, lerPreferencias, salvarPreferencias, aplicar } from './preferencias.js';
+import { PADRAO, lerPreferencias, salvarPreferencias, aplicar, temTema } from './preferencias.js';
 
 const TEXTOS = ['Normal', 'Maior', 'Muito maior'];
+const TEMAS = [['escuro', 'Escuro'], ['claro', 'Claro'], ['auto', 'Automático']];
 const CHAVES = [
   ['contraste', 'Alto contraste', 'Textos e bordas mais fortes.'],
   ['movimento', 'Reduzir animações', 'Para a Lua, o metal e os efeitos ao rolar (vale ao recarregar).'],
@@ -11,26 +12,35 @@ const CHAVES = [
 ];
 
 export function montarPainelPreferencias(container) {
-  const desenhar = () => {
-    const p = lerPreferencias();
-    container.replaceChildren();
+  // grupo de botões de escolha única (tema, tamanho do texto)
+  const escolha = (rotulo, itens, ajuda) => {
     const grupo = document.createElement('div');
     grupo.className = 'pref__grupo';
     grupo.setAttribute('role', 'radiogroup');
-    grupo.setAttribute('aria-label', 'Tamanho do texto');
-    grupo.innerHTML = '<p class="pref__rotulo">Tamanho do texto</p>';
+    grupo.setAttribute('aria-label', rotulo);
+    const r = Object.assign(document.createElement('p'), { className: 'pref__rotulo', textContent: rotulo });
     const opcoes = document.createElement('div');
     opcoes.className = 'pref__opcoes';
-    TEXTOS.forEach((nome, i) => {
+    itens.forEach(({ nome, ativo, aoEscolher, tam }) => {
       const b = Object.assign(document.createElement('button'), { type: 'button', className: 'pref__opcao', textContent: nome });
       b.setAttribute('role', 'radio');
-      b.setAttribute('aria-checked', String(p.texto === i));
-      b.style.setProperty('--tam', `${1 + i * 0.125}em`);
-      b.addEventListener('click', () => mudar({ texto: i }));
+      b.setAttribute('aria-checked', String(ativo));
+      if (tam) b.style.setProperty('--tam', tam);
+      b.addEventListener('click', aoEscolher);
       opcoes.append(b);
     });
-    grupo.append(opcoes);
+    grupo.append(r, opcoes);
+    if (ajuda) grupo.append(Object.assign(document.createElement('p'), { className: 'pref__ajuda', textContent: ajuda }));
     container.append(grupo);
+  };
+  const desenhar = () => {
+    const p = lerPreferencias();
+    container.replaceChildren();
+    if (temTema()) {
+      escolha('Tema', TEMAS.map(([id, nome]) => ({ nome, ativo: p.tema === id, aoEscolher: () => mudar({ tema: id }) })),
+        p.tema === 'auto' ? 'Segue o modo claro ou escuro do seu aparelho.' : '');
+    }
+    escolha('Tamanho do texto', TEXTOS.map((nome, i) => ({ nome, ativo: p.texto === i, tam: `${1 + i * 0.125}em`, aoEscolher: () => mudar({ texto: i }) })));
     CHAVES.forEach(([chave, nome, ajuda]) => {
       const b = Object.assign(document.createElement('button'), { type: 'button', className: 'pref__chave' });
       b.setAttribute('role', 'switch');

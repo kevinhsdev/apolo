@@ -11,7 +11,9 @@ test('sem nada guardado, usa o padrão', () => {
 
 test('corrige valores fora do lugar', () => {
   assert.deepEqual(lerPreferencias(guarda('{"texto":5,"contraste":true}')),
-    { texto: 2, contraste: true, movimento: false, links: false });
+    { texto: 2, contraste: true, movimento: false, links: false, tema: 'escuro' });
+  assert.equal(lerPreferencias(guarda('{"tema":"roxo"}')).tema, 'escuro');
+  assert.equal(lerPreferencias(guarda('{"tema":"auto"}')).tema, 'auto');
 });
 
 test('JSON quebrado volta ao padrão', () => {
@@ -27,6 +29,13 @@ test('classes para o <html>', () => {
   assert.deepEqual(classesDe({ texto: 1, contraste: true, movimento: true, links: false }),
     ['a-texto-1', 'a-contraste', 'a-sem-movimento']);
   assert.deepEqual(classesDe(PADRAO), []);
+});
+
+test('tema claro: escolhido, ou automático com o sistema no claro', () => {
+  assert.deepEqual(classesDe({ ...PADRAO, tema: 'claro' }), ['t-claro']);
+  assert.deepEqual(classesDe({ ...PADRAO, tema: 'auto' }, true), ['t-claro']);
+  assert.deepEqual(classesDe({ ...PADRAO, tema: 'auto' }, false), []);
+  assert.deepEqual(classesDe({ ...PADRAO, tema: 'escuro' }, true), []);
 });
 
 test('localStorage do navegador bloqueado (getter que lança) não derruba a página', () => {

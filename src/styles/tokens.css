@@ -12,15 +12,89 @@
   --laranja: #ff5a1f;
   --laranja-luz: rgba(255, 90, 31, .45);
 
+  /* superfícies, linhas e textos das telas de trabalho (área do cliente, pagamento, admin, textos).
+     Trocam juntas no tema claro e no alto contraste (blocos abaixo). */
+  --sup: #111111;
+  --sup-2: #151515;
+  --sup-3: #1a1a1a;
+  --linha: #1f1f1f;
+  --linha-2: #242424;
+  --linha-3: #2e2e2e;
+  --linha-4: #3d3d3d;
+  --linha-5: #555555;
+  --cinza: #5a5a5a;
+  --texto-1: #d6d6d6;
+  --texto-2: #b4b4b4;
+  --texto-3: #949494;
+  --texto-4: #6f6f6f;
+  --laranja-texto: #ffb08e;
+  --laranja-fundo: #2a160e;
+  --perigo: #ff8a70;
+  --perigo-borda: #4a2a22;
+  --verde: #6fd39a;
+  --verde-fundo: #13261b;
+  --veu: 255 255 255; /* rgb(var(--veu) / .05): véu claro no escuro, escuro no claro */
+
   --fonte: 'Figtree Variable', 'Figtree', system-ui, sans-serif;
 
   --margem: clamp(20px, 3.9vw, 72px);
   --gap: clamp(14px, 1.65vw, 24px);
-  --titulo: clamp(34px, 3.9vw, 64px);
-  --lead: clamp(21px, 1.98vw, 31px);
-  --gigante: clamp(76px, 14.6vw, 250px);
+  --titulo: clamp(2.125rem, 3.9vw, 4rem);
+  --lead: clamp(1.3125rem, 1.98vw, 1.9375rem);
+  --gigante: clamp(4.75rem, 14.6vw, 15.625rem);
 
   --ease-out: cubic-bezier(.22, 1, .36, 1);
   --ease-io: cubic-bezier(.65, 0, .35, 1);
   --ease-snap: cubic-bezier(.3, .9, .2, 1);
 }
+
+/* tema claro (só nas páginas com <html data-com-tema>; a classe vem de src/preferencias.js) */
+html[data-com-tema].t-claro {
+  color-scheme: light;
+  --preto-topo: #ffffff;
+  --preto: #f5f5f3;
+  --preto-fim: #ececea;
+  --fantasma: #e6e6e6;
+  --tinta: #111111;
+  --tinta-2: #4f4f4f;
+  --tinta-3: #666666;
+  --fio: rgba(17, 17, 17, .14);
+  --fio-forte: rgba(17, 17, 17, .3);
+  --laranja-luz: rgba(255, 90, 31, .3);
+  --sup: #ffffff;
+  --sup-2: #f4f4f2;
+  --sup-3: #ededeb;
+  --linha: #ececea;
+  --linha-2: #e2e2df;
+  --linha-3: #d5d5d1;
+  --linha-4: #c2c2be;
+  --linha-5: #9a9a96;
+  --cinza: #c4c4c0;
+  --texto-1: #262626;
+  --texto-2: #4a4a4a;
+  --texto-3: #666666;
+  --texto-4: #8c8c8c;
+  --laranja-texto: #b23a0a;
+  --laranja-fundo: #fde9df;
+  --perigo: #c0361a;
+  --perigo-borda: #f1c4b6;
+  --verde: #137a42;
+  --verde-fundo: #e2f3e9;
+  --veu: 0 0 0;
+}
+
+/* alto contraste: textos e linhas mais fortes, no escuro e no claro */
+html.a-contraste {
+  --tinta-2: #f4f4f2; --tinta-3: #e2e2df; --fio: rgba(244, 244, 242, .5); --fio-forte: rgba(244, 244, 242, .85);
+  --texto-1: #ffffff; --texto-2: #f4f4f2; --texto-3: #e2e2df; --texto-4: #c8c8c4;
+  --linha: #3a3a3a; --linha-2: #4a4a4a; --linha-3: #5c5c5c; --linha-4: #777777; --linha-5: #9a9a9a;
+  --laranja-texto: #ffc4a8; --perigo: #ffab96; --verde: #8be6b2;
+}
+html.a-contraste:not(.t-claro) body { background: #000; }
+html[data-com-tema].t-claro.a-contraste {
+  --tinta: #000000; --tinta-2: #1a1a1a; --tinta-3: #2b2b2b; --fio: rgba(0, 0, 0, .5); --fio-forte: rgba(0, 0, 0, .85);
+  --texto-1: #000000; --texto-2: #1a1a1a; --texto-3: #2b2b2b; --texto-4: #444444;
+  --linha: #b5b5b0; --linha-2: #9e9e99; --linha-3: #85857f; --linha-4: #6b6b66; --linha-5: #4d4d48;
+  --laranja-texto: #8a2a03; --perigo: #9a2410; --verde: #0b5c30;
+}
+html[data-com-tema].t-claro.a-contraste body { background: #fff; }

@@ -21,7 +21,7 @@ html.is-pronto .hero__palavra { opacity: 1; }
 }
 .hero__preco {
   position: absolute; right: var(--margem); top: calc(var(--base, 50vh) + clamp(34px, 6.4vh, 70px) + 1.14em);
-  font-size: clamp(17px, 1.66vw, 26px); font-weight: 500; line-height: 1.2; letter-spacing: -.02em; text-align: right;
+  font-size: clamp(1.0625rem, 1.66vw, 1.625rem); font-weight: 500; line-height: 1.2; letter-spacing: -.02em; text-align: right;
   color: var(--tinta);
 }
 .hero__preco .linha:last-child > span { color: var(--tinta-2); }
@@ -35,8 +35,8 @@ html.is-pronto .hero__palavra { opacity: 1; }
 html.is-pronto .hero__acoes { opacity: 1; transform: translate(-50%, 0); }
 
 @media (max-width: 760px) {
-  .hero__lead { top: calc(64px + 28px); font-size: clamp(26px, 7.4vw, 32px); }
-  .hero__preco { left: var(--margem); right: auto; text-align: left; top: var(--preco-topo, 200px); font-size: 16px; }
+  .hero__lead { top: calc(64px + 28px); font-size: clamp(1.625rem, 7.4vw, 2rem); }
+  .hero__preco { left: var(--margem); right: auto; text-align: left; top: var(--preco-topo, 200px); font-size: 1rem; }
   .hero__preco .linha > span { color: var(--tinta-2); }
   .hero__acoes { top: calc(var(--globo-topo, 60vh) + var(--globo-d, 100vw) * .36); }
 }

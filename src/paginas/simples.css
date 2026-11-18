@@ -1,10 +1,10 @@
 body { min-height: 100vh; }
 .simples { max-width: 720px; margin: 0 auto; padding: 120px var(--margem) 96px; }
-.simples__marca { position: fixed; top: 28px; left: var(--margem); display: inline-flex; align-items: center; gap: .3em; font-size: 28px; font-weight: 600; letter-spacing: -.045em; }
+.simples__marca { position: fixed; top: 28px; left: var(--margem); display: inline-flex; align-items: center; gap: .3em; font-size: 1.75rem; font-weight: 600; letter-spacing: -.045em; }
 .simples__marca svg { height: 1.08em; width: auto; fill: currentColor; }
 .simples h1 { font-size: var(--titulo); font-weight: 500; letter-spacing: -.035em; line-height: 1.04; margin-bottom: 32px; }
-.simples h2 { font-size: 21px; font-weight: 500; letter-spacing: -.02em; margin: 40px 0 10px; }
-.simples p, .simples li { color: var(--tinta-2); font-size: 16px; line-height: 1.6; }
+.simples h2 { font-size: 1.3125rem; font-weight: 500; letter-spacing: -.02em; margin: 40px 0 10px; }
+.simples p, .simples li { color: var(--tinta-2); font-size: 1rem; line-height: 1.6; }
 .simples ul { padding-left: 1.1em; }
 .simples p + p { margin-top: 12px; }
 .simples .botao { margin-top: 32px; }

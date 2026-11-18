@@ -16,8 +16,8 @@
   display: flex; flex-direction: column; align-items: center; text-align: center;
   padding: 12vh 0 10vh; border-top: 1px solid var(--fio);
 }
-.rodape__eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 13.5px; color: var(--tinta-2); }
-.rodape__frase { margin-top: 22px; font-size: clamp(38px, 5.4vw, 88px); font-weight: 500; letter-spacing: -.045em; line-height: 1.02; }
+.rodape__eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 0.8438rem; color: var(--tinta-2); }
+.rodape__frase { margin-top: 22px; font-size: clamp(2.375rem, 5.4vw, 5.5rem); font-weight: 500; letter-spacing: -.045em; line-height: 1.02; }
 .rodape__frase span { display: block; color: var(--tinta-3); }
 .rodape__acoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 36px; }
 .botao--vazado { background: transparent; color: var(--tinta); box-shadow: inset 0 0 0 1px var(--fio-forte); }
@@ -27,18 +27,18 @@
   display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: clamp(24px, 3vw, 48px);
   padding: 7vh 0 6vh; border-top: 1px solid var(--fio);
 }
-.rodape__logo { display: inline-flex; align-items: center; gap: .3em; font-size: 34px; font-weight: 600; letter-spacing: -.045em; line-height: 1; }
+.rodape__logo { display: inline-flex; align-items: center; gap: .3em; font-size: 2.125rem; font-weight: 600; letter-spacing: -.045em; line-height: 1; }
 .rodape__logo svg { height: 1.05em; width: auto; fill: currentColor; }
-.rodape__sobre { margin-top: 16px; font-size: 14.5px; color: var(--tinta-2); max-width: 30ch; line-height: 1.55; }
-.rodape__titulo { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--tinta-3); margin-bottom: 10px; }
+.rodape__sobre { margin-top: 16px; font-size: 0.9062rem; color: var(--tinta-2); max-width: 30ch; line-height: 1.55; }
+.rodape__titulo { font-size: 0.75rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--tinta-3); margin-bottom: 10px; }
 .rodape__coluna { display: flex; flex-direction: column; }
 .r-item {
   position: relative; display: flex; align-items: center; gap: 10px; width: 100%; padding: 11px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, .06); font-size: 15px; text-align: left; color: var(--tinta);
+  border-bottom: 1px solid rgba(255, 255, 255, .06); font-size: 0.9375rem; text-align: left; color: var(--tinta);
   transition: color .3s, padding .4s var(--ease-snap);
 }
 .r-item span { flex: none; }
-.r-item em { font-style: normal; font-size: 12.5px; color: var(--tinta-3); flex: 1; text-align: right; white-space: nowrap; }
+.r-item em { font-style: normal; font-size: 0.7812rem; color: var(--tinta-3); flex: 1; text-align: right; white-space: nowrap; }
 .r-seta { width: 15px; height: 15px; flex: none; margin-left: auto; fill: none; stroke: var(--tinta-3); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .4s var(--ease-snap), stroke .3s; }
 .r-item em + .r-seta { margin-left: 0; }
 :where(html:not(.is-scrolling)) .r-item:hover { padding-left: 8px; }
@@ -47,9 +47,9 @@
 
 .rodape__base {
   display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 20px 0;
-  border-top: 1px solid var(--fio); font-size: 13px; color: var(--tinta-3);
+  border-top: 1px solid var(--fio); font-size: 0.8125rem; color: var(--tinta-3);
 }
-.rodape__topo-btn { font-size: 13px; color: inherit; }
+.rodape__topo-btn { font-size: 0.8125rem; color: inherit; }
 :where(html:not(.is-scrolling)) .rodape__base .link:hover { color: var(--tinta); }
 
 .reticula { position: relative; margin: 0 calc(var(--margem) * -1); cursor: crosshair; touch-action: pan-y; }

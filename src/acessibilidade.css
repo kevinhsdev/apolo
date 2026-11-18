@@ -1,8 +1,7 @@
 /* Preferências aplicadas no <html> (src/preferencias.js) */
 html.a-texto-1 { font-size: 112.5%; }
 html.a-texto-2 { font-size: 125%; }
-html.a-contraste { --tinta-2: #f4f4f2; --tinta-3: #e2e2df; --fio: rgba(244, 244, 242, .5); --fio-forte: rgba(244, 244, 242, .85); }
-html.a-contraste body { background: #000; }
+/* alto contraste e tema claro: tokens em src/styles/tokens.css */
 html.a-sem-movimento *, html.a-sem-movimento *::before, html.a-sem-movimento *::after {
   animation-duration: .01ms !important; animation-iteration-count: 1 !important;
   transition-duration: .01ms !important; scroll-behavior: auto !important;
@@ -37,11 +36,12 @@ body.conta .a11y-botao { bottom: calc(16px + var(--barra-conta, 0px)); }
 body.conta .a11y-painel { bottom: calc(72px + var(--barra-conta, 0px)); }
 .a11y-painel__topo { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 .a11y-painel__topo h2 { font-size: 1.05rem; font-weight: 600; margin: 0; }
-.a11y-painel__fechar { width: 32px; height: 32px; border-radius: 8px; border: 0; background: transparent; color: var(--tinta-2); font-size: 22px; cursor: pointer; }
+.a11y-painel__fechar { width: 32px; height: 32px; border-radius: 8px; border: 0; background: transparent; color: var(--tinta-2); font-size: 1.375rem; cursor: pointer; }
 .a11y-painel__fechar:hover { color: var(--tinta); background: var(--fantasma); }
 
 /* Controles (também na seção Preferências da conta) */
 .pref { display: grid; gap: 10px; }
+.pref__ajuda { margin: 8px 0 0; font-size: .8rem; color: var(--tinta-2); }
 .pref__rotulo { font-size: .8rem; color: var(--tinta-2); margin: 0 0 8px; }
 .pref__opcoes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
 .pref__opcao {

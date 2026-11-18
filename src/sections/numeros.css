@@ -6,7 +6,7 @@
 }
 .numero.is-assentado .numero__valor, .numero__valor[style*='opacity'] { opacity: 1; }
 .numero__legenda {
-  font-size: 15px; color: var(--tinta-2); line-height: 1.5; padding-bottom: .4em;
+  font-size: 0.9375rem; color: var(--tinta-2); line-height: 1.5; padding-bottom: .4em;
   opacity: 0; transform: translateY(14px); transition: opacity .9s var(--ease-out) .55s, transform .9s var(--ease-out) .55s;
 }
 .numero.is-visivel .numero__legenda { opacity: 1; transform: none; }
@@ -18,7 +18,7 @@
 @media (max-width: 760px) {
   .numeros { display: flex; flex-direction: column; gap: 9vh; }
   .numero { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
-  .numero__valor { font-size: clamp(64px, 21vw, 96px); }
+  .numero__valor { font-size: clamp(4rem, 21vw, 6rem); }
   .numero--b { align-items: flex-end; text-align: right; }
   .numero--b .numero__valor { order: 0; }
   .numero--b .numero__legenda { order: 1; }

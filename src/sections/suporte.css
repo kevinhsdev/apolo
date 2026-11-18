@@ -40,13 +40,13 @@
 .conversa__avatar { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--tinta); color: #0a0a0a; flex: none; }
 .conversa__avatar svg { width: 22px; fill: currentColor; }
 .conversa__quem { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
-.conversa__quem b { font-size: 15px; font-weight: 600; }
-.conversa__quem small { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--tinta-2); }
+.conversa__quem b { font-size: 0.9375rem; font-weight: 600; }
+.conversa__quem small { display: inline-flex; align-items: center; gap: 7px; font-size: 0.7812rem; color: var(--tinta-2); }
 .conversa__quem .ponto { width: 7px; height: 7px; }
-.conversa__insta { font-size: 13px; color: var(--tinta-2); }
+.conversa__insta { font-size: 0.8125rem; color: var(--tinta-2); }
 
 .conversa__mensagens { display: flex; flex-direction: column; gap: 10px; padding: 20px 18px; min-height: 190px; max-height: 300px; overflow-y: auto; scrollbar-width: none; }
-.balao { max-width: 84%; padding: 11px 15px; border-radius: 18px; font-size: 14.5px; line-height: 1.45; animation: balao .5s var(--ease-snap) both; white-space: pre-wrap; overflow-wrap: anywhere; }
+.balao { max-width: 84%; padding: 11px 15px; border-radius: 18px; font-size: 0.9062rem; line-height: 1.45; animation: balao .5s var(--ease-snap) both; white-space: pre-wrap; overflow-wrap: anywhere; }
 .balao--apolo { align-self: flex-start; background: rgba(255, 255, 255, .07); border-bottom-left-radius: 6px; color: var(--tinta); }
 .balao--voce { align-self: flex-end; background: var(--laranja); color: #120600; border-bottom-right-radius: 6px; }
 @keyframes balao { from { opacity: 0; transform: translateY(10px) scale(.96); } to { opacity: 1; transform: none; } }
@@ -58,7 +58,7 @@
 .caixa__presets { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
 .preset {
   padding: 7px 12px; border-radius: 10px; border: 1px dashed rgba(255, 255, 255, .18); background: rgba(255, 255, 255, .03);
-  font: inherit; font-size: 13px; line-height: 1.3; color: var(--tinta-2); text-align: left; cursor: pointer;
+  font: inherit; font-size: 0.8125rem; line-height: 1.3; color: var(--tinta-2); text-align: left; cursor: pointer;
   animation: preset-entra .32s cubic-bezier(.23, 1, .32, 1) both; animation-delay: calc(var(--i) * 45ms);
   transition: border-color .2s, color .2s, background-color .2s, transform .16s ease-out;
 }
@@ -69,12 +69,12 @@
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .caixa__texto {
   display: block; width: 100%; resize: none; border: 0; outline: 0; background: none; padding: 4px 2px; min-height: 28px;
-  font: inherit; font-size: 16px; line-height: 1.5; color: var(--tinta); scrollbar-width: thin;
+  font: inherit; font-size: 1rem; line-height: 1.5; color: var(--tinta); scrollbar-width: thin;
 }
 .caixa__texto::placeholder { color: var(--tinta-3); }
 .caixa__texto:focus-visible { outline: 0; }
 .caixa__pe { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 6px; }
-.caixa__dica { font-size: 11.5px; color: #6e6e6e; }
+.caixa__dica { font-size: 0.7188rem; color: #6e6e6e; }
 .caixa__enviar {
   width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; flex: none;
   background: var(--laranja); color: #120600; transition: transform .35s var(--ease-snap), opacity .3s, background-color .3s;
@@ -86,6 +86,6 @@
 
 @media (max-width: 900px) {
   .suporte { grid-template-columns: 1fr; padding: 12vh var(--margem) 16vh; }
-  .suporte__relogio { font-size: clamp(64px, 21vw, 96px); }
+  .suporte__relogio { font-size: clamp(4rem, 21vw, 6rem); }
   .caixa__dica { display: none; }
 }
