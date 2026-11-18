@@ -8,6 +8,7 @@ export async function avisarAdmins(aviso: { assunto: string; html: string; texto
     const r = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: { Authorization: `Bearer ${chave}`, 'Content-Type': 'application/json' },
+      signal: AbortSignal.timeout(5000), // Resend travado não segura o link de pagamento
       body: JSON.stringify({ from: 'Apolo Studio <no-reply@apolostudio.com.br>', to: para, subject: aviso.assunto, html: aviso.html, text: aviso.texto }),
     });
     if (!r.ok) console.error('aviso: Resend respondeu', r.status, await r.text());

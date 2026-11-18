@@ -60,7 +60,7 @@ export function iniciarUsuario() {
     if (!session) { location.reload(); return; } // sessão vencida: volta a mostrar "Entrar"
     const [{ data: c }, { count }] = await Promise.all([
       sb.from('clientes').select('nome').eq('id', session.user.id).maybeSingle(),
-      sb.from('pedidos').select('id', { count: 'exact', head: true }).eq('status', 'aguardando'),
+      sb.from('pedidos').select('id', { count: 'exact', head: true }).eq('status', 'aguardando').eq('cliente_id', session.user.id),
     ]);
     if (c?.nome) { pintar(c.nome); gravar('apolo-nome', c.nome); }
     if (count) {
