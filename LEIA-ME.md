@@ -17,6 +17,7 @@ Vite + Three.js (a Lua) + Lenis. Base: template Norte (Profitize), adaptado.
 - Imagem de compartilhamento: `fonte/og/og.html` → `public/og.png`.
 - Trechos repetidos nas páginas (`<!-- partial:NOME -->`) vêm de `src/partials/NOME.html`, colados no build pelo `vite.config.js`. Página nova: entra em `rollupOptions.input` e leva os dois partials (`a11y-cedo` no `<head>`, `rodape-confianca` no fim do `<body>`).
 - Acessibilidade: botão em `src/acessibilidade.js`; regras das preferências em `src/preferencias.js` (a cópia curta em `src/partials/a11y-cedo.html` aplica antes da página aparecer: mude as duas juntas).
+- Depois do pagamento o Mercado Pago volta para `obrigado.html?pedido=ID` (regra em `src/paginas/obrigado-dados.js`): agradece, ou espera o webhook, ou oferece tentar de novo.
 - Área do cliente (`conta.html#inicio`, `#pedidos`, `#projeto`, `#manutencao`, `#dados`, `#privacidade`, `#preferencias`, `#ajuda`): marcação em `conta.html`, tela em `src/paginas/conta.js`, regras testadas em `src/paginas/conta-dados.js`. As perguntas da Ajuda ficam direto em `conta.html`.
 
 ## Área do cliente e cobrança (Supabase + Mercado Pago)
