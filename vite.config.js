@@ -28,6 +28,7 @@ export default defineConfig({
         termos: resolve(import.meta.dirname, 'termos.html'),
         reembolso: resolve(import.meta.dirname, 'reembolso.html'),
         acessibilidade: resolve(import.meta.dirname, 'acessibilidade.html'),
+        admin: resolve(import.meta.dirname, 'admin.html'),
       },
     },
   },

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0a0a0a"><link rel="icon" href="./favicon.svg" type="image/svg+xml"><style>html{background:#0a0a0a}html:not(.com-estilo) body{visibility:hidden;animation:mostra 0s 4s forwards}@keyframes mostra{to{visibility:visible}}</style>
+  <title>Admin · Apolo Studio</title>
+  <meta name="robots" content="noindex, nofollow">
+  <!-- partial:a11y-cedo -->
+</head>
+<body class="pagar admin">
+  <header class="adm__topo">
+    <a class="painel__marca" href="./" aria-label="Apolo Studio, página inicial">
+      <svg viewBox="210 226 315 280" aria-hidden="true"><path d="M318 241h100l97 169-25 45L367.5 302 245 455l-25-45z"/><path d="M245 455Q367.5 355 490 455l-20 38Q367.5 407 265 493z"/></svg>
+      <span><b>Apolo</b>Studio</span>
+    </a>
+    <span class="adm__escopo">Admin</span>
+    <div class="adm__acoes" data-acoes hidden>
+      <button type="button" class="botao-acao botao-acao--neutro" data-atualizar>Atualizar</button>
+      <button type="button" class="botao-acao botao-acao--neutro" data-sair>Sair</button>
+    </div>
+  </header>
+
+  <main class="adm">
+    <!-- entrar: o mesmo código no e-mail da área do cliente -->
+    <section class="adm__cartao" data-vista="entrar" hidden>
+      <h1 class="secao__titulo">Entrar no admin</h1>
+      <p class="secao__sub">Só para a equipe Apolo. Enviamos um código para o seu e-mail.</p>
+      <form class="entrada__form" data-entrar novalidate>
+        <div>
+          <label class="entrada__rotulo" for="e-email">E-mail</label>
+          <div class="vidro"><input class="vidro__campo" id="e-email" name="email" type="email" autocomplete="email" placeholder="Digite seu e-mail" required></div>
+        </div>
+        <div class="entrada__codigo" data-entrar-codigo hidden>
+          <label class="entrada__rotulo" for="e-codigo">Código de 6 dígitos</label>
+          <div class="vidro"><input class="vidro__campo vidro__campo--codigo" id="e-codigo" name="codigo" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="000000"></div>
+          <p class="entrada__ajuda"><span data-entrar-para></span> · <button type="button" class="entrada__link" data-trocar>Trocar e-mail</button> · <button type="button" class="entrada__link" data-reenviar disabled>Reenviar</button></p>
+        </div>
+        <button class="entrada__botao" type="submit" data-entrar-botao>Receber código</button>
+        <p class="entrada__estado" data-entrar-estado role="status"></p>
+      </form>
+    </section>
+
+    <section class="adm__cartao" data-vista="sem-acesso" hidden>
+      <h1 class="secao__titulo">Sem acesso</h1>
+      <p class="secao__sub">Esta área é só da equipe Apolo. Se você é cliente, acompanhe seus pedidos na <a href="./conta.html">área do cliente</a>.</p>
+      <button type="button" class="botao-acao botao-acao--neutro" data-sair>Sair</button>
+    </section>
+
+    <section class="adm__cartao" data-vista="erro" hidden>
+      <h1 class="secao__titulo">Não conseguimos carregar os pedidos</h1>
+      <p class="secao__sub">Pode ser a conexão ou uma instabilidade do Supabase.</p>
+      <button type="button" class="botao-acao" data-tentar>Tentar de novo</button>
+    </section>
+
+    <!-- lista -->
+    <section data-vista="lista" hidden>
+      <h1 class="secao__titulo">Pedidos</h1>
+      <p class="secao__sub" data-lista-sub></p>
+      <div class="filtro-pedidos" role="group" aria-label="Filtrar pedidos">
+        <button type="button" data-filtro="aguardando" aria-pressed="false">Aguardando <em data-conta="aguardando"></em></button>
+        <button type="button" data-filtro="producao" aria-pressed="true">Em produção <em data-conta="producao"></em></button>
+        <button type="button" data-filtro="entregue" aria-pressed="false">Entregues <em data-conta="entregue"></em></button>
+        <button type="button" data-filtro="todos" aria-pressed="false">Todos <em data-conta="todos"></em></button>
+      </div>
+      <ul class="pedidos adm__lista" data-lista></ul>
+      <div class="vazio" data-lista-vazio hidden><p class="vazio__titulo">Nenhum pedido aqui</p><p>Escolha outro filtro.</p></div>
+    </section>
+
+    <!-- ficha -->
+    <section data-vista="ficha" hidden>
+      <a class="adm__voltar" href="#">← Pedidos</a>
+      <h1 class="secao__titulo" data-f-titulo tabindex="-1"></h1>
+      <p class="secao__sub" data-f-sub></p>
+      <div class="adm__ficha">
+        <article class="bloco">
+          <h2 class="bloco__titulo">Cliente</h2>
+          <p class="bloco__nome" data-f-cliente></p>
+          <dl class="adm__dados" data-f-dados></dl>
+          <div class="plano__acoes" data-f-contato></div>
+        </article>
+        <article class="bloco">
+          <h2 class="bloco__titulo">Status</h2>
+          <div class="filtro-pedidos adm__status" role="group" aria-label="Status do pedido" data-f-status></div>
+          <p class="bloco__meta" data-f-status-ajuda></p>
+          <p class="formulario__estado" data-f-status-estado role="status"></p>
+        </article>
+      </div>
+      <h2 class="adm__subtitulo">Etapas</h2>
+      <p class="secao__sub">O cliente vê cada mudança na hora. Um link na nota vira o botão "Abrir" na área do cliente.</p>
+      <ol class="adm__etapas" data-f-etapas></ol>
+    </section>
+  </main>
+  <script type="module" src="./src/paginas/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+/* Admin: mesmo visual do painel da área do cliente (conta.css), numa coluna só */
+body.admin { background: var(--preto); min-height: 100vh; }
+.admin :focus-visible { outline: 2px solid var(--laranja); outline-offset: 2px; }
+.adm__topo { display: flex; align-items: center; gap: 14px; max-width: 1040px; margin: 0 auto; padding: 22px clamp(16px, 4vw, 40px); }
+.adm__topo .painel__marca { padding: 0; }
+.adm__escopo { font-size: 13px; color: var(--tinta-3); padding-left: 14px; border-left: 1px solid #2a2a2a; }
+.adm__acoes { margin-left: auto; display: flex; gap: 8px; }
+.adm__acoes .botao-acao { height: 36px; padding: 0 14px; font-size: 13px; }
+.adm { max-width: 1040px; margin: 0 auto; padding: 16px clamp(16px, 4vw, 40px) 80px; }
+.adm__cartao { max-width: 480px; margin: 48px auto 0; padding: 28px; border-radius: 16px; background: #111; border: 1px solid #222; }
+.adm__cartao .secao__sub a { color: var(--tinta); text-decoration: underline; text-underline-offset: 3px; }
+
+.filtro-pedidos em { font-style: normal; font-variant-numeric: tabular-nums; opacity: .7; margin-left: 4px; }
+.adm__linha { padding: 0; grid-template-columns: 1fr auto; }
+.adm__abrir { display: grid; gap: 6px; padding: 18px 22px; color: inherit; }
+.adm__abrir:hover { background: #151515; }
+.adm__linha .pedido__acao { grid-column: 2; grid-row: 1; margin-right: 22px; }
+
+.adm__voltar { display: inline-block; margin-bottom: 14px; font-size: 14px; color: #b4b4b4; }
+.adm__voltar:hover { color: var(--tinta); }
+.adm__ficha { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px; margin-bottom: 32px; }
+.adm__dados { margin: 0; display: grid; gap: 8px; }
+.adm__dados div { display: grid; grid-template-columns: 90px 1fr; gap: 10px; font-size: 14px; }
+.adm__dados dt { color: #949494; }
+.adm__dados dd { margin: 0; overflow-wrap: anywhere; }
+.adm__status { margin: 4px 0 0; }
+.adm__status button:disabled { cursor: default; opacity: 1; }
+.adm__subtitulo { margin: 0; font: 600 20px/1.2 'Sora Variable', var(--fonte); letter-spacing: -.03em; }
+.adm__subtitulo + .secao__sub { margin-bottom: 16px; }
+
+.adm__etapas { list-style: none; margin: 0; padding: 0; border-radius: 16px; background: #111; border: 1px solid #222; }
+.adm__etapa { display: grid; gap: 10px; padding: 18px 22px; }
+.adm__etapa + .adm__etapa { border-top: 1px solid #1f1f1f; }
+.adm__etapa-cab { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.adm__etapa-cab input { width: 22px; height: 22px; accent-color: var(--laranja); cursor: pointer; }
+.adm__etapa-cab label { font-size: 15.5px; font-weight: 600; cursor: pointer; }
+.adm__etapa-cab small { margin-left: auto; font-size: 13px; color: #949494; }
+.adm__etapa:not(.is-feita) .adm__etapa-cab label { color: #d0d0d0; }
+.adm__nota { width: 100%; min-height: 44px; padding: 10px 14px; border-radius: 12px; resize: vertical; font: inherit; font-size: 14.5px; line-height: 1.45; color: var(--tinta); background: rgba(255, 255, 255, .04); border: 1px solid rgba(255, 255, 255, .12); }
+.adm__nota:focus { outline: none; border-color: rgba(255, 90, 31, .7); box-shadow: 0 0 0 4px rgba(255, 90, 31, .14); }
+.adm__etapa-pe { display: flex; align-items: center; gap: 12px; }
+.adm__etapa-pe .botao-acao { height: 36px; padding: 0 14px; font-size: 13px; }
+
+@media (max-width: 760px) {
+  .adm__ficha { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .adm__topo { flex-wrap: wrap; }
+  .adm__linha { grid-template-columns: 1fr; }
+  .adm__abrir { padding: 16px 18px; }
+  .adm__linha .pedido__acao { grid-column: 1; grid-row: auto; margin: 0 18px 16px; }
+  .adm__etapa { padding: 16px 18px; }
+}
+.admin [tabindex="-1"]:focus { outline: none; }

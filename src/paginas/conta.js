@@ -9,7 +9,8 @@ import './conta.css';
 import '../estilo.js';
 import { montarPainelPreferencias } from '../acessibilidade.js';
 import { CATALOGO, brl } from '../precos.js';
-import { ligado, sb, sessao, enviarCodigo, conferirCodigo, salvarCliente } from '../supabase.js';
+import { ligado, sb, sessao, salvarCliente } from '../supabase.js';
+import { montarEntrada } from '../entrar.js';
 import { linkConversa } from '../contato.js';
 import { secaoDoHash, projetosAtivos, manutencao, progresso, proximoPasso, mascararDoc, montarExportacao, nomePedido, linkProximaEtapa, resultadoLeitura } from './conta-dados.js';
 
@@ -24,60 +25,7 @@ const FORMA = { pix: 'Pix', cartao: 'Cartão', boleto: 'Boleto' };
 const data = iso => new Date(iso).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
 const el = (tag, cls, txt) => Object.assign(document.createElement(tag), cls ? { className: cls } : {}, txt != null ? { textContent: txt } : {});
 
-// entrar: e-mail → código de 6 dígitos (entra sozinho ao completar)
-const fEntrar = $('[data-entrar]'), eEstado = $('[data-entrar-estado]'), eCodigo = $('[data-entrar-codigo]');
-const eBotao = $('[data-entrar-botao]'), eEmail = $('#e-email'), eCod = $('#e-codigo'), eReenviar = $('[data-reenviar]');
-let espera;
-function contar() {
-  let s = 60;
-  clearInterval(espera);
-  eReenviar.disabled = true;
-  eReenviar.textContent = `Reenviar em ${s}s`;
-  espera = setInterval(() => {
-    if (--s > 0) { eReenviar.textContent = `Reenviar em ${s}s`; return; }
-    clearInterval(espera); eReenviar.disabled = false; eReenviar.textContent = 'Reenviar';
-  }, 1000);
-}
-async function pedirCodigo() {
-  const email = eEmail.value.trim();
-  const { error } = await enviarCodigo(email);
-  if (error) throw new Error('Não conseguimos enviar o código. Tente de novo em instantes.');
-  $('[data-entrar-para]').textContent = `Enviado para ${email}`;
-  eEmail.readOnly = true;
-  eCodigo.hidden = false;
-  eBotao.textContent = 'Entrar';
-  eEstado.textContent = '';
-  contar();
-  eCod.focus();
-}
-async function entrar() {
-  if (eCodigo.hidden) {
-    if (!eEmail.value.trim() || !eEmail.checkValidity()) throw new Error('Confira o e-mail.');
-    return pedirCodigo();
-  }
-  if (!/^\d{6}$/.test(eCod.value)) throw new Error('Digite os 6 números do código.');
-  const { error } = await conferirCodigo(eEmail.value.trim(), eCod.value);
-  if (error) { eCod.select(); throw new Error('Código inválido ou vencido.'); }
-  await abrirPainel();
-}
-async function enviar() {
-  eBotao.disabled = true;
-  try { await entrar(); } catch (err) { eEstado.textContent = err.message; }
-  finally { eBotao.disabled = false; }
-}
-fEntrar.addEventListener('submit', e => { e.preventDefault(); enviar(); });
-eCod.addEventListener('input', () => {
-  eCod.value = eCod.value.replace(/\D/g, '').slice(0, 6);
-  if (eCod.value.length === 6) enviar();
-});
-$('[data-trocar]').addEventListener('click', () => {
-  clearInterval(espera);
-  eCodigo.hidden = true; eCod.value = ''; eEmail.readOnly = false; eBotao.textContent = 'Receber código'; eEstado.textContent = '';
-  eEmail.focus();
-});
-eReenviar.addEventListener('click', async () => {
-  try { await pedirCodigo(); eEstado.textContent = 'Mandamos um código novo.'; } catch (err) { eEstado.textContent = err.message; }
-});
+montarEntrada(document, () => abrirPainel());
 
 // painel: uma seção por vez, escolhida pelo #hash (conta.html#pedidos)
 const ROTULOS = { inicio: 'Visão geral', pedidos: 'Pedidos e pagamentos', projeto: 'Meu projeto', manutencao: 'Manutenção', dados: 'Meus dados', privacidade: 'Privacidade e segurança', preferencias: 'Preferências', ajuda: 'Ajuda' };
@@ -245,7 +193,7 @@ async function abrirPainel() {
   if (!s) { mostrar('entrar'); return; }
   const [{ data: cliente, error: e1 }, { data: pedidos, error: e2 }] = await Promise.all([
     sb.from('clientes').select('*').eq('id', s.user.id).maybeSingle(),
-    sb.from('pedidos').select('*').order('criado_em', { ascending: false }),
+    sb.from('pedidos').select('*').eq('cliente_id', s.user.id).order('criado_em', { ascending: false }),
   ]);
   const ids = projetosAtivos(pedidos || []).map(p => p.id);
   const { data: etapas, error: e3 } = ids.length ? await sb.from('etapas').select('*').in('pedido_id', ids) : { data: [] };
