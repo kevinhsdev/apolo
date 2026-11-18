@@ -33,6 +33,7 @@
   --perigo-borda: #4a2a22;
   --verde: #6fd39a;
   --verde-fundo: #13261b;
+  --preto-rgb: 10 10 10; /* fundo translúcido: rgb(var(--preto-rgb) / .9) */
   --veu: 255 255 255; /* rgb(var(--veu) / .05): véu claro no escuro, escuro no claro */
 
   --fonte: 'Figtree Variable', 'Figtree', system-ui, sans-serif;
@@ -80,6 +81,7 @@ html[data-com-tema].t-claro {
   --perigo-borda: #f1c4b6;
   --verde: #137a42;
   --verde-fundo: #e2f3e9;
+  --preto-rgb: 245 245 243;
   --veu: 0 0 0;
 }
 

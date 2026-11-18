@@ -6,20 +6,22 @@
   transition: transform .6s var(--ease-io), background-color .5s, backdrop-filter .5s;
 }
 .nav.is-escondida { transform: translateY(-100%); }
-.nav.is-solida { background: rgba(10, 10, 10, .74); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
+.nav.is-solida { background: rgb(var(--preto-rgb) / .74); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
 .nav__grupo { display: flex; gap: clamp(18px, 2.2vw, 36px); opacity: 0; transition: opacity 1s var(--ease-out) .3s; }
 html.is-pronto .nav__grupo, html.is-pronto .nav__marca { opacity: 1; }
 .nav__grupo--dir { justify-content: flex-end; align-items: center; gap: 10px; }
 /* Instagram e WhatsApp como ícones dos apps */
 .nav__icone {
   width: 42px; height: 42px; display: grid; place-items: center; border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, .14); color: var(--tinta); background: rgba(255, 255, 255, .02);
+  border: 1px solid rgb(var(--veu) / .14); color: var(--tinta); background: rgb(var(--veu) / .02);
   transition: border-color .2s, background-color .2s, transform .16s ease-out;
 }
 .nav__icone svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.nav__tema-lua, html.t-claro .nav__tema-sol { display: none; }
+html.t-claro .nav__tema-lua { display: block; }
 .nav__icone .cheio { fill: currentColor; stroke: none; }
 .nav__icone svg.nav__icone-cheio { width: 19px; height: 19px; fill: currentColor; stroke: none; }
-@media (hover: hover) and (pointer: fine) { :where(html:not(.is-scrolling)) .nav__icone:hover { border-color: rgba(255, 255, 255, .4); background: rgba(255, 255, 255, .07); } }
+@media (hover: hover) and (pointer: fine) { :where(html:not(.is-scrolling)) .nav__icone:hover { border-color: rgb(var(--veu) / .4); background: rgb(var(--veu) / .07); } }
 .nav__icone:active { transform: scale(.94); }
 .nav__icone:focus-visible { outline: 2px solid var(--laranja); outline-offset: 3px; }
 .nav__marca {
@@ -59,7 +61,7 @@ html.is-pronto .nav__grupo, html.is-pronto .nav__marca { opacity: 1; }
     border: 1px solid var(--fio-forte); font-size: 0.875rem; font-weight: 500; align-items: center;
     transition: background-color .3s, color .3s;
   }
-  .nav__menu[aria-expanded='true'] { background: var(--tinta); color: #0a0a0a; border-color: var(--tinta); }
+  .nav__menu[aria-expanded='true'] { background: var(--tinta); color: var(--preto); border-color: var(--tinta); }
 }
 
 /* logo: no hover o símbolo dá um pequeno salto de decolagem e o nome vem logo atrás, como rastro */
@@ -88,14 +90,14 @@ html.is-pronto .nav__grupo, html.is-pronto .nav__marca { opacity: 1; }
 .conta-nav { position: relative; margin-left: 6px; }
 .conta-nav__entrar {
   height: 42px; padding: 0 18px 0 14px; border-radius: 999px; display: inline-flex; align-items: center; gap: 8px;
-  font-size: 0.875rem; font-weight: 600; color: #0a0a0a; background: var(--tinta);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -10px rgba(255, 255, 255, .35);
+  font-size: 0.875rem; font-weight: 600; color: var(--preto); background: var(--tinta);
+  box-shadow: inset 0 1px 0 rgb(var(--veu) / .9), 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -10px rgb(var(--veu) / .35);
   transition: transform .16s ease-out, box-shadow .3s;
 }
 .conta-nav__entrar[hidden], .conta-nav__avatar[hidden] { display: none; }
 .conta-nav__entrar svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; }
 @media (hover: hover) and (pointer: fine) {
-  :where(html:not(.is-scrolling)) .conta-nav__entrar:hover { box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(0, 0, 0, .4), 0 10px 30px -8px rgba(255, 255, 255, .5); }
+  :where(html:not(.is-scrolling)) .conta-nav__entrar:hover { box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(0, 0, 0, .4), 0 10px 30px -8px rgb(var(--veu) / .5); }
   :where(html:not(.is-scrolling)) .conta-nav__entrar:hover .rola__a { transform: translateY(-105%); }
   :where(html:not(.is-scrolling)) .conta-nav__entrar:hover .rola__b { transform: none; }
 }
@@ -112,22 +114,22 @@ html.is-pronto .nav__grupo, html.is-pronto .nav__marca { opacity: 1; }
 .conta-nav__iniciais {
   width: 100%; height: 100%; border-radius: 50%; display: grid; place-items: center;
   font: 600 0.875rem/1 'Sora Variable', var(--fonte); letter-spacing: -.02em; color: var(--tinta);
-  background: radial-gradient(120% 120% at 30% 20%, #2a2a2a, #0c0c0c 70%);
+  background: radial-gradient(120% 120% at 30% 20%, var(--linha-3), var(--sup) 70%);
 }
 @media (hover: hover) and (pointer: fine) { .conta-nav__avatar:hover, .conta-nav__avatar[aria-expanded=true] { animation: aro 3s linear infinite; } }
 @keyframes aro { to { --volta-aro: 360deg; } }
 .conta-nav__alerta {
   position: absolute; top: 0; right: 0; width: 11px; height: 11px; border-radius: 50%;
-  background: var(--laranja); box-shadow: 0 0 0 2.5px #0a0a0a, 0 0 12px var(--laranja-luz);
+  background: var(--laranja); box-shadow: 0 0 0 2.5px var(--preto), 0 0 12px var(--laranja-luz);
 }
 .conta-nav__alerta[hidden] { display: none; }
 
 /* menu da conta: nasce do avatar */
 .conta-menu {
   position: absolute; top: calc(100% + 12px); right: 0; width: 290px; padding: 8px; border-radius: 18px;
-  background: rgba(20, 20, 20, .94); -webkit-backdrop-filter: blur(24px) saturate(1.4); backdrop-filter: blur(24px) saturate(1.4);
-  border: 1px solid rgba(255, 255, 255, .1);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06), 0 24px 60px -12px rgba(0, 0, 0, .8), 0 0 0 1px rgba(0, 0, 0, .5);
+  background: rgb(var(--preto-rgb) / .94); -webkit-backdrop-filter: blur(24px) saturate(1.4); backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgb(var(--veu) / .1);
+  box-shadow: inset 0 1px 0 rgb(var(--veu) / .06), 0 24px 60px -12px rgba(0, 0, 0, .8), 0 0 0 1px rgba(0, 0, 0, .5);
   transform-origin: top right; transform: scale(.96) translateY(-4px); opacity: 0;
   transition: transform .18s cubic-bezier(.23, 1, .32, 1), opacity .18s cubic-bezier(.23, 1, .32, 1);
   font-size: 0.875rem; font-weight: 500;
@@ -137,34 +139,35 @@ html.is-pronto .nav__grupo, html.is-pronto .nav__marca { opacity: 1; }
 .conta-menu__topo { display: flex; align-items: center; gap: 12px; padding: 10px 10px 14px; }
 .conta-menu__foto {
   flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
-  font: 600 0.875rem/1 'Sora Variable', var(--fonte); background: radial-gradient(120% 120% at 30% 20%, #333, #111 70%);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14);
+  font: 600 0.875rem/1 'Sora Variable', var(--fonte); background: radial-gradient(120% 120% at 30% 20%, var(--linha-3), var(--sup) 70%);
+  box-shadow: inset 0 0 0 1px rgb(var(--veu) / .14);
 }
 .conta-menu__quem { display: grid; gap: 2px; min-width: 0; }
 .conta-menu__quem strong { font-size: 0.9375rem; font-weight: 600; letter-spacing: -.01em; }
 .conta-menu__quem small { font-size: 0.7812rem; color: var(--tinta-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .conta-menu__aviso {
   display: flex; align-items: center; gap: 10px; margin: 0 2px 8px; padding: 10px 12px; border-radius: 12px;
-  font-size: 0.8125rem; color: #ffc3a8; background: rgba(255, 90, 31, .1); border: 1px solid rgba(255, 90, 31, .22);
+  font-size: 0.8125rem; color: var(--laranja-texto); background: rgba(255, 90, 31, .1); border: 1px solid rgba(255, 90, 31, .22);
 }
 .conta-menu__aviso[hidden] { display: none; }
 .conta-menu__aviso span:nth-child(2) { flex: 1; }
 .conta-menu__ponto { width: 7px; height: 7px; border-radius: 50%; background: var(--laranja); box-shadow: 0 0 10px var(--laranja-luz); }
-.conta-menu__itens { display: grid; padding: 6px 0; border-top: 1px solid rgba(255, 255, 255, .07); border-bottom: 1px solid rgba(255, 255, 255, .07); }
+.conta-menu__itens { display: grid; padding: 6px 0; border-top: 1px solid rgb(var(--veu) / .07); border-bottom: 1px solid rgb(var(--veu) / .07); }
 .conta-menu__itens a, .conta-menu__sair {
   display: flex; align-items: center; gap: 12px; width: 100%; height: 40px; padding: 0 10px; border: 0; border-radius: 10px;
   color: var(--tinta); font: inherit; background: none; cursor: pointer; text-align: left;
 }
 .conta-menu__sair { margin-top: 6px; color: var(--tinta-2); }
 .conta-menu svg { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; opacity: .7; }
-.conta-menu__itens a:hover, .conta-menu__sair:hover, .conta-menu__itens a:focus-visible, .conta-menu__sair:focus-visible { background: rgba(255, 255, 255, .07); outline: none; }
+.conta-menu__itens a:hover, .conta-menu__sair:hover, .conta-menu__itens a:focus-visible, .conta-menu__sair:focus-visible { background: rgb(var(--veu) / .07); outline: none; }
 .conta-menu__aviso:focus-visible { outline: 2px solid var(--laranja); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .conta-menu { transition: opacity .12s; transform: none; } .conta-nav__avatar { animation: none !important; } }
 
 @media (max-width: 760px) {
   .nav { grid-template-columns: 1fr auto auto; gap: 10px; }
   .nav .nav__grupo--dir { display: flex; }
-  .nav__grupo--dir .nav__icone { display: none; }
+  .nav__grupo--dir .nav__icone:not(.nav__tema) { display: none; }
+  .nav__tema { width: 36px; height: 36px; }
   .conta-nav { margin: 0; }
   .conta-nav__entrar { height: 36px; padding: 0 14px 0 11px; font-size: 0.8438rem; gap: 6px; }
   .conta-nav__entrar svg { width: 15px; height: 15px; }

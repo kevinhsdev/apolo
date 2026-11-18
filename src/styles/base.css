@@ -146,10 +146,10 @@ main > section > *, .rodape > * { position: relative; z-index: 2; }
 /* chips de escolha (conversa, biblioteca) */
 .chip {
   height: 30px; padding: 0 12px; border-radius: 999px; font-size: 0.7812rem; font-weight: 500; color: var(--tinta-2);
-  border: 1px solid rgba(255, 255, 255, .12); transition: color .3s, background-color .3s, border-color .3s, transform .3s var(--ease-snap);
+  border: 1px solid rgb(var(--veu) / .12); transition: color .3s, background-color .3s, border-color .3s, transform .3s var(--ease-snap);
 }
 .chip[aria-pressed='true'] { color: var(--preto); background: var(--tinta); border-color: var(--tinta); }
-:where(html:not(.is-scrolling)) .chip:hover { border-color: rgba(255, 255, 255, .3); }
+:where(html:not(.is-scrolling)) .chip:hover { border-color: rgb(var(--veu) / .3); }
 .chip:active { transform: scale(.95); }
 .chip:focus-visible { border-radius: 999px; }
 
@@ -165,10 +165,10 @@ main > section > *, .rodape > * { position: relative; z-index: 2; }
 .faixa__selo { height: 22px; padding: 0 9px; border-radius: 999px; display: inline-flex; align-items: center; background: var(--laranja); color: #120600; font-size: 0.7188rem; font-weight: 700; }
 .faixa__sep { color: var(--tinta-3); }
 .faixa__tempo { color: var(--tinta-2); }
-.faixa__tempo b { color: #ffb08e; font-weight: 600; font-variant-numeric: tabular-nums; }
+.faixa__tempo b { color: var(--laranja-texto); font-weight: 600; font-variant-numeric: tabular-nums; }
 .faixa__ver { font-weight: 600; margin-left: 6px; }
 .faixa__fechar { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; border-radius: 50%; font-size: 1.125rem; line-height: 1; color: var(--tinta-2); }
-.faixa__fechar:hover { color: var(--tinta); background: rgba(255, 255, 255, .08); }
+.faixa__fechar:hover { color: var(--tinta); background: rgb(var(--veu) / .08); }
 html.tem-faixa .nav { top: 38px; }
 @media (max-width: 760px) {
   .faixa { justify-content: flex-start; }
@@ -188,7 +188,7 @@ html.tem-faixa .nav { top: 38px; }
 
 /* aparelho lento (src/desempenho.js): sem desfoque de fundo, que repinta a cada rolagem */
 html.leve .nav.is-solida, html.leve .conversa { -webkit-backdrop-filter: none; backdrop-filter: none; }
-html.leve .nav.is-solida { background: rgba(10, 10, 10, .96); }
+html.leve .nav.is-solida { background: rgb(var(--preto-rgb) / .96); }
 
 /* Rodapé de confiança (src/partials/rodape-confianca.html), em todas as páginas */
 .confianca { max-width: 1200px; margin: 0 auto; padding: 32px var(--margem); border-top: 1px solid var(--fio); font-size: 0.8125rem; color: var(--tinta-3); display: grid; gap: 20px; }
@@ -202,3 +202,6 @@ html.leve .nav.is-solida { background: rgba(10, 10, 10, .96); }
 .confianca a:hover { color: var(--tinta); }
 .confianca a:focus-visible { outline: 2px solid var(--laranja); outline-offset: 2px; }
 .confianca__empresa { margin: 0; line-height: 1.6; }
+
+/* tema claro */
+html.t-claro .faixa { background: linear-gradient(90deg, #fde9df, #fbd6c3 50%, #fde9df); border-bottom-color: rgba(255, 90, 31, .45); }

@@ -11,7 +11,7 @@
 .fecho.is-visivel > * { opacity: 1; transform: none; }
 
 /* rodapé: chamada final, grade de ações e a marca em retícula */
-.rodape { position: relative; overflow: hidden; padding: 0 var(--margem); background: linear-gradient(180deg, transparent, #070707 30%); }
+.rodape { position: relative; overflow: hidden; padding: 0 var(--margem); background: linear-gradient(180deg, transparent, var(--preto) 30%); }
 .rodape__chamada {
   display: flex; flex-direction: column; align-items: center; text-align: center;
   padding: 12vh 0 10vh; border-top: 1px solid var(--fio);
@@ -34,7 +34,7 @@
 .rodape__coluna { display: flex; flex-direction: column; }
 .r-item {
   position: relative; display: flex; align-items: center; gap: 10px; width: 100%; padding: 11px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, .06); font-size: 0.9375rem; text-align: left; color: var(--tinta);
+  border-bottom: 1px solid rgb(var(--veu) / .06); font-size: 0.9375rem; text-align: left; color: var(--tinta);
   transition: color .3s, padding .4s var(--ease-snap);
 }
 .r-item span { flex: none; }

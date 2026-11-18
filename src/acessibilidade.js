@@ -96,4 +96,23 @@ function montarBotao() {
   document.body.append(botao, painel);
 }
 
-if (typeof document !== 'undefined') montarBotao();
+// botões de trocar o tema (ex.: no cabeçalho da página inicial): alterna entre claro e escuro
+function ligarTrocaTema() {
+  const botoes = document.querySelectorAll('[data-trocar-tema]');
+  if (!botoes.length) return;
+  const claro = () => document.documentElement.classList.contains('t-claro');
+  const rotular = () => botoes.forEach(b => {
+    const texto = claro() ? 'Usar tema escuro' : 'Usar tema claro';
+    b.setAttribute('aria-label', texto);
+    b.title = texto;
+  });
+  botoes.forEach(b => b.addEventListener('click', () => {
+    const p = { ...lerPreferencias(), tema: claro() ? 'escuro' : 'claro' };
+    salvarPreferencias(p);
+    aplicar(p);
+  }));
+  document.addEventListener('preferencias', rotular);
+  rotular();
+}
+
+if (typeof document !== 'undefined') { montarBotao(); ligarTrocaTema(); }

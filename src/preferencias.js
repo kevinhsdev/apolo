@@ -1,7 +1,6 @@
 // Preferências de acessibilidade e tema, guardadas no navegador e aplicadas como classes no <html>.
 // A cópia em src/partials/a11y-cedo.html aplica as mesmas classes antes da página aparecer.
-// O tema só vale nas páginas com <html data-com-tema> (área do cliente, pagamento, admin, textos);
-// a página inicial fica sempre escura (a Lua e o cromo são feitos para o preto).
+// O tema vale nas páginas com <html data-com-tema> (hoje, todas).
 export const CHAVE = 'apolo-pref';
 export const TEMAS = ['escuro', 'claro', 'auto'];
 export const PADRAO = { texto: 0, contraste: false, movimento: false, links: false, tema: 'escuro' };
