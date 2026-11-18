@@ -189,3 +189,16 @@ html.tem-faixa .nav { top: 38px; }
 /* aparelho lento (src/desempenho.js): sem desfoque de fundo, que repinta a cada rolagem */
 html.leve .nav.is-solida, html.leve .conversa { -webkit-backdrop-filter: none; backdrop-filter: none; }
 html.leve .nav.is-solida { background: rgba(10, 10, 10, .96); }
+
+/* Rodapé de confiança (src/partials/rodape-confianca.html), em todas as páginas */
+.confianca { max-width: 1200px; margin: 0 auto; padding: 32px var(--margem); border-top: 1px solid var(--fio); font-size: 13px; color: var(--tinta-3); display: grid; gap: 20px; }
+.rodape .confianca { max-width: none; padding-inline: 0; }
+.confianca__selos { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.confianca__selo { display: flex; gap: 10px; align-items: flex-start; margin: 0; line-height: 1.45; }
+.confianca__selo svg { flex: none; width: 20px; height: 20px; margin-top: 1px; fill: none; stroke: var(--tinta-2); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.confianca__selo strong { display: block; color: var(--tinta); font-weight: 500; }
+.confianca__links { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+.confianca a { color: var(--tinta-2); }
+.confianca a:hover { color: var(--tinta); }
+.confianca a:focus-visible { outline: 2px solid var(--laranja); outline-offset: 2px; }
+.confianca__empresa { margin: 0; line-height: 1.6; }
