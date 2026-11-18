@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   SECOES, secaoDoHash, projetosAtivos, manutencao, progresso, proximoPasso,
-  mascararDoc, montarExportacao, nomePedido, linkProximaEtapa,
+  mascararDoc, montarExportacao, nomePedido, linkProximaEtapa, resultadoLeitura,
 } from '../src/paginas/conta-dados.js';
 
 const ped = (o) => ({ id: o.id ?? 'p', tipo: 'site', plano: 'orbita', status: 'pago', criado_em: '2026-11-01T10:00:00Z', link_fatura: null, cobranca: 'mp-123', ...o });
@@ -78,4 +78,18 @@ test('link dentro da nota da etapa', () => {
   assert.equal(linkProximaEtapa('veja https://previa.apolo.dev/x ok'), 'https://previa.apolo.dev/x');
   assert.equal(linkProximaEtapa('sem link'), null);
   assert.equal(linkProximaEtapa(null), null);
+});
+
+test('projeto recém-pago sem etapas não aparece como concluído', () => {
+  const p = proximoPasso([ped({ id: 'p', status: 'pago' })], []);
+  assert.equal(p.tipo, 'etapa');
+  assert.equal(p.texto, 'Estamos preparando as etapas do seu projeto');
+});
+
+test('leitura do banco: sessão vencida, falha passageira ou ok', () => {
+  assert.equal(resultadoLeitura([null, null]), 'ok');
+  assert.equal(resultadoLeitura([{ status: 401, message: 'x' }, null]), 'sessao');
+  assert.equal(resultadoLeitura([null, { message: 'JWT expired' }]), 'sessao');
+  assert.equal(resultadoLeitura([{ status: 503, message: 'Service Unavailable' }]), 'falha');
+  assert.equal(resultadoLeitura([new TypeError('Failed to fetch')]), 'falha');
 });

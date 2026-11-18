@@ -28,3 +28,14 @@ test('classes para o <html>', () => {
     ['a-texto-1', 'a-contraste', 'a-sem-movimento']);
   assert.deepEqual(classesDe(PADRAO), []);
 });
+
+test('localStorage do navegador bloqueado (getter que lança) não derruba a página', () => {
+  const antes = Object.getOwnPropertyDescriptor(globalThis, 'localStorage');
+  Object.defineProperty(globalThis, 'localStorage', { configurable: true, get() { throw new Error('SecurityError'); } });
+  try {
+    assert.deepEqual(lerPreferencias(), PADRAO);
+    assert.doesNotThrow(() => salvarPreferencias(PADRAO));
+  } finally {
+    if (antes) Object.defineProperty(globalThis, 'localStorage', antes); else delete globalThis.localStorage;
+  }
+});

@@ -3,9 +3,10 @@
 export const CHAVE = 'apolo-pref';
 export const PADRAO = { texto: 0, contraste: false, movimento: false, links: false };
 
-export function lerPreferencias(storage = globalThis.localStorage) {
+// o acesso a localStorage fica dentro do try: com cookies bloqueados, só ler a propriedade já lança
+export function lerPreferencias(storage) {
   try {
-    const p = JSON.parse(storage.getItem(CHAVE)) || {};
+    const p = JSON.parse((storage ?? globalThis.localStorage).getItem(CHAVE)) || {};
     return {
       texto: Math.min(2, Math.max(0, Math.trunc(Number(p.texto)) || 0)),
       contraste: p.contraste === true, movimento: p.movimento === true, links: p.links === true,
@@ -13,8 +14,8 @@ export function lerPreferencias(storage = globalThis.localStorage) {
   } catch { return { ...PADRAO }; }
 }
 
-export function salvarPreferencias(p, storage = globalThis.localStorage) {
-  try { storage.setItem(CHAVE, JSON.stringify(p)); } catch {}
+export function salvarPreferencias(p, storage) {
+  try { (storage ?? globalThis.localStorage).setItem(CHAVE, JSON.stringify(p)); } catch {}
 }
 
 export const classesDe = p => [

@@ -18,6 +18,7 @@ export async function sessao() {
 // guarda o cadastro do cliente (o RLS só deixa gravar o próprio)
 export async function salvarCliente(dados) {
   const { data: { user } } = await sb.auth.getUser();
+  if (!user) throw Object.assign(new Error('Sessão encerrada'), { status: 401 });
   const { error } = await sb.from('clientes').upsert({ id: user.id, email: user.email, ...dados });
   if (error) throw error;
 }

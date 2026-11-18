@@ -13,7 +13,6 @@
       <svg viewBox="210 226 315 280" aria-hidden="true"><path d="M318 241h100l97 169-25 45L367.5 302 245 455l-25-45z"/><path d="M245 455Q367.5 355 490 455l-20 38Q367.5 407 265 493z"/></svg>
       <span><b>Apolo</b>Studio</span>
     </a>
-    <button class="conta__sair" type="button" data-sair hidden>Sair</button>
   </header>
 
   <main class="conta__miolo">
@@ -21,6 +20,13 @@
     <section class="conta__cartao" data-vista="desligada" hidden>
       <h1 class="conta__titulo">Área do cliente</h1>
       <p class="conta__texto">Ainda estamos preparando a área do cliente. Para falar do seu pedido, chame a gente pelo Instagram <a href="https://www.instagram.com/apolostudio.br/">@apolostudio.br</a>.</p>
+    </section>
+
+    <!-- falha passageira ao ler os dados: não mostra o painel vazio (pareceria conta nova) -->
+    <section class="conta__cartao" data-vista="erro" hidden>
+      <h1 class="conta__titulo">Não conseguimos carregar sua conta</h1>
+      <p class="conta__texto">Pode ser a conexão ou uma instabilidade do nosso lado. Seus dados estão guardados.</p>
+      <button class="botao-acao" type="button" data-tentar style="margin-top:20px">Tentar de novo</button>
     </section>
 
     <!-- entrar: duas colunas (base: Sign In Page, ProfitizeBuild), adaptada ao login por código no e-mail -->

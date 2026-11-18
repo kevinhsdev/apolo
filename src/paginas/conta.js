@@ -11,7 +11,7 @@ import { montarPainelPreferencias } from '../acessibilidade.js';
 import { CATALOGO, brl } from '../precos.js';
 import { ligado, sb, sessao, enviarCodigo, conferirCodigo, salvarCliente } from '../supabase.js';
 import { linkConversa } from '../contato.js';
-import { secaoDoHash, projetosAtivos, manutencao, progresso, proximoPasso, mascararDoc, montarExportacao, nomePedido, linkProximaEtapa } from './conta-dados.js';
+import { secaoDoHash, projetosAtivos, manutencao, progresso, proximoPasso, mascararDoc, montarExportacao, nomePedido, linkProximaEtapa, resultadoLeitura } from './conta-dados.js';
 
 const $ = s => document.querySelector(s);
 const mostrar = v => {
@@ -247,9 +247,10 @@ async function abrirPainel() {
     sb.from('clientes').select('*').eq('id', s.user.id).maybeSingle(),
     sb.from('pedidos').select('*').order('criado_em', { ascending: false }),
   ]);
-  if ([e1, e2].some(e => e && (e.status === 401 || /jwt/i.test(e.message || '')))) { mostrar('entrar'); return; }
   const ids = projetosAtivos(pedidos || []).map(p => p.id);
-  const { data: etapas } = ids.length ? await sb.from('etapas').select('*').in('pedido_id', ids) : { data: [] };
+  const { data: etapas, error: e3 } = ids.length ? await sb.from('etapas').select('*').in('pedido_id', ids) : { data: [] };
+  const leitura = resultadoLeitura([e1, e2, e3]);
+  if (leitura !== 'ok') { mostrar(leitura === 'sessao' ? 'entrar' : 'erro'); return; }
   estado = { ...estado, cliente, pedidos: pedidos || [], etapas: etapas || [], email: s.user.email };
   mostrar('painel');
   pintarInicio(); pintarPedidos(); pintarProjeto(); pintarManutencao(); pintarDados(s);
@@ -269,6 +270,7 @@ $('[data-dados]').addEventListener('submit', async e => {
     if (estado.cliente) ({ error: erro } = await sb.from('clientes').update({ nome, whatsapp }).eq('id', estado.cliente.id));
     else await salvarCliente({ nome, whatsapp, cpf_cnpj: doc });
   } catch (err) { erro = err; }
+  if (erro && (resultadoLeitura([erro]) === 'sessao' || !(await sessao()))) { mostrar('entrar'); return; }
   est.textContent = erro ? 'Não foi possível salvar. Tente de novo.' : 'Dados salvos.';
   if (!erro) await abrirPainel();
 });
@@ -293,6 +295,7 @@ $('[data-pedir-exclusao]').addEventListener('click', () => {
 });
 document.querySelectorAll('[data-sair]').forEach(b => b.addEventListener('click', () => sair()));
 
+$('[data-tentar]').addEventListener('click', () => abrirPainel());
 montarPainelPreferencias($('[data-preferencias]'));
 document.querySelectorAll('.painel [data-whats]').forEach(conversa);
 

@@ -35,7 +35,8 @@ export function proximoPasso(pedidos, etapas) {
   const pagar = pedidos.filter(p => p.status === 'aguardando' && p.link_fatura).sort(recentes)[0];
   if (pagar) return { tipo: 'pagar', texto: `Conclua o pagamento do ${nomePedido(pagar)}`, link: pagar.link_fatura };
   if (projetosAtivos(pedidos).length) {
-    const { atual } = progresso(etapas);
+    const { atual, total } = progresso(etapas);
+    if (!total) return { tipo: 'etapa', texto: 'Estamos preparando as etapas do seu projeto' };
     return atual ? { tipo: 'etapa', texto: atual.nome } : { tipo: 'entregue', texto: 'Seu site está no ar' };
   }
   return { tipo: 'comecar', texto: 'Escolha um pacote para começar' };
@@ -57,3 +58,10 @@ export const montarExportacao = ({ cliente, pedidos, etapas, email }) => JSON.st
 }, null, 2);
 
 export const linkProximaEtapa = nota => String(nota || '').match(/https:\/\/[^\s)]+/)?.[0] ?? null;
+
+// resposta do Supabase: 'sessao' (venceu, volta a entrar), 'falha' (rede ou servidor: não pintar dados vazios) ou 'ok'
+export function resultadoLeitura(erros) {
+  const lista = erros.filter(Boolean);
+  if (!lista.length) return 'ok';
+  return lista.some(e => e.status === 401 || /jwt/i.test(e.message || '')) ? 'sessao' : 'falha';
+}
