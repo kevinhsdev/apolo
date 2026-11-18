@@ -2,6 +2,7 @@ import '@fontsource-variable/figtree';
 import '@fontsource-variable/sora';
 import './styles/tokens.css';
 import './styles/base.css';
+import './acessibilidade.js';
 import './sections/nav.css';
 import './sections/hero.css';
 import './sections/regioes.css';

@@ -1,5 +1,6 @@
 // Rodapé: as ações das colunas (abrir a aba certa, destacar o cartão, focar o campo)
 // e a marca "apolo" em retícula: os pontos crescem e esquentam perto do mouse, e o clique solta uma onda.
+import { movimentoReduzido } from '../preferencias.js';
 import { rolarPara } from './rolagem.js';
 
 const topoDe = el => el.getBoundingClientRect().top + window.scrollY;
@@ -40,7 +41,7 @@ export function iniciarReticula() {
   if (!caixa) return;
   const canvas = caixa.querySelector('canvas');
   const ctx = canvas.getContext('2d');
-  const parado = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const parado = movimentoReduzido();
   let pontos = [];
   let W = 0;
   let H = 0;

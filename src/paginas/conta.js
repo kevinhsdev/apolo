@@ -7,6 +7,7 @@ import '../styles/base.css';
 import './pagar.css';
 import './conta.css';
 import '../estilo.js';
+import '../acessibilidade.js';
 import { CATALOGO, brl } from '../precos.js';
 import { ligado, sb, sessao, enviarCodigo, conferirCodigo } from '../supabase.js';
 

@@ -9,3 +9,6 @@ __pycache__/
 # conexão local do Supabase para testes
 .env.local
 .env.*.local
+
+# rascunho dos planos de implementação
+.superpowers/

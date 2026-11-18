@@ -1,4 +1,5 @@
 // Pedido de diagnóstico: valida, abre a conversa já escrita (WhatsApp ou Instagram) e mostra o enviado.
+import { movimentoReduzido } from '../preferencias.js';
 import { linkConversa, WHATSAPP } from '../contato.js';
 
 const SITE = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(\/.*)?$/i;
@@ -65,7 +66,7 @@ export function iniciarPainel() {
   const escrito = desc.querySelector('.ra-typed');
   const resto = desc.querySelector('.ra-rest');
   const texto = resto.textContent;
-  const parado = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const parado = movimentoReduzido();
   const pinta = n => {
     escrito.textContent = texto.slice(0, n);
     resto.textContent = texto.slice(n);

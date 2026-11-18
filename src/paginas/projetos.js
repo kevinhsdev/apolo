@@ -4,6 +4,7 @@ import '../styles/base.css';
 import './simples.css';
 import '../sections/projetos.css';
 import '../estilo.js';
+import '../acessibilidade.js';
 import { montarRola } from '../motion/toque.js';
 import { PROJETOS, montarVitrine } from '../projetos.js';
 import { iniciarMetal } from '../motion/metal.js';

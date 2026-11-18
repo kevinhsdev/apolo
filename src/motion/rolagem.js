@@ -3,7 +3,10 @@
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
 
-export const reduzido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+import { movimentoReduzido } from '../preferencias.js';
+
+// preferência do site (botão de acessibilidade) ou do sistema
+export const reduzido = movimentoReduzido();
 
 // com movimento reduzido a rolagem fica a nativa, sem suavização
 export const lenis = reduzido ? null : new Lenis({ autoRaf: false, lerp: 0.1, anchors: true });

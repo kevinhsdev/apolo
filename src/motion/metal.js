@@ -1,5 +1,6 @@
 // Botão Mercúrio (ProfitizeBuild): anel de metal líquido em shader correndo pela borda da pílula.
 // Até o shader subir, um anel liso de 1 px segura o lugar. Tinta do metal no tom de luz da Apolo.
+import { movimentoReduzido } from '../preferencias.js';
 import {
   ShaderMount,
   liquidMetalFragmentShader,
@@ -49,7 +50,7 @@ function processed(w, h, ring) {
 async function mountMetalRing(el) {
   const image = await processed(el.offsetWidth, el.offsetHeight, 2);
   if (!el.isConnected) return () => {};
-  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const still = movimentoReduzido();
   const mount = new ShaderMount(
     el,
     liquidMetalFragmentShader,

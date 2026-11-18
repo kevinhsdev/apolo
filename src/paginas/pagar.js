@@ -7,6 +7,7 @@ import '../styles/tokens.css';
 import '../styles/base.css';
 import './pagar.css';
 import '../estilo.js';
+import '../acessibilidade.js';
 import { CATALOGO, precoCartao, descontoPix, brl, PARCELAS_SEM_JUROS } from '../precos.js';
 import { ligado, sb, sessao, enviarCodigo, conferirCodigo, salvarCliente, criarCobranca } from '../supabase.js';
 import { OFERTA, ofertaNoAr } from '../oferta.js';
