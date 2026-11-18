@@ -45,3 +45,11 @@ pública de `.env.production`; no `npm run dev`, o `.env.development.local` liga
 `npx supabase start` → `npx supabase functions serve --env-file supabase/functions/.env.teste` →
 `node supabase/teste-local.mjs` (com um Mercado Pago falso; nada é cobrado de verdade).
 As portas locais são 55321+ para não brigar com outros projetos.
+
+## Admin (pedidos)
+
+`apolostudio.com.br/admin.html`: todos os pedidos, a ficha de cada um (contato do cliente, status, etapas e notas). O cliente vê na área dele cada etapa marcada e cada nota. A página não aparece no Google (noindex) e só mostra dados para quem está na tabela `admins` do banco.
+
+- **Dar acesso a alguém:** a pessoa entra uma vez em `/admin.html` com o e-mail dela (vai ver "Sem acesso"). Depois, no PowerShell, na pasta `site`: `node supabase/admin.mjs email@dela.com`. Ela recarrega a página e vê os pedidos.
+- **Avisos por e-mail:** a cada pedido criado e a cada pedido pago, chega um e-mail com o link direto para a ficha. Segredos no Supabase: `RESEND_API_KEY` (chave do Resend) e `ADMIN_EMAILS` (e-mails separados por vírgula). Para mudar quem recebe: `npx supabase secrets set ADMIN_EMAILS=a@x.com,b@y.com --yes`. Se o e-mail falhar, o pedido e o pagamento seguem normalmente.
+- **Teste do banco (local):** `docker exec -i supabase_db_site psql -U postgres -q -v ON_ERROR_STOP=1 < supabase/teste-admin.sql` precisa imprimir `ok: cliente comum` e `ok: admin`.
