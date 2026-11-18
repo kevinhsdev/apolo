@@ -4,16 +4,21 @@ Vite + Three.js (a Lua) + Lenis. Base: template Norte (Profitize), adaptado.
 
 - `npm run dev`: abre em http://localhost:5183
 - `npm run build`: gera a pasta `dist/`. O GitHub Actions publica no GitHub Pages a cada push na `main`.
+- `npm test`: testes das regras da área do cliente e das preferências (`tests/`).
 
 ## Preencher antes de publicar
 - `src/contato.js` → `WHATSAPP` (55 + DDD + número). Vazio = os botões abrem o Direct do Instagram.
-- `index.html` e `privacidade.html` → e-mail `[preencher]@apolostudio.com.br`.
+- E-mail `[preencher]@apolostudio.com.br`, CNPJ e cidade: `src/partials/rodape-confianca.html` (rodapé de todas as páginas), `privacidade.html`, `termos.html`, `reembolso.html`, `acessibilidade.html` e a Ajuda em `conta.html`. Busque por `[preencher]`.
+- `termos.html`: endereço e foro. `reembolso.html`: confirmar a regra depois de 7 dias e o prazo de resposta.
 - Registrar **apolostudio.com.br** no Registro.br e o Instagram **@apolostudio.br**.
 
 ## Onde mexer
 - Textos: `index.html`. Preços: atributos `data-avista` / `data-parcelado` dos `.plano`. Prazos: `src/motion/estado.js`.
 - Cores: `src/styles/tokens.css`. Lua: `fonte/scripts/lua.py` (texturas NASA em `fonte/nasa/`).
 - Imagem de compartilhamento: `fonte/og/og.html` → `public/og.png`.
+- Trechos repetidos nas páginas (`<!-- partial:NOME -->`) vêm de `src/partials/NOME.html`, colados no build pelo `vite.config.js`. Página nova: entra em `rollupOptions.input` e leva os dois partials (`a11y-cedo` no `<head>`, `rodape-confianca` no fim do `<body>`).
+- Acessibilidade: botão em `src/acessibilidade.js`; regras das preferências em `src/preferencias.js` (a cópia curta em `src/partials/a11y-cedo.html` aplica antes da página aparecer: mude as duas juntas).
+- Área do cliente (`conta.html#inicio`, `#pedidos`, `#projeto`, `#manutencao`, `#dados`, `#privacidade`, `#preferencias`, `#ajuda`): marcação em `conta.html`, tela em `src/paginas/conta.js`, regras testadas em `src/paginas/conta-dados.js`. As perguntas da Ajuda ficam direto em `conta.html`.
 
 ## Área do cliente e cobrança (Supabase + Mercado Pago)
 
@@ -30,6 +35,7 @@ pública de `.env.production`; no `npm run dev`, o `.env.development.local` liga
 - **Parcelamento**: "parcelado vendedor" até 6x na conta do Mercado Pago; os preços do cartão em `precos.js` cobrem a taxa.
 - **E-mail com código**: SMTP do Resend (domínio verificado; DNS na Hostinger: `resend._domainkey`, `send`, `rsend`),
   remetente `no-reply@apolostudio.com.br`. Modelos "Magic link" e "Confirm sign up" = `supabase/templates/codigo.html`.
+  Em Sign In / Providers › Email, "Email OTP length" = 6 (o padrão do Supabase é 8; o site só aceita 6).
 - **Sem e-mail?** `node supabase/link-acesso.mjs email@cliente` gera um link de acesso de uso único.
 
 **No dia a dia**: o andamento de cada projeto você atualiza no Supabase › Table Editor › `etapas`
