@@ -13,10 +13,15 @@ const recentes = (a, b) => (b.criado_em > a.criado_em ? 1 : b.criado_em < a.cria
 export const projetosAtivos = pedidos =>
   pedidos.filter(p => p.tipo === 'site' && ['pago', 'em_andamento', 'entregue'].includes(p.status)).sort(recentes);
 
-export function manutencao(pedidos) {
+// manutenção: a mensalidade paga mais recente; 'aberta' é a do mês seguinte esperando pagamento
+export function manutencao(pedidos, hoje = new Date()) {
   const mensais = pedidos.filter(p => p.tipo === 'mensal' && p.status !== 'cancelado').sort(recentes);
   const ativa = mensais.find(p => p.status !== 'aguardando');
-  if (ativa) return { estado: 'ativa', pedido: ativa };
+  if (ativa) {
+    const aberta = mensais.find(p => p.renova_de === ativa.id && p.status === 'aguardando');
+    const vencida = !!ativa.vence_em && ativa.vence_em < hoje.toISOString().slice(0, 10);
+    return { estado: !vencida ? 'ativa' : aberta ? 'atrasada' : 'encerrada', pedido: ativa, aberta };
+  }
   return mensais.length ? { estado: 'pendente', pedido: mensais[0] } : { estado: 'nenhuma' };
 }
 

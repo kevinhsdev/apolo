@@ -85,15 +85,12 @@ try {
   ok(r.data?.link === 'https://mp.teste/checkout' && pref.items[0].unit_price === precoCartao(precoPix('lua')) && pref.payment_methods.installments === PARCELAS_SEM_JUROS,
     `cartão: total R$ ${pref?.items?.[0]?.unit_price}, até ${pref?.payment_methods?.installments}x`);
   ok(['ticket', 'bank_transfer', 'debit_card'].every(t => tipos.includes(t)), 'cartão: Pix, boleto e débito fora do Checkout');
-  r = await a.functions.invoke('criar-cobranca', { body: { plano: 'plus', forma: 'pix' } });
-  ok(!!r.error, 'manutenção no Pix é recusada');
-
-  // manutenção: assinatura mensal no cartão
+  // manutenção: 1ª mensalidade no Checkout Pro (Pix ou cartão), sem assinatura
   recebido.length = 0;
-  r = await a.functions.invoke('criar-cobranca', { body: { plano: 'plus', forma: 'cartao' } });
-  const sub = recebido.find(x => x.caminho === '/preapproval_plan')?.corpo;
-  ok(sub?.auto_recurring?.frequency_type === 'months' && sub.auto_recurring.transaction_amount === CATALOGO.plus.mes && r.data?.link === 'https://mp.teste/assinatura',
-    `assinatura mensal de R$ ${sub?.auto_recurring?.transaction_amount}`);
+  r = await a.functions.invoke('criar-cobranca', { body: { plano: 'plus', forma: 'pix' } });
+  const mens = recebido.find(x => x.caminho === '/checkout/preferences')?.corpo;
+  ok(mens?.items?.[0]?.unit_price === CATALOGO.plus.mes && /mensalidade/.test(mens.items[0].title) && !recebido.some(x => x.caminho === '/preapproval_plan'),
+    `mensalidade no Pix de R$ ${mens?.items?.[0]?.unit_price}`);
   const assinatura = (await a.from('pedidos').select('id').eq('plano', 'plus').single()).data;
 
   // webhook
@@ -108,10 +105,10 @@ try {
   r = await a.from('pedidos').select('status').eq('id', pedido.id).single();
   const e1 = await a.from('etapas').select('feita').eq('pedido_id', pedido.id).eq('ordem', 1).single();
   ok(w.status === 200 && r.data.status === 'pago' && e1.data.feita, 'pagamento confirmado: pedido pago e 1ª etapa concluída');
-  consulta['/preapproval/pre_teste'] = { status: 'authorized', preapproval_plan_id: 'plan_teste' };
-  await webhook('subscription_preapproval', 'pre_teste');
-  r = await a.from('pedidos').select('status').eq('id', assinatura.id).single();
-  ok(r.data.status === 'pago', 'assinatura autorizada: manutenção ativa');
+  consulta['/v1/payments/124'] = { status: 'approved', external_reference: assinatura.id, transaction_amount: CATALOGO.plus.mes, installments: 1, payment_type_id: 'bank_transfer' };
+  await webhook('payment', '124');
+  r = await a.from('pedidos').select('status, vence_em').eq('id', assinatura.id).single();
+  ok(r.data.status === 'pago' && !!r.data.vence_em, `mensalidade paga: manutenção ativa até ${r.data.vence_em}`);
 } catch (e) {
   console.error(e); falhas++;
 } finally {

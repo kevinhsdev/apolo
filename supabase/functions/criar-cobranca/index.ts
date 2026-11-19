@@ -3,11 +3,11 @@
 // O cartão é digitado na página do Mercado Pago: os dados dele nunca passam pelo site nem por aqui.
 //   Pix (site): Checkout Pro só com Pix, 50% de entrada.
 //   Cartão (site): Checkout Pro só com cartão, até PARCELAS_SEM_JUROS sem juros (parcelado vendedor no painel).
-//   Manutenção: assinatura mensal no cartão.
+//   Manutenção: 1ª mensalidade no Checkout Pro (Pix ou cartão em 1x); as seguintes, renovar-mensalidades.
 // Segredos: MP_ACCESS_TOKEN e SITE_URL (endereço do site, para a volta depois do pagamento).
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import { CATALOGO, PARCELAS_SEM_JUROS, precoCartao, precoPix } from '../_shared/precos.js';
-import { mp, MP_TOKEN } from '../_shared/mercadopago.ts';
+import { criarPreferencia, MP_TOKEN } from '../_shared/mercadopago.ts';
 import { montarAviso } from '../_shared/aviso.js';
 import { avisarAdmins } from '../_shared/avisar.ts';
 
@@ -34,7 +34,7 @@ Deno.serve(async req => {
   const item = CATALOGO[plano];
   if (!item) return resposta({ erro: 'Plano inválido.' }, 400);
   const site = item.tipo === 'site';
-  if (!(site ? ['pix', 'cartao'] : ['cartao']).includes(forma)) return resposta({ erro: 'Forma de pagamento inválida.' }, 400);
+  if (!['pix', 'cartao'].includes(forma)) return resposta({ erro: 'Forma de pagamento inválida.' }, 400);
   const parcelas = site && forma === 'cartao' ? Math.min(Math.max(1, Math.trunc(Number(p) || 1)), PARCELAS_SEM_JUROS) : 1;
 
   const { data: cliente } = await db.from('clientes').select('*').eq('id', user.id).single();
@@ -54,36 +54,16 @@ Deno.serve(async req => {
     }).select().single();
     if (error) throw error;
 
-    let cobranca: string, link: string;
-    if (!site) {
-      // um plano por pedido: o cliente assina com a própria conta Mercado Pago (o e-mail dela pode não ser o do site)
-      // e o webhook acha o pedido pelo id do plano. ponytail: os planos se acumulam no painel; inofensivo.
-      const a = await mp('/preapproval_plan', {
-        reason: `Manutenção ${item.nome} · Apolo Studio`,
-        auto_recurring: { frequency: 1, frequency_type: 'months', transaction_amount: valor, currency_id: 'BRL' },
-        back_url: `${SITE}/obrigado.html?pedido=${pedido.id}`,
-      });
-      cobranca = a.id; link = a.init_point;
-    } else {
-      // Checkout Pro nos dois casos; "dinheiro em conta" o Mercado Pago não deixa tirar.
-      // ponytail: no Pix, quem pagar com saldo custa 4,99% em vez de 0,99%; raro, aceito.
-      const ePix = forma === 'pix';
-      const c = await mp('/checkout/preferences', {
-        items: [{
-          id: plano, quantity: 1, currency_id: 'BRL',
-          title: `Site ${item.nome} · Apolo Studio${ePix ? ' · entrada de 50%' : ''}`,
-          unit_price: ePix ? Math.round(pix / 2 * 100) / 100 : valor,
-        }],
-        payer: { name: cliente.nome, ...pagador }, external_reference: pedido.id,
-        // volta para a tela de agradecimento; o Mercado Pago acrescenta status e collection_status
-        back_urls: Object.fromEntries(['success', 'pending', 'failure'].map(k => [k, `${SITE}/obrigado.html?pedido=${pedido.id}`])), auto_return: 'approved',
-        payment_methods: ePix
-          ? { installments: 1, excluded_payment_types: [{ id: 'credit_card' }, { id: 'debit_card' }, { id: 'prepaid_card' }, { id: 'ticket' }] }
-          : { installments: PARCELAS_SEM_JUROS, excluded_payment_types: [{ id: 'ticket' }, { id: 'bank_transfer' }, { id: 'debit_card' }, { id: 'prepaid_card' }] },
-        statement_descriptor: 'APOLOSTUDIO',
-      });
-      cobranca = c.id; link = c.init_point;
-    }
+    // Checkout Pro nos dois casos ("dinheiro em conta" o Mercado Pago não deixa tirar). A manutenção era assinatura
+    // (/preapproval_plan), mas o Mercado Pago recusava os cartões: virou mensalidade, um pedido por mês
+    // (a próxima é criada pela função renovar-mensalidades).
+    const ePix = forma === 'pix';
+    const { id: cobranca, link } = await criarPreferencia({
+      pedidoId: pedido.id, itemId: plano, site: SITE, forma, parcelas: ePix ? 1 : site ? PARCELAS_SEM_JUROS : 1,
+      titulo: site ? `Site ${item.nome} · Apolo Studio${ePix ? ' · entrada de 50%' : ''}` : `Manutenção ${item.nome} · Apolo Studio · 1ª mensalidade`,
+      valor: site && ePix ? Math.round(pix / 2 * 100) / 100 : valor,
+      pagador: { name: cliente.nome, ...pagador },
+    });
     await db.from('pedidos').update({ cobranca, link_fatura: link }).eq('id', pedido.id);
     await avisarAdmins(montarAviso({ evento: 'criado', pedido, cliente, site: SITE }));
     return resposta({ pedido: pedido.id, link });

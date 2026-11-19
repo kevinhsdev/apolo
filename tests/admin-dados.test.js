@@ -121,3 +121,20 @@ test('CSV seguro para o Excel', () => {
   assert.ok(t.includes(`"'=HYPERLINK(""x"")"`));
   assert.ok(t.includes('"Ana; Silva"'));
 });
+
+test('mensalidades: cada mês pago é receita; MRR conta só a vigente; vencida vira alerta', () => {
+  const agora = new Date('2026-12-22T12:00:00Z');
+  const M = o => ({ tipo: 'mensal', plano: 'base', cliente_id: 'c', forma: 'pix', valor: 94, criado_em: '2026-11-18T12:00:00Z', ...o });
+  const ped = [
+    M({ id: 'm1', status: 'pago', pago_em: '2026-11-18T12:00:00Z', vence_em: '2026-12-18' }),
+    M({ id: 'm2', status: 'pago', pago_em: '2026-12-16T12:00:00Z', vence_em: '2027-01-18', renova_de: 'm1', forma: 'cartao' }),
+    M({ id: 'n1', cliente_id: 'd', status: 'pago', pago_em: '2026-11-10T12:00:00Z', vence_em: '2026-12-10' }),
+    M({ id: 'n2', cliente_id: 'd', status: 'aguardando', renova_de: 'n1', criado_em: '2026-12-07T12:00:00Z' }),
+  ];
+  assert.equal(recebimentos(ped).length, 3);
+  assert.equal(indicadores(ped, agora).mrr, 188);
+  const a = alertas(ped, [], new Map([['d', { nome: 'Dani' }]]), agora, { base: 'Base' });
+  assert.equal(a.length, 1);
+  assert.match(a[0].texto, /Mensalidade da manutenção Base de Dani venceu há/);
+  assert.equal(funil(ped)[0].n, 2); // renovações não contam como pedido novo
+});

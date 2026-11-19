@@ -1,4 +1,4 @@
-// Tela de cobrança: resumo do pedido + dados + Pix ou cartão (até 6x sem juros); manutenção no cartão.
+// Tela de cobrança: resumo do pedido + dados + Pix ou cartão (até 6x sem juros); manutenção mensal no Pix ou cartão.
 // Com a área do cliente ligada (src/supabase.js), confirma o e-mail por código, cria a cobrança no servidor
 // e leva à página oficial de pagamento do Mercado Pago. Desligada, o pedido segue pela conversa já escrita.
 import '@fontsource-variable/figtree';
@@ -18,7 +18,7 @@ const q = new URLSearchParams(location.search);
 const id = CATALOGO[q.get('plano')] ? q.get('plano') : 'orbita';
 const plano = CATALOGO[id];
 const site = plano.tipo === 'site';
-const estado = { forma: site ? 'pix' : 'cartao', parcelas: PARCELAS_SEM_JUROS, cupom: '' };
+const estado = { forma: 'pix', parcelas: PARCELAS_SEM_JUROS, cupom: '' };
 
 // preço do Pix: o de lançamento enquanto a oferta vale; depois, o cheio (oferta.js)
 const base = site ? (ofertaNoAr() ? plano.pix : OFERTA.cheio[id]) : plano.mes;
@@ -31,7 +31,7 @@ const comCupom = () => {
 document.title = `${plano.nome} · Finalizar pedido · Apolo Studio`;
 $('[data-r-nome]').textContent = plano.nome;
 $('[data-r-tipo]').textContent = site ? 'Criação de site · pagamento único' : 'Manutenção mensal';
-$('[data-r-prazo]').textContent = site ? `Pronto em ${plano.prazo}` : 'Cobrado todo mês no cartão. Cancele com 30 dias de aviso, sem multa.';
+$('[data-r-prazo]').textContent = site ? `Pronto em ${plano.prazo}` : 'Todo mês você recebe o link para pagar, no Pix ou no cartão. Cancele quando quiser, sem multa.';
 $('[data-r-itens]').replaceChildren(...plano.itens.map(t => Object.assign(document.createElement('li'), { textContent: t })));
 if (q.get('dominio')) $('#c-dominio').value = q.get('dominio');
 if (!site) $('[data-cupom-linha]').hidden = true;
@@ -54,7 +54,7 @@ if (site) {
     opcao('cartao', 'Cartão de crédito', `Até ${PARCELAS_SEM_JUROS}x sem juros`),
   );
 } else {
-  formas.append(opcao('cartao', 'Cartão de crédito', 'Cobrança automática todo mês'));
+  formas.append(opcao('pix', 'Pix', 'Na hora, sem taxa para você'), opcao('cartao', 'Cartão de crédito', 'À vista'));
 }
 formas.querySelector('input').checked = true;
 formas.addEventListener('change', e => { estado.forma = e.target.value; pintar(); });
@@ -82,15 +82,15 @@ function pintar() {
   $('[data-r-subtotal]').textContent = site ? `R$ ${brl(base)}` : `R$ ${brl(base)}/mês`;
   $('[data-r-linha-cupom]').hidden = !(c && site);
   if (c && site) { $('[data-r-cupom]').textContent = estado.cupom; $('[data-r-desconto]').textContent = `− R$ ${brl(base - pix)}`; }
-  const forma = !site ? 'Cartão, todo mês' : estado.forma === 'pix' ? 'Pix' : `Cartão em ${estado.parcelas}x`;
+  const forma = !site ? (estado.forma === 'pix' ? 'Pix, todo mês' : 'Cartão, todo mês') : estado.forma === 'pix' ? 'Pix' : `Cartão em ${estado.parcelas}x`;
   $('[data-r-forma]').textContent = site && estado.forma === 'cartao' ? `${forma} · + R$ ${brl(cartao - pix)}` : forma;
   $('[data-r-total]').textContent = site ? `R$ ${brl(total)}` : `R$ ${brl(base)}/mês`;
-  $('[data-r-hoje]').textContent = !site ? 'A primeira mensalidade é cobrada hoje, no cartão.'
+  $('[data-r-hoje]').textContent = !site ? `Hoje você paga o 1º mês, ${estado.forma === 'pix' ? 'no Pix' : 'no cartão'}. Os próximos chegam por e-mail, 3 dias antes de vencer.`
     : estado.forma === 'pix' ? `Hoje você paga R$ ${brl(pix / 2)} (50%). O restante, na entrega.`
     : `${estado.parcelas}x de R$ ${brl(Math.round(cartao / estado.parcelas * 100) / 100)} no cartão, sem juros.`;
   // "Pagar" só quando a cobrança é gerada de verdade (área do cliente ligada); sem ela, o botão envia o pedido
-  $('[data-finalizar]').textContent = !ligado ? (site ? 'Finalizar pedido' : 'Assinar')
-    : !site ? 'Assinar no cartão' : estado.forma === 'pix' ? `Pagar R$ ${brl(pix / 2)} no Pix` : `Pagar em até ${estado.parcelas}x no cartão`;
+  $('[data-finalizar]').textContent = !ligado ? (site ? 'Finalizar pedido' : 'Contratar')
+    : !site ? `Pagar o 1º mês ${estado.forma === 'pix' ? 'no Pix' : 'no cartão'}` : estado.forma === 'pix' ? `Pagar R$ ${brl(pix / 2)} no Pix` : `Pagar em até ${estado.parcelas}x no cartão`;
 }
 
 // cupom (só nos planos de site, enquanto a oferta vale)

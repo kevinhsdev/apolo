@@ -34,6 +34,19 @@ test('manutenção: ativa, pendente ou nenhuma', () => {
   assert.equal(ativa.pedido.id, 'm');
 });
 
+test('mensalidade: em dia, com o mês seguinte aberto, atrasada e encerrada', () => {
+  const hoje = new Date('2026-12-20T12:00:00Z');
+  const m = (o) => ped({ tipo: 'mensal', plano: 'base', ...o });
+  const paga = m({ id: 'm1', vence_em: '2026-12-28' });
+  assert.equal(manutencao([paga], hoje).estado, 'ativa');
+  const aberta = m({ id: 'm2', status: 'aguardando', renova_de: 'm1', link_fatura: 'https://mp/x', criado_em: '2026-12-25T10:00:00Z' });
+  const r = manutencao([paga, aberta], hoje);
+  assert.equal(r.estado, 'ativa'); assert.equal(r.pedido.id, 'm1'); assert.equal(r.aberta.id, 'm2');
+  const vencida = m({ id: 'm1', vence_em: '2026-12-18' });
+  assert.equal(manutencao([vencida, aberta], hoje).estado, 'atrasada');
+  assert.equal(manutencao([vencida, m({ id: 'm2', status: 'cancelado', renova_de: 'm1' })], hoje).estado, 'encerrada');
+});
+
 test('progresso das etapas', () => {
   assert.deepEqual(progresso([]), { feitas: 0, total: 0, pct: 0, atual: null });
   const p = progresso(etapas(2, 5));

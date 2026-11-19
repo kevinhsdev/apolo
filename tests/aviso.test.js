@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { montarAviso, escapar } from '../supabase/functions/_shared/aviso.js';
+import { montarAviso, montarLembrete, escapar } from '../supabase/functions/_shared/aviso.js';
 
 const SITE = 'https://apolostudio.com.br';
 const cliente = { nome: 'João Lima', email: 'joao@x.com', whatsapp: '(11) 98888-7777' };
@@ -36,4 +36,12 @@ test('nome do cliente é escapado no HTML', () => {
 
 test('pedido sem cadastro do cliente não quebra', () => {
   assert.equal(montarAviso({ evento: 'pago', pedido: lua, cliente: null, site: SITE }).assunto, 'Pedido pago: Site Lua · cliente sem cadastro');
+});
+
+test('lembrete de mensalidade: assunto, valor, link e nome escapado', () => {
+  const l = montarLembrete({ pedido: { plano: 'base', valor: 94 }, cliente: { nome: 'Ana <b>Souza' }, vence: '2026-12-18', link: 'https://mp.com/x?a=1&b=2', site: SITE });
+  assert.equal(l.assunto, 'Sua mensalidade da Manutenção Base vence em 18/12');
+  assert.match(l.texto, /R\$ 94/);
+  assert.match(l.html, /href="https:\/\/mp\.com\/x\?a=1&amp;b=2"/);
+  assert.ok(!l.html.includes('<b>Souza'));
 });

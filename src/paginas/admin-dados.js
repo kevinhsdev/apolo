@@ -1,6 +1,7 @@
 // Regras da página de admin, sem DOM (testadas em tests/admin-dados.test.js).
 import { progresso } from './conta-dados.js';
 import { TAXAS, liquidoCartao } from '../precos.js';
+import { mensalidadesVigentes } from '../../supabase/functions/_shared/mensalidade.js';
 
 // meta de receita do mês: R$ 1.000 para cada sócio
 export const META_MENSAL = 2000;
@@ -40,7 +41,7 @@ export const statusPermitidos = p => (['aguardando', 'cancelado'].includes(p.sta
 export const faltaRestante = p => ativo(p) && p.tipo === 'site' && p.forma === 'pix' && !p.restante_em;
 
 // Cada entrada de dinheiro: { data, valor (bruto), liquido (depois da taxa) }.
-// ponytail: a manutenção conta só a 1ª mensalidade (o pagamento de cada mês não fica gravado); o MRR mostra o recorrente.
+// A manutenção entra uma vez por mês pago (cada mensalidade é um pedido).
 export function recebimentos(pedidos) {
   const r = [];
   for (const p of pedidos) {
@@ -50,7 +51,7 @@ export function recebimentos(pedidos) {
       r.push({ data: p.pago_em, valor: v / 2, liquido: (v / 2) * (1 - TAXAS.pix) });
       if (p.restante_em) r.push({ data: p.restante_em, valor: v / 2, liquido: v / 2 }); // recebido fora do Mercado Pago
     } else if (p.tipo === 'site') r.push({ data: p.pago_em, valor: v, liquido: liquidoCartao(v, p.parcelas || 1) });
-    else r.push({ data: p.pago_em, valor: v, liquido: v * (1 - TAXAS.avista) });
+    else r.push({ data: p.pago_em, valor: v, liquido: v * (1 - (p.forma === 'pix' ? TAXAS.pix : TAXAS.avista)) });
   }
   return r;
 }
@@ -67,11 +68,14 @@ export function porMes(recs, n = 6, agora = new Date()) {
   });
 }
 
+// recorrente: a mensalidade em vigor de cada cliente, menos as que o admin encerrou (renovação cancelada)
+const mrrVivo = pedidos => mensalidadesVigentes(pedidos).filter(p => !pedidos.some(c => c.renova_de === p.id && c.status === 'cancelado'));
+
 export function indicadores(pedidos, agora = new Date()) {
   const meses = porMes(recebimentos(pedidos), 2, agora);
   const [anterior, atual] = meses;
   const sites = pedidos.filter(p => ativo(p) && p.tipo === 'site');
-  const recentes = pedidos.filter(p => dias(p.criado_em, agora) <= 30);
+  const recentes = pedidos.filter(p => !p.renova_de && dias(p.criado_em, agora) <= 30); // renovação não é venda nova
   const mes = chaveMes(agora);
   return {
     recebidoMes: atual.valor,
@@ -80,7 +84,7 @@ export function indicadores(pedidos, agora = new Date()) {
     meta: Math.min(atual.valor / META_MENSAL, 1),
     faltaMeta: Math.max(META_MENSAL - atual.valor, 0),
     aReceber: pedidos.filter(faltaRestante).reduce((s, p) => s + Number(p.valor) / 2, 0),
-    mrr: somar(pedidos.filter(p => ativo(p) && p.tipo === 'mensal')),
+    mrr: somar(mrrVivo(pedidos)),
     ticket: sites.length ? somar(sites) / sites.length : 0,
     conversao: recentes.length ? recentes.filter(ativo).length / recentes.length : null,
     pedidosMes: pedidos.filter(p => chaveMes(new Date(p.criado_em)) === mes).length,
@@ -88,7 +92,8 @@ export function indicadores(pedidos, agora = new Date()) {
   };
 }
 
-export function funil(pedidos) {
+export function funil(todos) {
+  const pedidos = todos.filter(p => !p.renova_de); // renovação não é venda nova
   const vivos = pedidos.filter(p => p.status !== 'cancelado' || p.pago_em);
   return [
     { nome: 'Pedidos criados', n: pedidos.length },
@@ -115,7 +120,12 @@ export function alertas(pedidos, etapas, clientes, agora = new Date(), nomes = {
   const plano = p => (nomes[p.plano] ? ` ${nomes[p.plano]}` : '');
   const out = [];
   for (const p of pedidos) {
-    if (p.status === 'aguardando' && dias(p.criado_em, agora) >= 1)
+    const anterior = p.renova_de && pedidos.find(x => x.id === p.renova_de);
+    if (anterior) { // mensalidade: só cobra depois de vencer
+      const vence = anterior.vence_em && new Date(`${anterior.vence_em}T23:59:59-03:00`);
+      if (p.status === 'aguardando' && vence && agora > vence)
+        out.push({ tipo: 'cobrar', pedido: p.id, cliente: p.cliente_id, texto: `Mensalidade da manutenção${plano(p)} de ${nome(p.cliente_id)} venceu ${tempoDesde(vence, agora)}` });
+    } else if (p.status === 'aguardando' && dias(p.criado_em, agora) >= 1)
       out.push({ tipo: 'cobrar', pedido: p.id, cliente: p.cliente_id, texto: `${nome(p.cliente_id)} não pagou o pedido${plano(p)} ${tempoDesde(p.criado_em, agora)}` });
     if (faltaRestante(p) && (p.status === 'entregue' || progresso(etapas.filter(e => e.pedido_id === p.id)).atual?.ordem >= 5))
       out.push({ tipo: 'restante', pedido: p.id, cliente: p.cliente_id, texto: `Cobrar os 50% restantes do site${plano(p)} de ${nome(p.cliente_id)}` });

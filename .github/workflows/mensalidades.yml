@@ -1,0 +1,16 @@
+# Todo dia às 9h (Brasília): cria as mensalidades de manutenção que vencem em até 3 dias e manda o link por e-mail.
+# Segredo do repositório: CRON_SECRET (o mesmo valor do segredo CRON_SECRET no Supabase).
+name: Mensalidades
+on:
+  schedule:
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+jobs:
+  renovar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Renovar mensalidades
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          curl -fsS -X POST -H "x-cron: $CRON_SECRET" https://zmjrzeuwowqgoaazcrgs.supabase.co/functions/v1/renovar-mensalidades

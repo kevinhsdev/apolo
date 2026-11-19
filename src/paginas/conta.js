@@ -23,6 +23,7 @@ const mostrar = v => {
 const STATUS = { aguardando: 'Aguardando pagamento', pago: 'Pago', em_andamento: 'Em produção', entregue: 'Entregue', cancelado: 'Cancelado' };
 const FORMA = { pix: 'Pix', cartao: 'Cartão', boleto: 'Boleto' };
 const data = iso => new Date(iso).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+const diaMes = d => new Date(`${d}T12:00:00Z`).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', timeZone: 'UTC' }).replace('.', '');
 const el = (tag, cls, txt) => Object.assign(document.createElement(tag), cls ? { className: cls } : {}, txt != null ? { textContent: txt } : {});
 
 montarEntrada(document, () => abrirPainel());
@@ -85,7 +86,8 @@ function pintarInicio() {
 
   const m = manutencao(pedidos);
   $('[data-resumo-manutencao]').textContent = m.pedido ? nomePedido(m.pedido) : 'Sem plano ativo';
-  $('[data-resumo-manutencao-meta]').textContent = m.estado === 'ativa' ? `R$ ${brl(Number(m.pedido.valor))}/mês · ativa`
+  $('[data-resumo-manutencao-meta]').textContent = m.estado === 'ativa' ? `R$ ${brl(Number(m.pedido.valor))}/mês · ${m.pedido.vence_em ? `próxima em ${diaMes(m.pedido.vence_em)}` : 'ativa'}`
+    : m.estado === 'atrasada' ? 'Mensalidade vencida' : m.estado === 'encerrada' ? 'Encerrada'
     : m.estado === 'pendente' ? 'Aguardando o primeiro pagamento' : 'Hospedagem, domínio e alterações por mês.';
 }
 
@@ -160,11 +162,19 @@ function pintarManutencao() {
   }
   const p = m.pedido, plano = CATALOGO[p.plano];
   caixa.classList.add('plano');
-  caixa.append(el('p', 'bloco__meta', m.estado === 'ativa' ? `Ativa desde ${data(p.criado_em)}` : 'Aguardando o primeiro pagamento'),
+  const situacao = {
+    ativa: p.vence_em ? `Em dia · próxima mensalidade em ${diaMes(p.vence_em)}` : `Ativa desde ${data(p.criado_em)}`,
+    atrasada: `Mensalidade vencida em ${diaMes(p.vence_em ?? p.criado_em)}`,
+    encerrada: `Encerrada em ${diaMes(p.vence_em ?? p.criado_em)}`,
+    pendente: 'Aguardando o primeiro pagamento',
+  }[m.estado];
+  caixa.append(el('p', 'bloco__meta', situacao),
     el('h2', 'bloco__nome bloco__nome--grande', `${nomePedido(p)} · R$ ${brl(Number(p.valor))}/mês`));
   if (plano?.itens) { const ul = el('ul', 'plano__itens'); ul.append(...plano.itens.map(i => el('li', '', i))); caixa.append(ul); }
   const acoes = el('div', 'plano__acoes');
-  if (m.estado === 'pendente' && p.link_fatura) { const a = el('a', 'botao-acao', 'Pagar agora'); a.href = p.link_fatura; a.target = '_blank'; a.rel = 'noopener'; acoes.append(a); }
+  const link = m.estado === 'pendente' ? p.link_fatura : m.aberta?.link_fatura;
+  if (link) { const a = el('a', 'botao-acao', m.aberta ? 'Pagar mensalidade' : 'Pagar agora'); a.href = link; a.target = '_blank'; a.rel = 'noopener'; acoes.append(a); }
+  if (m.estado === 'encerrada') { const a = el('a', 'botao-acao', 'Reativar'); a.href = `./pagar.html?plano=${p.plano}`; acoes.append(a); }
   const alterar = el('a', 'botao-acao botao-acao--neutro', 'Alterar ou cancelar');
   alterar.dataset.whats = `Olá! Quero alterar ou cancelar minha manutenção ${plano?.nome ?? ''}.`;
   conversa(alterar);

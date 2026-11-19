@@ -407,10 +407,12 @@ function pintarFicha(p) {
 
   // financeiro
   const v = Number(p.valor);
-  const liquido = p.tipo === 'site' && p.forma === 'pix' ? v * (1 - TAXAS.pix / 2) : p.tipo === 'site' ? liquidoCartao(v, p.parcelas || 1) : v * (1 - TAXAS.avista);
+  const liquido = p.tipo === 'site' && p.forma === 'pix' ? v * (1 - TAXAS.pix / 2) : p.tipo === 'site' ? liquidoCartao(v, p.parcelas || 1) : v * (1 - (p.forma === 'pix' ? TAXAS.pix : TAXAS.avista));
   const pares = [['Valor', `${centavos(v)}${p.tipo === 'mensal' ? '/mês' : ''}`], ['Pagamento', formaTxt(p)], ['Líquido est.', centavos(liquido)]];
   if (p.tipo === 'site' && p.forma === 'pix') pares.push(['Entrada', `${centavos(v / 2)}${p.pago_em ? ` · paga em ${dataCurta(p.pago_em)}` : ''}`], ['Restante', `${centavos(v / 2)}${p.restante_em ? ` · recebido em ${dataCurta(p.restante_em)}` : ' · a receber'}`]);
   else if (p.pago_em) pares.push(['Pago em', data(p.pago_em)]);
+  if (p.vence_em) pares.push(['Vale até', dataCurta(`${p.vence_em}T12:00:00Z`)]);
+  if (p.renova_de) pares.push(['Mensalidade', 'renovação do mês anterior']);
   if (p.cupom) pares.push(['Cupom', p.cupom]);
   pares.push(['Mercado Pago', p.cobranca ?? '—']);
   dl($('[data-f-financeiro]'), pares);

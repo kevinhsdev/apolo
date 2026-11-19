@@ -26,7 +26,7 @@ Projeto Supabase `apolo-site` (ref `zmjrzeuwowqgoaazcrgs`, São Paulo). O build 
 pública de `.env.production`; no `npm run dev`, o `.env.development.local` liga o Supabase local.
 
 - **Banco**: `npx supabase db push --remote` aplica as migrações de `supabase/migrations/`.
-- **Funções**: `npx supabase functions deploy criar-cobranca` e `npx supabase functions deploy mercadopago-webhook --no-verify-jwt`.
+- **Funções**: `npx supabase functions deploy criar-cobranca`, `npx supabase functions deploy mercadopago-webhook --no-verify-jwt` e `npx supabase functions deploy renovar-mensalidades --no-verify-jwt`.
 - **Segredos**: `MP_ACCESS_TOKEN` (token de produção do Mercado Pago), `MP_WEBHOOK_SECRET` (assinatura secreta do
   webhook) e `SITE_URL`. Troque com `npx supabase secrets set NOME=valor --yes` no PowerShell (nunca no chat).
 - **Webhook no Mercado Pago**: Suas integrações › Apolo Studio Site › Webhooks, nos modos teste e produção:
@@ -37,6 +37,13 @@ pública de `.env.production`; no `npm run dev`, o `.env.development.local` liga
   remetente `no-reply@apolostudio.com.br`. Modelos "Magic link" e "Confirm sign up" = `supabase/templates/codigo.html`.
   Em Sign In / Providers › Email, "Email OTP length" = 6 (o padrão do Supabase é 8; o site só aceita 6).
 - **Sem e-mail?** `node supabase/link-acesso.mjs email@cliente` gera um link de acesso de uso único.
+
+**Manutenção (mensalidade)**: a assinatura do Mercado Pago recusava os cartões (nov/2026), então cada mês é um pedido pago
+no Checkout Pro (Pix ou cartão). Todo dia às 9h o GitHub Actions (`.github/workflows/mensalidades.yml`) chama a função
+`renovar-mensalidades`: 3 dias antes de vencer, ela cria o pedido do mês seguinte e manda o link por e-mail ao cliente
+(que também vê "Pagar mensalidade" na área dele). Pago, o webhook grava `vence_em` (+1 mês). **Cliente cancelou?** No admin,
+cancele a mensalidade aberta dele: a cadeia para. Segredo `CRON_SECRET` igual no Supabase e no GitHub (Settings › Secrets).
+Para rodar na hora: GitHub › Actions › Mensalidades › Run workflow.
 
 **No dia a dia**: o andamento de cada projeto você atualiza no Supabase › Table Editor › `etapas`
 (marque `feita` e escreva um recado em `nota`, ex.: o link da prévia). O pagamento se marca sozinho pelo webhook.

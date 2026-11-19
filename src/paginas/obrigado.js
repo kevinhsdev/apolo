@@ -68,7 +68,7 @@ function botao(texto, href, classe = 'botao') {
 function resumo(p) {
   const site = p.tipo !== 'mensal';
   const linhas = [['Pedido', nomePedido(p)]];
-  if (!site) linhas.push(['Valor', `R$ ${brl(p.valor)}/mês no cartão`]);
+  if (!site) linhas.push(['Valor', `R$ ${brl(p.valor)}/mês`], ...(p.vence_em ? [['Próxima mensalidade', new Date(`${p.vence_em}T12:00:00Z`).toLocaleDateString('pt-BR', { timeZone: 'UTC' })]] : []));
   else if (p.forma === 'pix') linhas.push(['Entrada paga (50%)', `R$ ${brl(p.valor / 2)} no Pix`], ['Na entrega', `R$ ${brl(p.valor / 2)}`]);
   else linhas.push(['Valor', p.parcelas > 1 ? `${p.parcelas}x de R$ ${brl(p.valor / p.parcelas)} sem juros` : `R$ ${brl(p.valor)} no cartão`]);
   if (site && CATALOGO[p.plano]?.prazo) linhas.push(['Prazo', CATALOGO[p.plano].prazo]);
@@ -86,7 +86,7 @@ function passos(p) {
   ] : [
     ['A gente entra em contato', 'Em até 1 dia útil, para combinar o acesso ao seu site.'],
     ['Pedidos de alteração', 'Pela área do cliente ou pelo WhatsApp, quando precisar.'],
-    ['Cobrança mensal', 'Todo mês no cartão. Dá para cancelar quando quiser.'],
+    ['Mensalidade por e-mail', 'Três dias antes de vencer, o link chega por e-mail (Pix ou cartão). Cancele quando quiser.'],
   ];
   const sec = el('section', 'obg__passos obg__entra');
   sec.append(el('h2', 'obg__passos-titulo', 'Próximos passos'));

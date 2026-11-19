@@ -6,6 +6,7 @@ import { createClient } from 'npm:@supabase/supabase-js@2';
 import { mp } from '../_shared/mercadopago.ts';
 import { montarAviso } from '../_shared/aviso.js';
 import { avisarAdmins } from '../_shared/avisar.ts';
+import { proximoVencimento } from '../_shared/mensalidade.js';
 
 const SEGREDO = Deno.env.get('MP_WEBHOOK_SECRET') ?? '';
 
@@ -28,6 +29,7 @@ Deno.serve(async req => {
 
   const db = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
   let pedidoId: string | undefined, plano: string | undefined, pago = false, desfeito = false, parcelas: number | undefined, recebido = Infinity;
+  let pagoNoCartao: boolean | undefined;
   try {
     if (tipo === 'payment') {
       const p = await mp(`/v1/payments/${id}`);
@@ -36,7 +38,9 @@ Deno.serve(async req => {
       desfeito = ['refunded', 'charged_back'].includes(p.status);
       parcelas = p.installments;
       recebido = Number(p.transaction_amount);
-    } else if (tipo === 'subscription_preapproval') {
+      pagoNoCartao = p.payment_type_id === 'credit_card';
+      console.log('pagamento', id, p.status, p.status_detail); // motivo de recusa fica no log da função
+    } else if (tipo === 'subscription_preapproval') { // assinaturas antigas (antes da mensalidade por link)
       const a = await mp(`/preapproval/${id}`);
       plano = a.preapproval_plan_id; // a manutenção é assinada pelo link do plano criado para o pedido
       pago = a.status === 'authorized';
@@ -48,7 +52,7 @@ Deno.serve(async req => {
     return new Response('erro', { status: 500 }); // falha passageira: o Mercado Pago tenta de novo
   }
 
-  const campos = 'id, status, tipo, forma, valor, cliente_id, plano, parcelas, dominio';
+  const campos = 'id, status, tipo, forma, valor, cliente_id, plano, parcelas, dominio, renova_de';
   const { data: pedido } = pedidoId ? await db.from('pedidos').select(campos).eq('id', pedidoId).maybeSingle()
     : plano ? await db.from('pedidos').select(campos).eq('cobranca', plano).maybeSingle()
     : { data: null };
@@ -58,10 +62,20 @@ Deno.serve(async req => {
   const esperado = pedido.tipo === 'site' && pedido.forma === 'pix' ? Number(pedido.valor) / 2 : Number(pedido.valor);
   // cancelado também: o admin pode cancelar um pedido parado, mas o link do Mercado Pago continua valendo
   if (pago && ['aguardando', 'cancelado'].includes(pedido.status) && recebido >= esperado - 0.01) {
-    await db.from('pedidos').update({ status: 'pago', pago_em: new Date().toISOString(), ...(parcelas && pedido.forma === 'cartao' ? { parcelas } : {}) }).eq('id', pedido.id);
+    const extra: Record<string, unknown> = parcelas && pedido.forma === 'cartao' ? { parcelas } : {};
+    if (pedido.tipo === 'mensal') {
+      // vale por um mês a partir do vencimento anterior (pagando atrasado, a partir de hoje)
+      const hoje = new Date().toISOString().slice(0, 10);
+      const { data: anterior } = pedido.renova_de ? await db.from('pedidos').select('vence_em').eq('id', pedido.renova_de).maybeSingle() : { data: null };
+      const vence = proximoVencimento(anterior?.vence_em ?? hoje);
+      extra.vence_em = vence < hoje ? proximoVencimento(hoje) : vence;
+      if (pagoNoCartao !== undefined) extra.forma = pagoNoCartao ? 'cartao' : 'pix'; // a renovação deixa o cliente escolher
+    }
+    Object.assign(pedido, extra);
+    await db.from('pedidos').update({ status: 'pago', pago_em: new Date().toISOString(), ...extra }).eq('id', pedido.id);
     await db.from('etapas').update({ feita: true, atualizado_em: new Date().toISOString() }).eq('pedido_id', pedido.id).eq('ordem', 1);
     const { data: cliente } = await db.from('clientes').select('nome, email, whatsapp').eq('id', pedido.cliente_id).maybeSingle();
-    await avisarAdmins(montarAviso({ evento: 'pago', pedido: { ...pedido, ...(parcelas && pedido.forma === 'cartao' ? { parcelas } : {}) }, cliente, site: Deno.env.get('SITE_URL') ?? 'https://apolostudio.com.br' }));
+    await avisarAdmins(montarAviso({ evento: 'pago', pedido, cliente, site: Deno.env.get('SITE_URL') ?? 'https://apolostudio.com.br' }));
   } else if (desfeito) {
     await db.from('pedidos').update({ status: 'cancelado' }).eq('id', pedido.id);
   }
