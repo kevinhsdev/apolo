@@ -95,7 +95,8 @@ try {
 
   // webhook
   let w = await webhook('payment', '123', 'segredo-errado');
-  ok(w.status === 401, 'aviso com assinatura errada é recusado');
+  r = await a.from('pedidos').select('status').eq('id', pedido.id).single();
+  ok(w.status === 200 && r.data.status === 'aguardando', 'aviso com assinatura errada não confirma nada sozinho (status vem da API)');
   consulta['/v1/payments/123'] = { status: 'approved', external_reference: pedido.id, transaction_amount: 1, installments: 1 };
   await webhook('payment', '123');
   r = await a.from('pedidos').select('status').eq('id', pedido.id).single();

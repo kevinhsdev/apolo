@@ -1,6 +1,6 @@
 // Recebe os avisos do Mercado Pago (Suas integrações › Webhooks: eventos "Pagamentos" e "Planos e assinaturas").
 // O aviso só diz "mudou o pagamento X": o status de verdade é buscado na API com o nosso token,
-// então um aviso falso no máximo provoca uma consulta. A assinatura (x-signature) é conferida mesmo assim.
+// então um aviso falso no máximo provoca uma consulta. A assinatura (x-signature) é conferida e, se falhar, só registrada.
 // Segredo: MP_WEBHOOK_SECRET (a "assinatura secreta" do webhook no painel). Publicar com --no-verify-jwt.
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import { mp } from '../_shared/mercadopago.ts';
@@ -25,7 +25,10 @@ Deno.serve(async req => {
   const tipo = corpo.type ?? url.searchParams.get('type');
   const id = String(corpo.data?.id ?? url.searchParams.get('data.id') ?? '');
   if (!tipo || !id) return new Response('ok');
-  if (!SEGREDO || !(await assinaturaOk(req, id))) return new Response('não autorizado', { status: 401 });
+  // A assinatura é uma camada extra: o status, o valor e o pedido vêm da API do Mercado Pago com o nosso token,
+  // então um aviso falso não confirma nada. Se ela não bater (segredo trocado no painel, que tem um por modo),
+  // registra e segue, para um pagamento de verdade nunca ficar parado (aconteceu em 19/11/2026).
+  if (!SEGREDO || !(await assinaturaOk(req, id))) console.warn('webhook: assinatura não confere; confira MP_WEBHOOK_SECRET', tipo, id);
 
   const db = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
   let pedidoId: string | undefined, plano: string | undefined, pago = false, desfeito = false, parcelas: number | undefined, recebido = Infinity;

@@ -1,9 +1,18 @@
-<div style="background:#0a0a0a;padding:40px 24px;font-family:Arial,Helvetica,sans-serif;color:#f4f4f2">
-  <div style="max-width:440px;margin:0 auto">
-    <!-- logo em PNG (e-mail não mostra SVG); troque o endereço quando o site mudar de domínio -->
-    <img src="https://apolostudio.com.br/email-logo.png" width="200" height="24" alt="ApoloStudio" style="display:block;border:0;margin:0 0 32px;color:#f4f4f2;font-size:20px;font-weight:bold">
-    <p style="font-size:16px;line-height:1.5;margin:0 0 20px">Seu código para entrar na área do cliente:</p>
-    <p style="font-size:36px;letter-spacing:10px;font-weight:bold;margin:0 0 24px;color:#ffffff">{{ .Token }}</p>
-    <p style="font-size:14px;line-height:1.5;color:#9b9b9b;margin:0">Ele vale por alguns minutos. Se não foi você quem pediu, é só ignorar este e-mail.</p>
-  </div>
-</div>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><meta name="supported-color-schemes" content="dark"><title>Seu código de acesso</title></head>
+<!-- mesma moldura dos outros e-mails (supabase/functions/_shared/aviso.js). Copie também no painel:
+     Authentication › Emails › Templates › "Magic Link" e "Confirm signup". Logo em PNG: e-mail não mostra SVG. -->
+<body style="margin:0;padding:0;background:#0a0a0a">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0">{{ .Token }} é o seu código para entrar na área do cliente.</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a0a"><tr><td align="center" style="padding:32px 12px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#121212;border:1px solid #242424;border-radius:20px;overflow:hidden">
+<tr><td style="height:4px;line-height:4px;font-size:0;background:#ff5a1f;background-image:linear-gradient(90deg,#ff5a1f,#ffb08e 55%,#ff5a1f)">&nbsp;</td></tr>
+<tr><td style="padding:32px 40px 0"><a href="https://apolostudio.com.br"><img src="https://apolostudio.com.br/email-logo.png" width="150" height="18" alt="Apolo Studio" style="display:block;border:0;color:#f4f4f2;font-size:18px;font-weight:bold"></a></td></tr>
+<tr><td style="font-family:Figtree,Segoe UI,Helvetica,Arial,sans-serif;padding:36px 40px 0;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#ff7a45">Área do cliente</td></tr>
+<tr><td style="font-family:Figtree,Segoe UI,Helvetica,Arial,sans-serif;padding:10px 40px 0;font-size:26px;line-height:1.2;font-weight:700;letter-spacing:-.02em;color:#ffffff">Seu código de acesso</td></tr>
+<tr><td style="font-family:Figtree,Segoe UI,Helvetica,Arial,sans-serif;padding:14px 40px 0;font-size:15px;line-height:1.6;color:#b8b8b4">Digite estes 6 números na tela de entrada. Sem senha para decorar.</td></tr>
+<tr><td style="padding:24px 40px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:14px"><tr>
+<td align="center" style="font-family:Consolas,Menlo,Courier New,monospace;padding:24px 12px 24px 24px;font-size:38px;line-height:1;font-weight:700;letter-spacing:12px;color:#ffffff">{{ .Token }}</td></tr></table></td></tr>
+<tr><td style="font-family:Figtree,Segoe UI,Helvetica,Arial,sans-serif;padding:22px 40px 0;font-size:13px;line-height:1.55;color:#8a8a8a">O código vale por alguns minutos. Se não foi você quem pediu, é só ignorar este e-mail: ninguém entra sem ele.</td></tr>
+<tr><td style="padding:36px 40px 0"><div style="height:1px;line-height:1px;font-size:0;background:#242424">&nbsp;</div></td></tr>
+<tr><td style="font-family:Figtree,Segoe UI,Helvetica,Arial,sans-serif;padding:18px 40px 32px;font-size:12px;line-height:1.6;color:#6f6f6f">Apolo Studio · sites que colocam o seu negócio no mapa<br><a href="https://apolostudio.com.br" style="color:#8f8f8f">apolostudio.com.br</a> · <a href="mailto:contato@apolostudio.com.br" style="color:#8f8f8f">contato@apolostudio.com.br</a></td></tr>
+</table></td></tr></table></body></html>
