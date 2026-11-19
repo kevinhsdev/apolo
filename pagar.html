@@ -6,6 +6,7 @@
   <meta name="description" content="Escolha Pix ou cartão e finalize o pedido do seu site com a Apolo Studio.">
   <meta name="robots" content="noindex">
   <!-- partial:a11y-cedo -->
+  <!-- partial:transicao-cedo -->
 </head>
 <body class="pagar">
   <header class="pagar__topo">
@@ -72,9 +73,10 @@
         <p>Enviamos um código de 6 dígitos para <b data-codigo-email></b>. Ele também cria o seu acesso à área do cliente.</p>
         <div class="campo"><label for="c-codigo">Código</label><input id="c-codigo" name="codigo" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000"></div>
       </div>
+      <div class="campo aceite"><input id="c-aceite" name="aceite" type="checkbox" required><label for="c-aceite">Li e concordo com os <a href="./termos.html" target="_blank" rel="noopener">termos de uso</a> e declaro ser maior de 18 anos ou representar uma empresa.</label></div>
       <button class="checkout__botao" type="submit" data-finalizar>Finalizar pedido</button>
       <p class="checkout__estado" data-estado role="status"></p>
-      <p class="checkout__nota">Ao finalizar, enviamos o link oficial de pagamento e combinamos o início do projeto. Seus dados são usados só para este pedido (<a href="./privacidade.html">privacidade</a>).</p>
+      <p class="checkout__nota" data-nota><span data-nota-extra>Enviamos o link oficial de pagamento e combinamos o início do projeto.</span> Seus dados são usados só para este pedido (<a href="./privacidade.html">privacidade</a>).</p>
     </form>
   </main>
   <!-- partial:rodape-confianca -->

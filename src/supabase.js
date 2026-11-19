@@ -31,3 +31,13 @@ export async function criarCobranca(pedido) {
   }
   return data;
 }
+
+// cliente cancela a manutenção (função cancelar-manutencao); devolve { ate } = último dia do serviço
+export async function cancelarManutencao() {
+  const { data, error } = await sb.functions.invoke('cancelar-manutencao', { body: {} });
+  if (error) {
+    const corpo = await error.context?.json?.().catch(() => null);
+    throw new Error(corpo?.erro || 'Não foi possível cancelar agora.');
+  }
+  return data;
+}

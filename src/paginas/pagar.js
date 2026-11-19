@@ -18,6 +18,8 @@ const q = new URLSearchParams(location.search);
 const id = CATALOGO[q.get('plano')] ? q.get('plano') : 'orbita';
 const plano = CATALOGO[id];
 const site = plano.tipo === 'site';
+// manutenção: renovação e cancelamento escritos colados no botão
+if (!site) $('[data-nota-extra]').textContent = `Renovação: R$ ${brl(plano.mes)} por mês, com o link enviado por e-mail a cada mês (sem cobrança automática). Cancele quando quiser em Área do cliente › Manutenção.`;
 const estado = { forma: 'pix', parcelas: PARCELAS_SEM_JUROS, cupom: '' };
 
 // preço do Pix: o de lançamento enquanto a oferta vale; depois, o cheio (oferta.js)
@@ -110,6 +112,7 @@ if (site && q.get('cupom')) aplicarCupom(q.get('cupom'), true);
 
 // finalizar
 const form = $('[data-checkout]'), saida = $('[data-estado]'), botao = $('[data-finalizar]');
+$('#c-aceite').addEventListener('change', e => { if (e.target.checked) { e.target.closest('.campo').classList.remove('is-erro'); saida.textContent = ''; } });
 const passoCodigo = $('[data-codigo]');
 const docOk = v => [11, 14].includes(v.replace(/\D/g, '').length);
 
@@ -132,7 +135,7 @@ function conferir() {
   form.querySelectorAll('.campo').forEach(c => c.classList.remove('is-erro'));
   if (!invalido) return true;
   invalido.closest('.campo').classList.add('is-erro');
-  saida.textContent = { tel: 'Confira o WhatsApp, com DDD.', email: 'Confira o e-mail.' }[invalido.type]
+  saida.textContent = { tel: 'Confira o WhatsApp, com DDD.', email: 'Confira o e-mail.', checkbox: 'Marque a caixa dos termos e da maioridade para continuar.' }[invalido.type]
     || (invalido.name === 'doc' ? 'Confira o CPF (11 números) ou CNPJ (14 números).' : 'Preencha seu nome.');
   invalido.focus();
   return false;

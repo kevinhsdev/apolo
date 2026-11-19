@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { proximoVencimento, renovacoesDevidas, mensalidadesVigentes } from '../supabase/functions/_shared/mensalidade.js';
+import { proximoVencimento, renovacoesDevidas, mensalidadesVigentes, planoCancelamento } from '../supabase/functions/_shared/mensalidade.js';
 
 test('vencimento: um mês depois, sem pular para o mês seguinte', () => {
   assert.equal(proximoVencimento('2026-11-18'), '2026-12-18');
@@ -29,4 +29,15 @@ test('renova só o que vence em até 3 dias e ainda não foi renovado', () => {
 test('vigente: a última paga de cada cadeia', () => {
   const pedidos = [M('a', 'pago', '2026-12-18'), M('a2', 'pago', '2027-01-18', 'a'), M('a3', 'aguardando', null, 'a2'), M('b', 'pago', '2026-12-01')];
   assert.deepEqual(mensalidadesVigentes(pedidos).map(p => p.id), ['a2', 'b']);
+});
+
+test('cancelamento: fecha o aberto, ou encerra a paga; nada a fazer se já encerrada', () => {
+  const paga = M('a', 'pago', '2026-12-18');
+  assert.equal(planoCancelamento([paga]).acao, 'encerrar');
+  assert.equal(planoCancelamento([paga]).pedido.id, 'a');
+  const aberta = M('a2', 'aguardando', null, 'a');
+  assert.deepEqual([planoCancelamento([paga, aberta]).acao, planoCancelamento([paga, aberta]).pedido.id], ['cancelar', 'a2']);
+  assert.equal(planoCancelamento([paga, M('a2', 'cancelado', null, 'a')]), null);
+  assert.equal(planoCancelamento([M('x', 'aguardando', null)]).acao, 'cancelar');
+  assert.equal(planoCancelamento([]), null);
 });

@@ -61,6 +61,13 @@ body.pagar { min-height: 100vh; background: radial-gradient(60% 50% at 20% 0%, r
 .checkout input::placeholder { color: rgb(var(--veu) / .3); }
 .checkout input:focus, .checkout select:focus { outline: none; border-color: rgba(255, 90, 31, .7); background-color: rgb(var(--veu) / .06); box-shadow: 0 0 0 4px rgba(255, 90, 31, .14); }
 .campo.is-erro input { border-color: var(--perigo); }
+/* aceite dos termos e da maioridade, antes do botão */
+.aceite { grid-template-columns: auto 1fr; align-items: start; gap: 10px; margin-top: 4px; }
+.checkout .aceite input { width: 20px; height: 20px; min-height: 0; padding: 0; margin: 1px 0 0; border: 0; background: none; box-shadow: none; appearance: auto; accent-color: var(--laranja); cursor: pointer; }
+.checkout .aceite input:focus-visible { outline: 2px solid var(--laranja); outline-offset: 2px; }
+.aceite label { font-size: 0.875rem; line-height: 1.45; color: var(--tinta-2); cursor: pointer; }
+.aceite a { color: var(--tinta); text-decoration: underline; text-underline-offset: 2px; }
+.aceite.is-erro label { color: var(--perigo); }
 
 /* Pix ou cartão: opções em cartão, com o valor de cada uma à vista */
 .formas { display: grid; gap: 10px; }

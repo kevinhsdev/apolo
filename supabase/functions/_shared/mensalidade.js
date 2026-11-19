@@ -25,3 +25,16 @@ export function mensalidadesVigentes(pedidos) {
   const renovadas = new Set(pagas.map(p => p.renova_de).filter(Boolean));
   return pagas.filter(p => !renovadas.has(p.id));
 }
+
+// Cliente cancela pela área dele. O que fazer com os pedidos de manutenção dele:
+//   'cancelar' um pedido aberto (1ª mensalidade ou a do mês seguinte), ou
+//   'encerrar' a mensalidade paga: grava o mês seguinte já cancelado, e a rotina não renova mais.
+// O serviço segue até o vence_em da paga. ponytail: uma manutenção por cliente (a mais recente).
+export function planoCancelamento(pedidos) {
+  const mensais = pedidos.filter(p => p.tipo === 'mensal');
+  const aberta = mensais.filter(p => p.status === 'aguardando').sort((a, b) => String(b.criado_em).localeCompare(String(a.criado_em)))[0];
+  if (aberta) return { acao: 'cancelar', pedido: aberta };
+  const vigente = mensalidadesVigentes(mensais).sort((a, b) => String(b.vence_em).localeCompare(String(a.vence_em)))[0];
+  if (vigente && !mensais.some(p => p.renova_de === vigente.id)) return { acao: 'encerrar', pedido: vigente };
+  return null;
+}

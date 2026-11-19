@@ -20,7 +20,8 @@ export function manutencao(pedidos, hoje = new Date()) {
   if (ativa) {
     const aberta = mensais.find(p => p.renova_de === ativa.id && p.status === 'aguardando');
     const vencida = !!ativa.vence_em && ativa.vence_em < hoje.toISOString().slice(0, 10);
-    return { estado: !vencida ? 'ativa' : aberta ? 'atrasada' : 'encerrada', pedido: ativa, aberta };
+    const encerrando = pedidos.some(p => p.renova_de === ativa.id && p.status === 'cancelado'); // cliente cancelou
+    return { estado: !vencida ? 'ativa' : aberta ? 'atrasada' : 'encerrada', pedido: ativa, aberta, encerrando };
   }
   return mensais.length ? { estado: 'pendente', pedido: mensais[0] } : { estado: 'nenhuma' };
 }

@@ -9,7 +9,7 @@ import './conta.css';
 import '../estilo.js';
 import { montarPainelPreferencias } from '../acessibilidade.js';
 import { CATALOGO, brl } from '../precos.js';
-import { ligado, sb, sessao, salvarCliente } from '../supabase.js';
+import { ligado, sb, sessao, salvarCliente, cancelarManutencao } from '../supabase.js';
 import { montarEntrada } from '../entrar.js';
 import { linkConversa } from '../contato.js';
 import { secaoDoHash, projetosAtivos, manutencao, progresso, proximoPasso, mascararDoc, montarExportacao, nomePedido, linkProximaEtapa, resultadoLeitura } from './conta-dados.js';
@@ -23,7 +23,7 @@ const mostrar = v => {
 const STATUS = { aguardando: 'Aguardando pagamento', pago: 'Pago', em_andamento: 'Em produção', entregue: 'Entregue', cancelado: 'Cancelado' };
 const FORMA = { pix: 'Pix', cartao: 'Cartão', boleto: 'Boleto' };
 const data = iso => new Date(iso).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
-const diaMes = d => new Date(`${d}T12:00:00Z`).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', timeZone: 'UTC' }).replace('.', '');
+const diaMes = d => new Date(`${String(d).slice(0, 10)}T12:00:00Z`).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', timeZone: 'UTC' }).replace('.', '');
 const el = (tag, cls, txt) => Object.assign(document.createElement(tag), cls ? { className: cls } : {}, txt != null ? { textContent: txt } : {});
 
 montarEntrada(document, () => abrirPainel());
@@ -86,7 +86,7 @@ function pintarInicio() {
 
   const m = manutencao(pedidos);
   $('[data-resumo-manutencao]').textContent = m.pedido ? nomePedido(m.pedido) : 'Sem plano ativo';
-  $('[data-resumo-manutencao-meta]').textContent = m.estado === 'ativa' ? `R$ ${brl(Number(m.pedido.valor))}/mês · ${m.pedido.vence_em ? `próxima em ${diaMes(m.pedido.vence_em)}` : 'ativa'}`
+  $('[data-resumo-manutencao-meta]').textContent = m.estado === 'ativa' ? `R$ ${brl(Number(m.pedido.valor))}/mês · ${m.encerrando ? `até ${diaMes(m.pedido.vence_em)}` : m.pedido.vence_em ? `próxima em ${diaMes(m.pedido.vence_em)}` : 'ativa'}`
     : m.estado === 'atrasada' ? 'Mensalidade vencida' : m.estado === 'encerrada' ? 'Encerrada'
     : m.estado === 'pendente' ? 'Aguardando o primeiro pagamento' : 'Hospedagem, domínio e alterações por mês.';
 }
@@ -163,7 +163,8 @@ function pintarManutencao() {
   const p = m.pedido, plano = CATALOGO[p.plano];
   caixa.classList.add('plano');
   const situacao = {
-    ativa: p.vence_em ? `Em dia · próxima mensalidade em ${diaMes(p.vence_em)}` : `Ativa desde ${data(p.criado_em)}`,
+    ativa: m.encerrando ? `Cancelada · o serviço segue até ${diaMes(p.vence_em ?? p.criado_em)}`
+      : p.vence_em ? `Em dia · próxima mensalidade em ${diaMes(p.vence_em)}` : `Ativa desde ${data(p.criado_em)}`,
     atrasada: `Mensalidade vencida em ${diaMes(p.vence_em ?? p.criado_em)}`,
     encerrada: `Encerrada em ${diaMes(p.vence_em ?? p.criado_em)}`,
     pendente: 'Aguardando o primeiro pagamento',
@@ -175,11 +176,31 @@ function pintarManutencao() {
   const link = m.estado === 'pendente' ? p.link_fatura : m.aberta?.link_fatura;
   if (link) { const a = el('a', 'botao-acao', m.aberta ? 'Pagar mensalidade' : 'Pagar agora'); a.href = link; a.target = '_blank'; a.rel = 'noopener'; acoes.append(a); }
   if (m.estado === 'encerrada') { const a = el('a', 'botao-acao', 'Reativar'); a.href = `./pagar.html?plano=${p.plano}`; acoes.append(a); }
-  const alterar = el('a', 'botao-acao botao-acao--neutro', 'Alterar ou cancelar');
-  alterar.dataset.whats = `Olá! Quero alterar ou cancelar minha manutenção ${plano?.nome ?? ''}.`;
-  conversa(alterar);
-  acoes.append(alterar);
-  caixa.append(acoes, el('p', 'bloco__meta', 'Sem multa. O serviço segue até o fim do mês já pago.'));
+  const mudar = el('a', 'botao-acao botao-acao--neutro', m.encerrando ? 'Quero continuar' : 'Mudar de plano');
+  mudar.dataset.whats = m.encerrando ? `Olá! Cancelei minha manutenção ${plano?.nome ?? ''}, mas quero continuar.` : `Olá! Quero mudar o plano da minha manutenção ${plano?.nome ?? ''}.`;
+  conversa(mudar);
+  acoes.append(mudar);
+  const aviso = el('p', 'bloco__meta', 'Sem multa. O serviço segue até o fim do mês já pago.');
+  aviso.setAttribute('role', 'status');
+  if (m.estado !== 'encerrada' && !m.encerrando) {
+    // cancelar online, em dois toques (o segundo confirma)
+    const cancelar = el('button', 'botao-acao botao-acao--neutro', 'Cancelar manutenção');
+    cancelar.type = 'button';
+    cancelar.addEventListener('click', async () => {
+      if (!cancelar.dataset.confirmar) {
+        cancelar.dataset.confirmar = '1';
+        cancelar.textContent = 'Confirmar cancelamento';
+        aviso.textContent = m.estado === 'pendente' ? 'O pedido será cancelado e o link de pagamento deixa de valer.'
+          : `Sem multa. O serviço segue até ${diaMes(p.vence_em ?? p.criado_em)} e não cobramos o mês seguinte.`;
+        return;
+      }
+      cancelar.disabled = true; aviso.textContent = 'Cancelando…';
+      try { await cancelarManutencao(); await abrirPainel(); }
+      catch (e) { cancelar.disabled = false; aviso.textContent = e.message; }
+    });
+    acoes.append(cancelar);
+  }
+  caixa.append(acoes, aviso);
 }
 
 function pintarDados(s) {

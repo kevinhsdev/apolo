@@ -45,6 +45,8 @@ test('mensalidade: em dia, com o mês seguinte aberto, atrasada e encerrada', ()
   const vencida = m({ id: 'm1', vence_em: '2026-12-18' });
   assert.equal(manutencao([vencida, aberta], hoje).estado, 'atrasada');
   assert.equal(manutencao([vencida, m({ id: 'm2', status: 'cancelado', renova_de: 'm1' })], hoje).estado, 'encerrada');
+  const cancelada = manutencao([paga, m({ id: 'm2', status: 'cancelado', renova_de: 'm1' })], hoje);
+  assert.equal(cancelada.estado, 'ativa'); assert.equal(cancelada.encerrando, true);
 });
 
 test('progresso das etapas', () => {

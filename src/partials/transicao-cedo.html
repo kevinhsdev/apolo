@@ -1,0 +1,33 @@
+<style>@view-transition{navigation:auto}</style>
+<script>/* "O card vira a página, e o voltar volta": o card do pacote (index) cresce até virar o resumo da tela de pagamento,
+   e o voltar encolhe o resumo para o card. View Transitions entre páginas (Chrome, Edge, Safari); sem suporte, abre normal.
+   Fica no head porque o pagereveal acontece antes dos módulos rodarem. Visual em styles/base.css. */
+(function(){
+  var sem = function(){ return document.documentElement.classList.contains('a-sem-movimento') || matchMedia('(prefers-reduced-motion: reduce)').matches; };
+  var em = function(url, nome){ return new URL(url, location.href).pathname.endsWith(nome); };
+  var card = function(url){ return document.querySelector('[data-cartao="' + new URL(url, location.href).searchParams.get('plano') + '"]'); };
+  var resumo = function(){ return document.querySelector('.resumo'); };
+  // nome compartilhado só no card certo (precisa ser único na página), tirado no fim
+  function marcar(vt, caixa){
+    if (!caixa || !caixa.getClientRects().length) return;
+    var nome = caixa.querySelector('.cartao__nome, .resumo__nome');
+    caixa.style.viewTransitionName = 'plano'; if (nome) nome.style.viewTransitionName = 'plano-nome';
+    vt.finished.finally(function(){ caixa.style.viewTransitionName = ''; if (nome) nome.style.viewTransitionName = ''; });
+  }
+  addEventListener('pageswap', function(e){
+    if (!e.viewTransition || !e.activation || !e.activation.entry) return;
+    if (sem()) return e.viewTransition.skipTransition();
+    var destino = e.activation.entry.url;
+    if (em(location.href, 'pagar.html')) marcar(e.viewTransition, resumo());
+    else if (em(destino, 'pagar.html')) marcar(e.viewTransition, card(destino));
+  });
+  // a página nova ainda está sendo montada: espera o DOM para achar o card/resumo
+  addEventListener('pagereveal', function(e){
+    if (!e.viewTransition) return;
+    if (sem()) return e.viewTransition.skipTransition();
+    var de = window.navigation && navigation.activation && navigation.activation.from && navigation.activation.from.url;
+    if (!de) return;
+    if (em(location.href, 'pagar.html')) marcar(e.viewTransition, resumo());
+    else if (em(de, 'pagar.html')) marcar(e.viewTransition, card(de));
+  });
+})();</script>

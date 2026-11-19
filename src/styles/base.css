@@ -205,3 +205,9 @@ html.leve .nav.is-solida { background: rgb(var(--preto-rgb) / .96); }
 
 /* tema claro */
 html.t-claro .faixa { background: linear-gradient(90deg, #fde9df, #fbd6c3 50%, #fde9df); border-bottom-color: rgba(255, 90, 31, .45); }
+
+/* Transição entre páginas (src/partials/transicao-cedo.html, que também liga o @view-transition):
+   nada aparece do nada. O card do pacote vira o resumo do pedido e volta. */
+::view-transition-group(*) { animation-duration: .55s; animation-timing-function: cubic-bezier(.2, .8, .2, 1); }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .3s; }
+::view-transition-old(plano), ::view-transition-new(plano) { height: 100%; object-fit: cover; overflow: clip; }
