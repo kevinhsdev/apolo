@@ -9,6 +9,9 @@ import { tmpdir } from 'node:os';
 const PROJETOS = [
   { slug: 'rumo', url: 'https://kevinhsdev.github.io/rumo/' },
   { slug: 'kevinhs', url: 'https://www.kevinhs.dev/pt', espera: 32000 }, // abre com uma animação de entrada
+  { slug: 'jsf', url: 'https://kevinhsdev.github.io/jsf-company/' },
+  { slug: 'marinleo', url: 'https://marinleo.netlify.app/', espera: 9000 }, // abre com o logo animado
+  { slug: 'kiri', url: 'https://kevinhsdev.github.io/kiri/' },
 ];
 const CHROME = process.env.CHROME || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 const W = 1440, H = 900, SEG = 10, FPS = 30; // segundos de rolagem

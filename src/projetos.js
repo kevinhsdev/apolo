@@ -11,6 +11,15 @@ export const PROJETOS = [
   { slug: 'kevinhs', nome: 'Kevin Henrique', categoria: 'Portfólio', url: 'https://www.kevinhs.dev/pt',
     capa: 'projetos/kevinhs.jpg', video: 'projetos/kevinhs.mp4',
     resumo: 'Portfólio de engenharia de software, com a trajetória contada num globo 3D enquanto se rola.' },
+  { slug: 'jsf', nome: 'Joia Silva Fono', categoria: 'Fonoaudiologia', url: 'https://kevinhsdev.github.io/jsf-company/',
+    capa: 'projetos/jsf.jpg', video: 'projetos/jsf.mp4',
+    resumo: 'Fonoaudiologia para crianças, jovens e adultos, com avaliação agendada direto pelo WhatsApp.' },
+  { slug: 'marinleo', nome: 'Leonardo Marin', categoria: 'Portfólio', url: 'https://marinleo.netlify.app/',
+    capa: 'projetos/marinleo.jpg', video: 'projetos/marinleo.mp4',
+    resumo: 'Portfólio de um professor de tecnologia e programador de sites, SaaS e software.' },
+  { slug: 'kiri', nome: 'Kiri', categoria: 'App', url: 'https://kevinhsdev.github.io/kiri/',
+    capa: 'projetos/kiri.jpg', video: 'projetos/kiri.mp4',
+    resumo: 'App que organiza prontuários escolares: lê os PDFs, sugere o tipo de cada documento e salva na pasta do aluno.' },
 ];
 
 const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
