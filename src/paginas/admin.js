@@ -12,7 +12,7 @@ import '../acessibilidade.js';
 import { brl, CATALOGO, TAXAS, liquidoCartao } from '../precos.js';
 import { ligado, sb, sessao } from '../supabase.js';
 import { montarEntrada } from '../entrar.js';
-import { nomePedido, mascararDoc, resultadoLeitura } from './conta-dados.js';
+import { visivel, nomePedido, mascararDoc, resultadoLeitura } from './conta-dados.js';
 import {
   META_MENSAL, noFiltro, contagens, tempoDesde, pedidoDoHash, resumoEtapas, statusPermitidos, faltaRestante,
   recebimentos, porMes, indicadores, funil, porPlano, alertas, resumoClientes, combina, ordenar, csv,
@@ -233,13 +233,13 @@ const linhaPedido = p => {
 
 function pedidosVisiveis() {
   const [chave, dir] = estado.ordem;
-  return ordenar(dados.pedidos.map(linhaPedido)
+  return ordenar(dados.pedidos.filter(visivel).map(linhaPedido)
     .filter(p => noFiltro(p, estado.filtro) && (!estado.tipo || p.tipo === estado.tipo))
     .filter(p => combina(estado.busca, p.cliente, p.cli?.email, p.cli?.whatsapp, p.plano_nome, p.dominio, p.id)), chave, dir);
 }
 
 function pintarPedidos() {
-  const c = contagens(dados.pedidos);
+  const c = contagens(dados.pedidos.filter(visivel));
   $$('[data-conta]').forEach(e => { e.textContent = String(c[e.dataset.conta]); });
   $$('[data-filtro]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filtro === estado.filtro)));
   $('[data-p-sub]').textContent = `${c.aguardando} aguardando pagamento · ${c.producao} em produção · ${c.entregue} entregues`;

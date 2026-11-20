@@ -12,7 +12,7 @@ import { CATALOGO, brl } from '../precos.js';
 import { ligado, sb, sessao, salvarCliente, cancelarManutencao } from '../supabase.js';
 import { montarEntrada } from '../entrar.js';
 import { linkConversa } from '../contato.js';
-import { secaoDoHash, projetosAtivos, manutencao, progresso, proximoPasso, mascararDoc, montarExportacao, nomePedido, linkProximaEtapa, resultadoLeitura } from './conta-dados.js';
+import { visivel, secaoDoHash, projetosAtivos, manutencao, progresso, proximoPasso, mascararDoc, montarExportacao, nomePedido, linkProximaEtapa, resultadoLeitura } from './conta-dados.js';
 
 const $ = s => document.querySelector(s);
 const mostrar = v => {
@@ -92,7 +92,7 @@ function pintarInicio() {
 }
 
 function pintarPedidos() {
-  const { pedidos, filtro } = estado;
+  const { filtro } = estado, pedidos = estado.pedidos.filter(visivel);
   const lista = pedidos.filter(p => filtro === 'todos' || (filtro === 'pago' ? ['pago', 'em_andamento', 'entregue'].includes(p.status) : p.status === filtro));
   $('[data-pedidos-vazio]').hidden = lista.length > 0;
   $('[data-pedidos-vazio-titulo]').textContent = pedidos.length ? 'Nenhum pedido com esse status' : 'Nenhum pedido ainda';

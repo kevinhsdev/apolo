@@ -71,3 +71,6 @@ export function resultadoLeitura(erros) {
   if (!lista.length) return 'ok';
   return lista.some(e => e.status === 401 || /jwt/i.test(e.message || '')) ? 'sessao' : 'falha';
 }
+
+// fica fora das listas: a renovação cancelada sem pagamento é só a marca de "não renovar" (cancelar-manutencao)
+export const visivel = p => !(p.renova_de && p.status === 'cancelado' && !p.pago_em);

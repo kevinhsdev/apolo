@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   SECOES, secaoDoHash, projetosAtivos, manutencao, progresso, proximoPasso,
-  mascararDoc, montarExportacao, nomePedido, linkProximaEtapa, resultadoLeitura,
+  mascararDoc, montarExportacao, visivel, nomePedido, linkProximaEtapa, resultadoLeitura,
 } from '../src/paginas/conta-dados.js';
 
 const ped = (o) => ({ id: o.id ?? 'p', tipo: 'site', plano: 'orbita', status: 'pago', criado_em: '2026-11-01T10:00:00Z', link_fatura: null, cobranca: 'mp-123', ...o });
@@ -107,4 +107,11 @@ test('leitura do banco: sessão vencida, falha passageira ou ok', () => {
   assert.equal(resultadoLeitura([null, { message: 'JWT expired' }]), 'sessao');
   assert.equal(resultadoLeitura([{ status: 503, message: 'Service Unavailable' }]), 'falha');
   assert.equal(resultadoLeitura([new TypeError('Failed to fetch')]), 'falha');
+});
+
+test('marca de "não renovar" fica fora das listas; pedidos reais continuam', () => {
+  assert.equal(visivel({ renova_de: 'a', status: 'cancelado', pago_em: null }), false);
+  assert.equal(visivel({ renova_de: 'a', status: 'aguardando' }), true);
+  assert.equal(visivel({ status: 'cancelado', pago_em: '2026-11-19' }), true);
+  assert.equal(visivel({ status: 'cancelado' }), true);
 });
