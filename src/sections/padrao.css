@@ -1,0 +1,29 @@
+/* Padrão Apolo: a checagem de 30 itens, mostrada como lista conferida */
+.padrao {
+  display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(36px, 6vw, 110px);
+  padding: 16vh var(--margem); border-top: 1px solid var(--fio);
+}
+.padrao__cabeca { position: sticky; top: 140px; align-self: start; }
+.padrao__cabeca .titulo { margin: 14px 0 18px; }
+.padrao__placar {
+  margin-top: clamp(28px, 6vh, 64px); font-family: 'Sora Variable', sans-serif; line-height: .9; letter-spacing: -.06em;
+  font-size: clamp(4rem, 9vw, 9rem); font-weight: 600; font-variant-numeric: tabular-nums;
+}
+.padrao__placar span { color: var(--tinta-3); font-weight: 300; }
+.padrao__lista { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--fio); }
+.padrao__item {
+  display: grid; grid-template-columns: 28px 120px 1fr; align-items: center; gap: 16px;
+  padding: 18px 0; border-bottom: 1px solid var(--fio);
+}
+.padrao__check { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; border: 1px solid rgba(255, 90, 31, .55); }
+.padrao__check svg { width: 13px; height: 13px; fill: none; stroke: var(--laranja); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.padrao__area { font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--tinta-3); }
+.padrao__texto { font-size: 1.0312rem; color: var(--tinta); }
+@media (max-width: 900px) {
+  .padrao { grid-template-columns: 1fr; padding: 12vh var(--margem); }
+  .padrao__cabeca { position: static; }
+  .padrao__item { grid-template-columns: 28px 1fr; row-gap: 2px; }
+  .padrao__area { grid-column: 2; }
+  .padrao__texto { grid-column: 2; }
+  .padrao__check { grid-row: span 2; }
+}

@@ -1,31 +1,19 @@
-/* Contato sem foto: a hora de quem visita, o título e uma caixa de conversa que abre o WhatsApp.
-   Atrás, o horizonte de um planeta acendendo em laranja. */
+/* Contato: os dois sócios e uma caixa de conversa que abre o WhatsApp. */
 .suporte {
   position: relative; isolation: isolate; overflow: hidden;
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .92fr); gap: clamp(36px, 5vw, 90px); align-items: center;
-  padding: 16vh var(--margem) 20vh;
+  padding: 16vh var(--margem) 16vh; border-top: 1px solid var(--fio);
 }
-.suporte__horizonte {
-  position: absolute !important; z-index: -1 !important; left: 50%; bottom: -160vw; width: 190vw; height: 190vw; transform: translateX(-50%);
-  border-radius: 50%; pointer-events: none;
-  background: radial-gradient(closest-side, var(--preto) 97.6%, rgba(255, 90, 31, .55) 99.2%, transparent 100%);
-  box-shadow: 0 -30px 120px -20px rgba(255, 90, 31, .32), 0 -6px 40px -10px rgba(255, 140, 90, .4);
+.socios { list-style: none; margin: 32px 0 0; padding: 0; display: grid; gap: 10px; max-width: 380px; }
+.socio { display: flex; align-items: center; gap: 14px; padding: 12px 14px; border: 1px solid var(--fio); border-radius: 16px; }
+.socio__inicial {
+  width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; flex: none;
+  font-family: 'Sora Variable', sans-serif; font-weight: 600; color: var(--preto); background: var(--tinta);
 }
-.suporte__horizonte::after {
-  content: ''; position: absolute; inset: 0; border-radius: 50%;
-  background: radial-gradient(60% 6% at 50% 0%, rgba(255, 180, 140, .22), transparent 100%);
-}
-.numero--c { display: block; margin-bottom: 6vh; }
-.suporte__relogio { font-size: var(--gigante); font-variant-numeric: tabular-nums; }
-/* relógio digital de 7 segmentos: traço aceso na tinta, apagado quase sumindo */
-.seg7 { display: inline-flex; align-items: stretch; gap: .06em; height: .82em; transform: skewX(-6deg); }
-.seg7__dig { height: 100%; width: auto; aspect-ratio: 64 / 100; overflow: visible; }
-.seg7__dig polygon { fill: rgb(var(--veu) / .055); transition: fill .25s; }
-.seg7__dig polygon.aceso { fill: var(--tinta); }
-.seg7__dois { display: flex; flex-direction: column; justify-content: center; gap: .2em; padding: 0 .04em; }
-.seg7__dois i { width: .075em; height: .075em; background: var(--laranja); }
-.suporte__dois { animation: pisca 2s steps(1) infinite; }
-.numero--c .numero__legenda { margin-top: 14px; }
+.socio b { display: block; font-weight: 600; font-size: .9688rem; }
+.socio small { color: var(--tinta-2); font-size: .8125rem; }
+.socios__lema { margin-top: 16px; font-size: .875rem; color: var(--tinta-2); }
+.socios__lema::before { content: ''; display: inline-block; width: 18px; height: 1px; margin-right: 10px; vertical-align: middle; background: var(--laranja); }
 .suporte__conteudo .titulo { margin-bottom: 18px; }
 
 /* caixa de conversa */
@@ -86,6 +74,5 @@
 
 @media (max-width: 900px) {
   .suporte { grid-template-columns: 1fr; padding: 12vh var(--margem) 16vh; }
-  .suporte__relogio { font-size: clamp(4rem, 21vw, 6rem); }
   .caixa__dica { display: none; }
 }

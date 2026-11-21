@@ -10,7 +10,7 @@ import './sections/dominio.css';
 import './sections/projetos.css';
 import './sections/planos.css';
 import './sections/migracao.css';
-import './sections/numeros.css';
+import './sections/padrao.css';
 import './sections/suporte.css';
 import './sections/fecho.css';
 import './estilo.js';
@@ -28,9 +28,7 @@ import { iniciarOferta } from './oferta.js';
 import { iniciarProjetos } from './motion/projetos.js';
 import { iniciarMetal } from './motion/metal.js';
 import { mountCromo } from './components/cromo/cromo-shader.js';
-import { iniciarAcoes, iniciarReticula } from './motion/rodape.js';
-import { iniciarRelogio } from './motion/relogio.js';
-import { iniciarNumeros } from './motion/numeros.js';
+import { iniciarAcoes } from './motion/rodape.js';
 import { iniciarNav } from './motion/nav.js';
 import { iniciarUsuario } from './motion/usuario.js';
 import { iniciarBarra } from './motion/barra.js';
@@ -69,13 +67,10 @@ if (cromo && !fraco) {
   mountCromo(cromo, '', { simbolo: document.querySelector('.nav__marca .marca__simbolo').outerHTML });
 }
 iniciarAcoes();
-iniciarReticula();
-iniciarRelogio();
 iniciarToque();
 iniciarNav();
 iniciarUsuario();
 iniciarBarra();
-iniciarNumeros();
 medirTudo();
 iniciarRevelar();
 

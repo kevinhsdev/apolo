@@ -1,16 +1,45 @@
-.fecho { padding: 18vh var(--margem) 14vh; }
-.fecho__nome { display: flex; align-items: center; gap: clamp(14px, 1.6vw, 28px); }
-.fecho__ponto { width: clamp(10px, 1vw, 16px); height: clamp(10px, 1vw, 16px); }
-.fecho__dominio { font-weight: 500; letter-spacing: -.05em; line-height: 1.05; white-space: nowrap; min-width: 0; }
-.fecho__linha { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-top: 4vh; flex-wrap: wrap; }
+/* fecho: o resumo do pedido como um cartão de embarque (domínio e pacote vêm da busca e dos planos) */
+.fecho { padding: 14vh var(--margem); }
+.bilhete {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
+  border: 1px solid var(--fio-forte); border-radius: 28px; overflow: hidden;
+  background: linear-gradient(135deg, rgb(var(--veu) / .04), transparent 60%);
+}
+.bilhete__corpo { padding: clamp(28px, 4vw, 56px); min-width: 0; }
+.fecho__nome { display: flex; align-items: center; gap: 14px; margin: 18px 0 14px; min-width: 0; }
+.fecho__ponto { width: 12px; height: 12px; }
+.fecho__dominio {
+  font-family: 'Sora Variable', sans-serif; font-size: clamp(1.75rem, 4.4vw, 4rem); font-weight: 600;
+  letter-spacing: -.045em; line-height: 1.05; min-width: 0; overflow-wrap: anywhere;
+}
 .fecho__texto { font-size: var(--lead); font-weight: 500; letter-spacing: -.02em; color: var(--tinta-2); }
-.fecho__texto strong { color: var(--tinta); font-weight: 500; }
-.fecho__acoes { display: flex; gap: 6px; }
+.fecho__texto strong { color: var(--tinta); font-weight: 600; }
+.bilhete__nota { margin-top: 18px; font-size: .8125rem; color: var(--tinta-3); }
+.bilhete__canhoto {
+  position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 20px;
+  padding: clamp(28px, 3vw, 44px); border-left: 2px dashed var(--fio-forte);
+}
+/* os recortes do canhoto */
+.bilhete__canhoto::before, .bilhete__canhoto::after {
+  content: ''; position: absolute; left: -15px; width: 28px; height: 28px; border-radius: 50%; background: var(--preto);
+  border: 1px solid var(--fio-forte);
+}
+.bilhete__canhoto::before { top: -15px; }
+.bilhete__canhoto::after { bottom: -15px; }
+.bilhete__campo small { display: block; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--tinta-3); margin-bottom: 4px; }
+.bilhete__campo b { font-weight: 600; font-size: 1.0625rem; }
+.fecho__acoes { display: flex; }
 .fecho > * { opacity: 0; transform: translateY(18px); transition: opacity .9s var(--ease-out), transform .9s var(--ease-out); }
-.fecho > .fecho__linha { transition-delay: .18s; }
 .fecho.is-visivel > * { opacity: 1; transform: none; }
+@media (max-width: 760px) {
+  .bilhete { grid-template-columns: 1fr; }
+  .bilhete__canhoto { border-left: 0; border-top: 2px dashed var(--fio-forte); }
+  .bilhete__canhoto::before, .bilhete__canhoto::after { top: -15px; bottom: auto; }
+  .bilhete__canhoto::before { left: -15px; }
+  .bilhete__canhoto::after { left: auto; right: -15px; }
+}
 
-/* rodapé: chamada final, grade de ações e a marca em retícula */
+/* rodapé: chamada final e grade de ações */
 .rodape { position: relative; overflow: hidden; padding: 0 var(--margem); background: linear-gradient(180deg, transparent, var(--preto) 30%); }
 .rodape__chamada {
   display: flex; flex-direction: column; align-items: center; text-align: center;
@@ -52,8 +81,6 @@
 .rodape__topo-btn { font-size: 0.8125rem; color: inherit; }
 :where(html:not(.is-scrolling)) .rodape__base .link:hover { color: var(--tinta); }
 
-.reticula { position: relative; margin: 0 calc(var(--margem) * -1); cursor: crosshair; touch-action: pan-y; }
-.reticula canvas { display: block; }
 
 /* destaque quando um link do rodapé leva até o item */
 .is-destaque { animation: destaque 1.6s var(--ease-out); }
@@ -68,7 +95,8 @@
   .rodape__marca { grid-column: 1 / -1; }
 }
 @media (max-width: 760px) {
-  .fecho__nome { flex-direction: column; align-items: flex-start; gap: 18px; }
   .rodape__grade { grid-template-columns: 1fr; }
   .rodape__base { flex-direction: column; }
 }
+.rodape__logo b { font-weight: 700; }
+.rodape__studio { font-weight: 300; color: var(--tinta-3); }
