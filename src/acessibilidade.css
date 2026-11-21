@@ -71,3 +71,8 @@ body.conta .a11y-painel { bottom: calc(72px + var(--barra-conta, 0px)); }
 /* no painel da conta o pé do menu lateral tem o botão Sair: o botão vai para a direita */
 body.conta.is-painel .a11y-botao { left: auto; right: 16px; }
 body.conta.is-painel .a11y-painel { left: auto; right: 16px; }
+/* celular: mais discreto e encostado no canto, para não cobrir o conteúdo */
+@media (max-width: 760px) {
+  .a11y-botao { left: 10px; bottom: calc(10px + env(safe-area-inset-bottom)); width: 40px; height: 40px; background: rgb(10 10 10 / .55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  .a11y-botao svg { width: 19px; height: 19px; }
+}

@@ -6,6 +6,7 @@
   display: grid; grid-template-rows: 1fr auto; row-gap: clamp(18px, 3vh, 44px);
   padding: calc(var(--topo) + clamp(16px, 3vh, 40px)) var(--margem) clamp(20px, 3.5vh, 36px);
   touch-action: pan-y pinch-zoom;
+  overflow-x: clip; /* a órbita passa da borda: sem isso a página fica mais larga que a tela */
 }
 html.tem-faixa .hero { --topo: 134px; }
 /* tudo em fluxo: nada fica por cima de nada, em qualquer altura de tela */

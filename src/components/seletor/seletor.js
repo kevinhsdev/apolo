@@ -18,9 +18,14 @@ export function montarSeletor(raiz, itens, { rotulo = 'Projetos' } = {}) {
         <span class="isel__info"><span class="isel__title">${esc(p.nome)}</span><span class="isel__desc">${esc(p.categoria)} · ${esc(p.resumo)}</span></span>
         <span class="isel__ver" data-projeto="${esc(p.slug)}">Ver ao vivo ${SETA}</span>
       </span>
-    </button>`).join('')}</div>`;
+    </button>`).join('')}</div>
+    <p class="isel__dica" aria-hidden="true"><span>Deslize para ver os outros →</span><span class="isel__pontos">${itens.map(() => '<i></i>').join('')}</span></p>`;
 
   const opcoes = [...raiz.querySelectorAll('.isel__option')];
+  const lista = raiz.querySelector('.isel__list');
+  const pontos = [...raiz.querySelectorAll('.isel__pontos i')];
+  // no celular a lista vira um carrossel que rola de lado
+  const carrossel = () => getComputedStyle(lista).overflowX === 'auto';
   const reduzido = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let ativo = -1, visivel = false;
 
@@ -31,7 +36,8 @@ export function montarSeletor(raiz, itens, { rotulo = 'Projetos' } = {}) {
       o.setAttribute('aria-checked', String(k === i));
       o.tabIndex = k === i ? 0 : -1;
     });
-    if (foco) opcoes[i].focus();
+    pontos.forEach((p, k) => p.classList.toggle('is-ativo', k === i));
+    if (foco) opcoes[i].focus({ preventScroll: carrossel() });
     tocar();
   }
   function tocar() {
@@ -49,7 +55,11 @@ export function montarSeletor(raiz, itens, { rotulo = 'Projetos' } = {}) {
     const o = e.target.closest('.isel__option');
     if (!o) return;
     const i = Number(o.dataset.indice);
-    if (i !== ativo) { e.stopPropagation(); escolher(i); return; }
+    if (i !== ativo) {
+      e.stopPropagation();
+      if (carrossel()) { centralizar(i); if (!e.target.closest('[data-projeto]')) return; o.querySelector('[data-projeto]').click(); return; }
+      escolher(i); return;
+    }
     if (!e.target.closest('[data-projeto]')) o.querySelector('[data-projeto]').click();
   }, true);
   raiz.addEventListener('keydown', e => {
@@ -59,7 +69,25 @@ export function montarSeletor(raiz, itens, { rotulo = 'Projetos' } = {}) {
     if (!(e.key in mapa)) return;
     e.preventDefault();
     escolher((mapa[e.key] + n) % n, true);
+    if (carrossel()) centralizar(ativo);
   });
+
+  function centralizar(i) {
+    const o = opcoes[i];
+    lista.scrollTo({ left: o.offsetLeft - (lista.clientWidth - o.offsetWidth) / 2, behavior: reduzido ? 'auto' : 'smooth' });
+  }
+  // carrossel: o cartão que para no meio vira o escolhido
+  let pedido = 0;
+  lista.addEventListener('scroll', () => {
+    if (!carrossel()) return;
+    cancelAnimationFrame(pedido);
+    pedido = requestAnimationFrame(() => {
+      const meio = lista.scrollLeft + lista.clientWidth / 2;
+      let melhor = 0, dist = Infinity;
+      opcoes.forEach((o, k) => { const d = Math.abs(o.offsetLeft + o.offsetWidth / 2 - meio); if (d < dist) { dist = d; melhor = k; } });
+      escolher(melhor);
+    });
+  }, { passive: true });
 
   new IntersectionObserver(([e]) => {
     visivel = e.isIntersecting;
