@@ -32,6 +32,7 @@ import { mountCromo } from './components/cromo/cromo-shader.js';
 import { iniciarAcoes } from './motion/rodape.js';
 import { iniciarRelogio } from './motion/relogio.js';
 import { iniciarNumeros } from './motion/numeros.js';
+import { iniciarPlacar } from './motion/placar.js';
 import { iniciarNav } from './motion/nav.js';
 import { iniciarUsuario } from './motion/usuario.js';
 import { iniciarBarra } from './motion/barra.js';
@@ -77,6 +78,7 @@ iniciarUsuario();
 iniciarBarra();
 medirTudo();
 iniciarNumeros();
+iniciarPlacar();
 iniciarRevelar();
 
 // o texto do hero entra quando a fonte chega (ou em 2,5 s, no máximo)
