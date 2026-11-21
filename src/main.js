@@ -129,6 +129,7 @@ Promise.all([
     canvas.classList.add('is-pronto');
     luaPronta();
     podeMedir();
+    coreografia.acender(performance.now() / 1000);
   };
   fontes.then(() => { medirTudo(); coreografia.remedir(); });
   let largura = tela.w;

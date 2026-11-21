@@ -1,6 +1,7 @@
-// Para onde a Lua vai em cada ponto da rolagem: posição, tamanho e giro.
+// Para onde a Lua vai em cada ponto da rolagem: posição, tamanho e giro, e a luz dos pousos acesos.
 // A página nunca para: a Lua é uma camada fixa que sobe mais devagar que o conteúdo.
 import { L } from './layout.js';
+import { REGIOES } from './globo.js';
 import { tela, amortecer, limitar, suave, misturar, faixa, reduzido } from './rolagem.js';
 
 // quadros-chave: s = posição da rolagem (px); o resto é o estado do globo
@@ -36,7 +37,17 @@ export function criarCoreografia(globo) {
   const aplicado = {};
   const giro = { lat: 0, lon: 0 }; // somado ao roteiro quando a mão gira o globo no hero
 
+  // os pousos acesos: na entrada acendem um a um, de oeste para leste, quando estão de frente
+  const aceso = new Array(REGIOES.length).fill(false);
+  const ordemOeste = REGIOES.map((r, i) => ({ i, lon: r.lon })).sort((a, b) => a.lon - b.lon)
+    .reduce((o, r, k) => { o[r.i] = k; return o; }, []);
+  const ponto = {};
+  let inicio = -1;
+
   function remedir() { qs = quadros(); }
+
+  /** liga a entrada dos pontos (quando a Lua termina de carregar) */
+  function acender(agora) { inicio = agora; }
 
   let ultimoY = tela.y;
   function quadro(dt, agora) {
@@ -56,11 +67,20 @@ export function criarCoreografia(globo) {
     aplicado.lon = atual.lon + giro.lon;
     globo.aplicar(aplicado);
 
-    // sem pontos acesos: a luz laranja do hero é o satélite da órbita
+    for (let i = 0; i < REGIOES.length; i++) {
+      globo.projetar(i, ponto);
+      if (!aceso[i] && inicio >= 0 && ponto.face > 0.18) {
+        if (agora - inicio > 0.55 + ordemOeste[i] * 0.11 || tela.y > 40) aceso[i] = true;
+      }
+      const alvoBrilho = aceso[i] ? 1 : 0;
+      const sobe = alvoBrilho > globo.brilho[i];
+      globo.brilho[i] = reduzido ? alvoBrilho : amortecer(globo.brilho[i], alvoBrilho, sobe ? 5 : 3.5, dt);
+    }
+    // a órbita do hero some conforme a página desce
     document.documentElement.style.setProperty('--rolou', Math.min(1, tela.y / (tela.h * 0.35)).toFixed(3));
   }
 
   const visivel = () => atual.cy + atual.r > -80 && atual.cy - atual.r < tela.h + 80;
 
-  return { quadro, remedir, visivel, atual, giro };
+  return { quadro, remedir, acender, visivel, atual, giro };
 }
