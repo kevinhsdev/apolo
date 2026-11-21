@@ -1,16 +1,20 @@
 /* Hero da Apolo: título grande à esquerda, a Lua nascendo à direita com uma órbita
    e o satélite laranja (o site do cliente em órbita). Medidas da Lua: layout.js (--lua-*). */
 .hero {
-  position: relative; height: 100svh; min-height: 620px;
-  display: flex; flex-direction: column; justify-content: center;
-  padding: 96px var(--margem) 0;
+  --topo: 96px; /* altura da nav (+ a faixa da oferta, quando aparece) */
+  position: relative; min-height: 100svh;
+  display: grid; grid-template-rows: 1fr auto; row-gap: clamp(18px, 3vh, 44px);
+  padding: calc(var(--topo) + clamp(16px, 3vh, 40px)) var(--margem) clamp(20px, 3.5vh, 36px);
   touch-action: pan-y pinch-zoom;
 }
+html.tem-faixa .hero { --topo: 134px; }
+/* tudo em fluxo: nada fica por cima de nada, em qualquer altura de tela */
+.hero__conteudo { align-self: center; display: flex; flex-direction: column; align-items: flex-start; }
 .hero.is-giravel { cursor: grab; }
 .hero.is-girando { cursor: grabbing; }
 
 .hero__missao {
-  display: inline-flex; align-items: center; gap: 10px; align-self: flex-start;
+  display: inline-flex; align-items: center; gap: 10px;
   margin-bottom: clamp(18px, 3vh, 32px);
   font-size: .875rem; letter-spacing: .02em; color: var(--tinta-2);
   opacity: 0; transition: opacity .8s var(--ease-out) .2s;
@@ -20,7 +24,7 @@ html.is-pronto .hero__missao { opacity: 1; }
 
 .hero__lead {
   font-family: 'Sora Variable', 'Figtree Variable', sans-serif;
-  font-size: clamp(3rem, 7vw, 8rem); font-weight: 600; line-height: 1.02; letter-spacing: -.055em;
+  font-size: clamp(2.75rem, min(7vw, 10.5svh), 8rem); font-weight: 600; line-height: 1.02; letter-spacing: -.055em;
   max-width: 9ch;
 }
 .hero__lead em { font-style: normal; font-weight: 300; color: var(--tinta-2); }
@@ -41,7 +45,7 @@ html.is-pronto .hero__acoes { opacity: 1; transform: none; }
 
 /* a órbita: elipse fina inclinada em volta da Lua; some ao rolar (a Lua sobe mais devagar que a página) */
 .hero__orbita {
-  position: absolute; z-index: 2;
+  position: absolute !important; z-index: 2 !important;
   left: var(--lua-x, 74vw); top: var(--lua-y, 58vh);
   width: calc(var(--lua-d, 56vw) * 1.5); height: auto;
   transform: translate(-50%, -50%) rotate(-16deg);
@@ -49,13 +53,14 @@ html.is-pronto .hero__acoes { opacity: 1; transform: none; }
   opacity: 0; transition: opacity 1.4s var(--ease-out) 1s;
 }
 html.is-pronto .hero__orbita { opacity: calc(1 - var(--rolou, 0)); }
+.hero__orbita--tras { z-index: 0 !important; } /* abaixo do canvas da Lua (z 1) */
 .hero__orbita ellipse { fill: none; stroke: var(--fio-forte); stroke-width: 1; vector-effect: non-scaling-stroke; }
 .hero__satelite { fill: var(--laranja); filter: drop-shadow(0 0 4px var(--laranja)); }
 
-/* telemetria: o que vai em todo site, no rodapé do hero */
+/* telemetria: o que vai em todo site, na base do hero (em fluxo, abaixo dos botões) */
 .hero__telemetria {
-  position: absolute; left: max(var(--margem), 84px); right: var(--margem); bottom: clamp(20px, 4vh, 40px);
-  display: flex; flex-wrap: wrap; gap: 8px 36px; list-style: none; padding: 18px 0 0; margin: 0;
+  justify-self: start; margin: 0 0 0 max(0px, calc(76px - var(--margem))); /* livre do botão de acessibilidade */
+  display: flex; flex-wrap: wrap; gap: 8px 36px; list-style: none; padding: 16px 0 0;
   border-top: 1px solid var(--fio);
   font-size: .8125rem; color: var(--tinta-2);
   opacity: 0; transition: opacity .8s var(--ease-out) 1s;
@@ -66,10 +71,13 @@ html.is-pronto .hero__telemetria { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .hero__satelite { display: none; } }
 
 @media (max-width: 760px) {
-  .hero { justify-content: flex-start; padding-top: calc(64px + 40px); }
-  .hero__lead { font-size: clamp(2.75rem, 13.5vw, 3.75rem); }
+  .hero { --topo: 64px; grid-template-rows: auto; align-content: start; }
+  html.tem-faixa .hero { --topo: 102px; }
+  .hero__conteudo { align-self: start; }
+  .hero__lead { font-size: clamp(2.25rem, 12.4vw, 3.75rem); }
   .hero__preco { font-size: 1rem; }
   .hero__preco .linha > span { white-space: normal; }
   .hero__acoes { gap: 18px; }
-  .hero__telemetria { left: var(--margem); bottom: 84px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; font-size: .75rem; background: linear-gradient(transparent, rgb(var(--preto-rgb) / .85) 40%); padding: 26px 0 0; border-top: 0; }
+  .hero__telemetria { display: none; } /* o preço já diz prazo, LGPD e Google */
 }
+.hero__link { white-space: nowrap; }

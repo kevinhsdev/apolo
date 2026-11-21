@@ -55,14 +55,21 @@ export function medirHero() {
   const W = tela.w;
   const H = hero.getBoundingClientRect().height;
   let cx; let cy; let d;
+  const conteudo = hero.querySelector('.hero__conteudo');
   if (tela.celular) {
+    // embaixo do texto, sem encostar nos botões
     d = W * 1.15;
     cx = W * 0.7;
-    cy = H + d * 0.02;
+    const fim = conteudo.offsetTop + conteudo.offsetHeight;
+    cy = Math.max(H + d * 0.02, fim + 40 + d / 2);
   } else {
-    d = Math.min(H * 0.86, W * 0.5);
+    // à direita, sem invadir a linha mais longa do título
+    const direita = Math.max(...[...hero.querySelectorAll('.hero__lead .linha > span')].map(el => el.getBoundingClientRect().right));
+    // e sem subir até a nav (nem a faixa da oferta)
+    const topo = parseFloat(getComputedStyle(hero).getPropertyValue('--topo')) || 96;
+    cy = H * 0.56;
+    d = Math.min(H * 0.86, W * 0.5, (W - direita - 48) / 0.8, (cy - topo - 20) * 2);
     cx = W - d * 0.3;
-    cy = H * 0.6;
   }
   hero.style.setProperty('--lua-x', `${cx.toFixed(1)}px`);
   hero.style.setProperty('--lua-y', `${cy.toFixed(1)}px`);

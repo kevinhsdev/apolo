@@ -52,6 +52,20 @@ html.t-claro .nav__tema-lua { display: block; }
 .menu.is-aberto .menu__link:nth-child(5) { transition-delay: 220ms; }
 .menu__pe { display: flex; justify-content: space-between; align-items: center; font-size: 0.9375rem; }
 
+/* tablet: os links não cabem ao lado da marca; viram o botão Menu à esquerda */
+@media (min-width: 761px) and (max-width: 1080px) {
+  .nav__grupo--esq { display: none; }
+  .nav__menu {
+    grid-column: 1; grid-row: 1; justify-self: start;
+    display: inline-flex; height: 40px; padding: 0 18px; border-radius: 999px;
+    border: 1px solid var(--fio-forte); font-size: 0.875rem; font-weight: 500; align-items: center;
+    transition: background-color .3s, color .3s;
+  }
+  .nav__menu[aria-expanded='true'] { background: var(--tinta); color: var(--preto); border-color: var(--tinta); }
+  .nav__marca { grid-column: 2; grid-row: 1; }
+  .nav__grupo--dir { grid-column: 3; grid-row: 1; }
+}
+
 @media (max-width: 760px) {
   .nav { height: 64px; grid-template-columns: 1fr auto; }
   .nav__grupo { display: none; }
@@ -179,4 +193,10 @@ html.t-claro .nav__tema-lua { display: block; }
 @media (max-width: 420px) {
   .conta-nav__entrar { width: 36px; padding: 0; justify-content: center; }
   .conta-nav__entrar .rola { display: none; }
+}
+/* celular pequeno (até 380 px): marca menor para o Menu caber */
+@media (max-width: 380px) {
+  .nav { gap: 8px; }
+  .nav__marca { font-size: 1.4rem; }
+  .nav__menu { padding: 0 13px; }
 }

@@ -138,6 +138,7 @@
 
   <main id="conteudo">
     <section class="hero" id="topo">
+      <div class="hero__conteudo">
       <p class="hero__missao" aria-hidden="true"><span class="ponto ponto--vivo"></span>Agenda aberta para novos projetos</p>
       <h1 class="hero__lead">
         <span class="linha"><span>Sites para</span></span>
@@ -152,7 +153,10 @@
         <a class="metal-btn" href="#pacotes"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Quero meu site</span><span class="metal-btn__orb" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
         <a class="link hero__link" href="#projetos">Ver projetos no ar</a>
       </div>
-      <svg class="hero__orbita" aria-hidden="true" viewBox="-146 -43 292 86"><ellipse cx="0" cy="0" rx="144" ry="41"/><circle class="hero__satelite" r="2.4"><animateMotion dur="16s" repeatCount="indefinite" path="M144 0A144 41 0 1 1 -144 0A144 41 0 1 1 144 0"/></circle></svg>
+      </div>
+      <!-- órbita em duas camadas: a de trás fica atrás da Lua (o canvas a esconde onde passa por ela); a da frente só mostra a metade de baixo -->
+      <svg class="hero__orbita hero__orbita--tras" aria-hidden="true" viewBox="-146 -43 292 86"><ellipse cx="0" cy="0" rx="144" ry="41"/><circle class="hero__satelite" r="1.5"><animateMotion dur="16s" repeatCount="indefinite" path="M144 0A144 41 0 1 1 -144 0A144 41 0 1 1 144 0"/></circle></svg>
+      <svg class="hero__orbita hero__orbita--frente" aria-hidden="true" viewBox="-146 -43 292 86"><defs><clipPath id="orbita-frente"><rect x="-150" y="0" width="300" height="50"/></clipPath></defs><g clip-path="url(#orbita-frente)"><ellipse cx="0" cy="0" rx="144" ry="41"/><circle class="hero__satelite" r="1.5"><animateMotion dur="16s" repeatCount="indefinite" path="M144 0A144 41 0 1 1 -144 0A144 41 0 1 1 144 0"/></circle></g></svg>
       <ol class="hero__telemetria" aria-label="Em todo site">
         <li><b>T-7</b> dias úteis</li>
         <li><b>30/30</b> itens do Padrão Apolo</li>
