@@ -1,5 +1,4 @@
-// Medidas da página: ajusta as palavras gigantes à largura da tela e posiciona o hero
-// (palavra, texto e globo) com as proporções do conceito. Roda no load, nas fontes e no resize.
+// Medidas da página: ajusta as palavras gigantes à largura da tela e posiciona a Lua do hero. Roda no load, nas fontes e no resize.
 import { tela } from './rolagem.js';
 
 const docTop = el => el.getBoundingClientRect().top + window.scrollY;
@@ -35,10 +34,6 @@ export function ajustarPalavras() {
     const m = medir(el);
     const borda = Math.max(6, tela.w * 0.007);
     let f = ((tela.w - borda * 2) / m.w) * 100;
-    if (el.classList.contains('hero__palavra') && !tela.celular) {
-      // em tela muito larga a palavra não passa de 36% da altura
-      f = Math.min(f, (tela.h * 0.36) / (m.alto / 100));
-    }
     el.style.fontSize = `${f.toFixed(2)}px`;
     el._medida = { f, base: (m.base * f) / 100, alto: (m.alto * f) / 100, w: (m.w * f) / 100 };
   });
@@ -55,56 +50,27 @@ export function ajustarPalavras() {
 }
 
 export function medirHero() {
+  // a Lua nasce à direita, cortada pela borda; no celular, embaixo, atrás da telemetria
   const hero = document.querySelector('.hero');
-  const palavra = hero.querySelector('.hero__palavra');
-  const m = palavra._medida;
   const W = tela.w;
   const H = hero.getBoundingClientRect().height;
-  const navH = tela.celular ? 64 : 96;
-  let topoLetras;
-  let d;
-  let globoTopo;
+  let cx; let cy; let d;
   if (tela.celular) {
-    const preco = hero.querySelector('.hero__preco');
-    const lead = hero.querySelector('.hero__lead');
-    const leadFim = lead.offsetTop + lead.offsetHeight;
-    hero.style.setProperty('--preco-topo', `${Math.round(leadFim + 18)}px`);
-    const precoFim = leadFim + 18 + preco.offsetHeight;
-    topoLetras = Math.max(precoFim + 40, H * 0.355);
-    d = W * 1.5;
-    globoTopo = topoLetras + m.alto * 0.7;
+    d = W * 1.15;
+    cx = W * 0.7;
+    cy = H + d * 0.02;
   } else {
-    topoLetras = Math.max(navH + 16, H * 0.137);
-    d = Math.min(W * 0.515, H * 0.88);
-    globoTopo = topoLetras + m.alto * 0.71;
+    d = Math.min(H * 0.86, W * 0.5);
+    cx = W - d * 0.3;
+    cy = H * 0.6;
   }
-  const palavraTopo = topoLetras - (m.base - m.alto);
-  const base = topoLetras + m.alto;
-  hero.style.setProperty('--palavra-tam', `${m.f.toFixed(2)}px`);
-  hero.style.setProperty('--palavra-topo', `${palavraTopo.toFixed(1)}px`);
-  hero.style.setProperty('--base', `${base.toFixed(1)}px`);
-  hero.style.setProperty('--globo-topo', `${globoTopo.toFixed(1)}px`);
-  hero.style.setProperty('--globo-d', `${d.toFixed(1)}px`);
-  L.hero = { altura: H, topoLetras, base, globoTopo, d };
+  hero.style.setProperty('--lua-x', `${cx.toFixed(1)}px`);
+  hero.style.setProperty('--lua-y', `${cy.toFixed(1)}px`);
+  hero.style.setProperty('--lua-d', `${d.toFixed(1)}px`);
+  L.hero = { altura: H, cx, cy, d };
 }
 
 export function medirSecoes() {
-  // o globo das regiões: cabe entre as duas colunas de texto
-  const margem = Math.min(72, Math.max(20, tela.w * 0.039));
-  L.r1 = tela.celular ? tela.w * 0.5 : Math.min(tela.h * 0.37, (tela.w - 2 * margem) * 0.225);
-  document.documentElement.style.setProperty('--globo-regioes', `${(L.r1 * 2).toFixed(1)}px`);
-  const reg = document.querySelector('.regioes');
-  const a = reg.querySelector('.regioes__bloco--a');
-  const b = reg.querySelector('.regioes__bloco--b');
-  L.regioes = {
-    topo: docTop(reg),
-    altura: reg.offsetHeight,
-    a: { topo: docTop(a), altura: a.offsetHeight },
-    b: { topo: docTop(b), altura: b.offsetHeight },
-  };
-  const campo = document.querySelector('.busca__campo');
-  L.busca = { topo: docTop(campo), altura: campo.offsetHeight, esquerda: campo.getBoundingClientRect().left };
-  L.dominio = { topo: docTop(document.querySelector('.dominio')) };
   const rodape = document.querySelector('.rodape');
   L.rodape = { topo: docTop(rodape), altura: rodape.offsetHeight };
   L.doc = document.documentElement.scrollHeight;

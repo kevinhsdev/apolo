@@ -1,42 +1,75 @@
+/* Hero da Apolo: título grande à esquerda, a Lua nascendo à direita com uma órbita
+   e o satélite laranja (o site do cliente em órbita). Medidas da Lua: layout.js (--lua-*). */
 .hero {
-  position: relative; height: 100svh; min-height: 560px;
+  position: relative; height: 100svh; min-height: 620px;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 96px var(--margem) 0;
   touch-action: pan-y pinch-zoom;
 }
 .hero.is-giravel { cursor: grab; }
 .hero.is-girando { cursor: grabbing; }
-.hero__palavra {
-  position: absolute; left: 0; right: 0; top: var(--palavra-topo, 12vh);
-  text-align: center; font-size: var(--palavra-tam, 22vw);
-  opacity: 0; transition: opacity 1.4s var(--ease-out);
-  /* a marca em contorno fino: assina a página sem disputar com a Lua */
-  color: var(--tinta); font-weight: 400; /* o filtro deixa só a borda, a 22% */
-  font-family: 'Sora Variable', 'Figtree Variable', sans-serif; letter-spacing: .01em;
-  /* contorno pelo filtro: desenha a letra cheia e tira o miolo, então os traços sobrepostos da fonte não aparecem */
-  filter: url(#contorno-palavra);
+
+.hero__missao {
+  display: inline-flex; align-items: center; gap: 10px; align-self: flex-start;
+  margin-bottom: clamp(18px, 3vh, 32px);
+  font-size: .875rem; letter-spacing: .02em; color: var(--tinta-2);
+  opacity: 0; transition: opacity .8s var(--ease-out) .2s;
 }
-html.is-pronto .hero__palavra { opacity: 1; }
+.hero__missao .ponto { width: 7px; height: 7px; }
+html.is-pronto .hero__missao { opacity: 1; }
+
 .hero__lead {
-  position: absolute; left: var(--margem); top: calc(var(--base, 50vh) + clamp(34px, 6.4vh, 70px));
-  font-size: var(--lead); font-weight: 500; line-height: 1.14; letter-spacing: -.025em;
+  font-family: 'Sora Variable', 'Figtree Variable', sans-serif;
+  font-size: clamp(3rem, 7vw, 8rem); font-weight: 600; line-height: 1.02; letter-spacing: -.055em;
+  max-width: 9ch;
 }
+.hero__lead em { font-style: normal; font-weight: 300; color: var(--tinta-2); }
 .hero__preco {
-  position: absolute; right: var(--margem); top: calc(var(--base, 50vh) + clamp(34px, 6.4vh, 70px) + 1.14em);
-  font-size: clamp(1.0625rem, 1.66vw, 1.625rem); font-weight: 500; line-height: 1.2; letter-spacing: -.02em; text-align: right;
-  color: var(--tinta);
+  margin-top: clamp(20px, 3.4vh, 36px);
+  font-size: clamp(1.0625rem, 1.3vw, 1.3125rem); line-height: 1.45; color: var(--tinta-2);
 }
-.hero__preco .linha:last-child > span { color: var(--tinta-2); }
-.hero__lead .linha > span { transition-delay: calc(350ms + var(--i, 0) * 70ms); }
-.hero__preco .linha > span { transition-delay: calc(500ms + var(--i, 0) * 70ms); }
+.hero__preco .linha:first-child > span { color: var(--tinta); }
+.hero__lead .linha > span { transition-delay: calc(350ms + var(--i, 0) * 80ms); }
+.hero__preco .linha > span { transition-delay: calc(560ms + var(--i, 0) * 70ms); }
+
 .hero__acoes {
-  position: absolute; left: 50%; top: calc(var(--globo-topo, 60vh) + var(--globo-d, 50vw) * .425);
-  transform: translate(-50%, 14px); display: flex; gap: 6px; opacity: 0;
-  transition: opacity .8s var(--ease-out) .7s, transform .8s var(--ease-out) .7s;
+  display: flex; align-items: center; gap: 22px; margin-top: clamp(24px, 4vh, 40px);
+  opacity: 0; transform: translateY(14px);
+  transition: opacity .8s var(--ease-out) .75s, transform .8s var(--ease-out) .75s;
 }
-html.is-pronto .hero__acoes { opacity: 1; transform: translate(-50%, 0); }
+html.is-pronto .hero__acoes { opacity: 1; transform: none; }
+
+/* a órbita: elipse fina inclinada em volta da Lua; some ao rolar (a Lua sobe mais devagar que a página) */
+.hero__orbita {
+  position: absolute; z-index: 2;
+  left: var(--lua-x, 74vw); top: var(--lua-y, 58vh);
+  width: calc(var(--lua-d, 56vw) * 1.5); height: auto;
+  transform: translate(-50%, -50%) rotate(-16deg);
+  overflow: visible; pointer-events: none;
+  opacity: 0; transition: opacity 1.4s var(--ease-out) 1s;
+}
+html.is-pronto .hero__orbita { opacity: calc(1 - var(--rolou, 0)); }
+.hero__orbita ellipse { fill: none; stroke: var(--fio-forte); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.hero__satelite { fill: var(--laranja); filter: drop-shadow(0 0 4px var(--laranja)); }
+
+/* telemetria: o que vai em todo site, no rodapé do hero */
+.hero__telemetria {
+  position: absolute; left: max(var(--margem), 84px); right: var(--margem); bottom: clamp(20px, 4vh, 40px);
+  display: flex; flex-wrap: wrap; gap: 8px 36px; list-style: none; padding: 18px 0 0; margin: 0;
+  border-top: 1px solid var(--fio);
+  font-size: .8125rem; color: var(--tinta-2);
+  opacity: 0; transition: opacity .8s var(--ease-out) 1s;
+}
+html.is-pronto .hero__telemetria { opacity: 1; }
+.hero__telemetria b { color: var(--tinta); font-weight: 600; margin-right: 4px; font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) { .hero__satelite { display: none; } }
 
 @media (max-width: 760px) {
-  .hero__lead { top: calc(64px + 28px); font-size: clamp(1.625rem, 7.4vw, 2rem); }
-  .hero__preco { left: var(--margem); right: auto; text-align: left; top: var(--preco-topo, 200px); font-size: 1rem; }
-  .hero__preco .linha > span { color: var(--tinta-2); }
-  .hero__acoes { top: calc(var(--globo-topo, 60vh) + var(--globo-d, 100vw) * .36); }
+  .hero { justify-content: flex-start; padding-top: calc(64px + 40px); }
+  .hero__lead { font-size: clamp(2.75rem, 13.5vw, 3.75rem); }
+  .hero__preco { font-size: 1rem; }
+  .hero__preco .linha > span { white-space: normal; }
+  .hero__acoes { gap: 18px; }
+  .hero__telemetria { left: var(--margem); bottom: 84px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; font-size: .75rem; background: linear-gradient(transparent, rgb(var(--preto-rgb) / .85) 40%); padding: 26px 0 0; border-top: 0; }
 }

@@ -1,0 +1,47 @@
+/* Processo como contagem regressiva: T-5 até T-0 (no ar). Fluxo normal, sem a Lua por trás. */
+.contagem { padding: clamp(110px, 18vh, 200px) var(--margem) clamp(90px, 14vh, 160px); }
+.contagem__cabeca { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 48px; align-items: end; margin-bottom: clamp(48px, 8vh, 88px); }
+.contagem__cabeca .rotulo { grid-column: 1 / -1; }
+.contagem__cabeca .corpo { justify-self: end; max-width: 42ch; }
+.rotulo { font-size: .8125rem; letter-spacing: .08em; text-transform: uppercase; color: var(--tinta-2); }
+
+.contagem__etapas {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--fio);
+}
+.etapa {
+  position: relative; padding: 28px 28px 40px 0;
+  border-bottom: 1px solid var(--fio);
+}
+.etapa:not(:nth-child(3n)) { border-right: 1px solid var(--fio); }
+.etapa:not(:nth-child(3n + 1)) { padding-left: 28px; }
+.etapa__t {
+  display: block; margin-bottom: clamp(28px, 6vh, 64px);
+  font-family: 'Sora Variable', 'Figtree Variable', sans-serif;
+  font-size: clamp(2.5rem, 4.6vw, 4.5rem); font-weight: 300; letter-spacing: -.05em; line-height: 1;
+  color: var(--tinta-3); font-variant-numeric: tabular-nums;
+}
+.etapa h3 { font-size: 1.1875rem; font-weight: 600; letter-spacing: -.015em; margin: 0 0 8px; }
+.etapa p { margin: 0; color: var(--tinta-2); line-height: 1.5; max-width: 32ch; }
+.etapa--lancamento .etapa__t { color: var(--laranja); }
+.etapa--lancamento::after {
+  content: ''; position: absolute; left: 28px; top: -1px; width: 48px; height: 2px; background: var(--laranja);
+  box-shadow: 0 0 12px var(--laranja-luz);
+}
+
+@media (max-width: 900px) {
+  .contagem__cabeca { grid-template-columns: 1fr; }
+  .contagem__cabeca .corpo { justify-self: start; }
+  .contagem__etapas { grid-template-columns: 1fr 1fr; }
+  .etapa, .etapa:not(:nth-child(3n + 1)) { padding: 24px 20px 32px 0; border-right: 0; }
+  .etapa:nth-child(odd) { border-right: 1px solid var(--fio); }
+  .etapa:nth-child(even) { padding-left: 20px; }
+  .etapa--lancamento::after { left: 20px; }
+}
+@media (max-width: 520px) {
+  .contagem__etapas { grid-template-columns: 1fr; }
+  .etapa, .etapa:nth-child(even) { padding: 22px 0 26px; border-right: 0 !important; display: grid; grid-template-columns: 76px 1fr; column-gap: 12px; }
+  .etapa__t { grid-row: span 2; margin: 0; font-size: 2.25rem; }
+  .etapa--lancamento::after { left: 0; }
+}

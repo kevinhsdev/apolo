@@ -5,7 +5,7 @@ import './styles/base.css';
 import './acessibilidade.js';
 import './sections/nav.css';
 import './sections/hero.css';
-import './sections/regioes.css';
+import './sections/contagem.css';
 import './sections/dominio.css';
 import './sections/projetos.css';
 import './sections/planos.css';
@@ -105,21 +105,18 @@ const leve = tela.celular || fraco;
 Promise.all([
   import('./motion/globo.js'),
   import('./motion/coreografia.js'),
-  import('./motion/voo.js'),
   import('./motion/arrasto.js'),
-]).then(([{ criarGlobo }, { criarCoreografia }, { criarVoo }, { criarArrasto }]) => {
+]).then(([{ criarGlobo }, { criarCoreografia }, { criarArrasto }]) => {
   const globo = criarGlobo(canvas, { leve, fraco });
   globo.medir(tela.w, tela.h);
   seLento(() => { globo.baixar(); globo.medir(tela.w, tela.h); });
   const coreografia = criarCoreografia(globo);
-  const voo = criarVoo(globo, coreografia, busca);
   const arrasto = criarArrasto(coreografia);
   let estavaNaTela = true;
   let meio = false;
   aCadaQuadro((dt, agora) => {
     arrasto.quadro(dt);
     coreografia.quadro(dt, agora);
-    voo.quadro();
     const naTela = coreografia.visivel();
     // aparelho lento: a Lua desenha um quadro sim, um não (30 fps), e sobra tempo para a rolagem
     meio = !meio;
@@ -130,9 +127,7 @@ Promise.all([
     canvas.classList.add('is-pronto');
     luaPronta();
     podeMedir();
-    coreografia.acender(performance.now() / 1000);
   };
-  document.querySelector('[data-falha]').addEventListener('revelou', () => coreografia.falhar(), { once: true });
   fontes.then(() => { medirTudo(); coreografia.remedir(); });
   let largura = tela.w;
   window.addEventListener('resize', () => {
@@ -143,8 +138,6 @@ Promise.all([
     coreografia.remedir();
     globo.medir(tela.w, tela.h);
   });
-}).catch(() => {
-  busca.pousar(true); // sem WebGL: só o ponto do ".com" aceso
 });
 
-if (!window.WebGLRenderingContext) busca.pousar(true);
+busca.pousar(true); // o ponto do ".com" fica aceso na busca de domínio

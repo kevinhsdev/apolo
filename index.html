@@ -75,14 +75,13 @@
   </div>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
   <canvas class="globo" aria-hidden="true"></canvas>
-  <span class="ponto-voo" aria-hidden="true"></span>
 
   <header class="nav" data-nav>
     <nav class="nav__grupo nav__grupo--esq" aria-label="Seções">
       <a class="link" href="#processo">Processo</a>
-      <a class="link" href="#dominio">Domínio</a>
-      <a class="link" href="#pacotes">Pacotes</a>
       <a class="link" href="#projetos">Projetos</a>
+      <a class="link" href="#pacotes">Pacotes</a>
+      <a class="link" href="#dominio">Domínio</a>
       <a class="link" href="#diagnostico">Diagnóstico</a>
     </nav>
     <a class="nav__marca" href="#topo" aria-label="Apolo Studio, voltar ao topo">
@@ -139,57 +138,43 @@
 
   <main id="conteudo">
     <section class="hero" id="topo">
-      <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="contorno-palavra"><feMorphology in="SourceAlpha" operator="erode" radius="1" result="miolo"/><feComposite in="SourceGraphic" in2="miolo" operator="out" result="borda"/><feComponentTransfer in="borda"><feFuncA type="linear" slope=".22"/></feComponentTransfer></filter></svg>
-      <p class="palavra hero__palavra" aria-hidden="true" data-palavra>apolo</p>
+      <p class="hero__missao" aria-hidden="true"><span class="ponto ponto--vivo"></span>Agenda aberta para novos projetos</p>
       <h1 class="hero__lead">
         <span class="linha"><span>Sites para</span></span>
         <span class="linha"><span>sua empresa</span></span>
-        <span class="linha"><span>sair do chão.</span></span>
+        <span class="linha"><span><em>decolar.</em></span></span>
       </h1>
       <p class="hero__preco">
-        <span class="linha"><span>Sites a partir de</span></span>
-        <span class="linha"><span>R$ 1.200, em 7 dias úteis</span></span>
+        <span class="linha"><span>A partir de R$ 1.200, prontos em 7 dias úteis.</span></span>
+        <span class="linha"><span>Dentro da LGPD e prontos para o Google.</span></span>
       </p>
       <div class="hero__acoes">
-        <a class="metal-btn" href="#dominio"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Quero meu site</span><span class="metal-btn__orb" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a class="metal-btn" href="#pacotes"><span class="metal-btn__metal" aria-hidden="true"></span><span class="metal-btn__label">Quero meu site</span><span class="metal-btn__orb" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a class="link hero__link" href="#projetos">Ver projetos no ar</a>
       </div>
+      <svg class="hero__orbita" aria-hidden="true" viewBox="-146 -43 292 86"><ellipse cx="0" cy="0" rx="144" ry="41"/><circle class="hero__satelite" r="2.4"><animateMotion dur="16s" repeatCount="indefinite" path="M144 0A144 41 0 1 1 -144 0A144 41 0 1 1 144 0"/></circle></svg>
+      <ol class="hero__telemetria" aria-label="Em todo site">
+        <li><b>T-7</b> dias úteis</li>
+        <li><b>30/30</b> itens do Padrão Apolo</li>
+        <li><b>LGPD</b> em dia</li>
+        <li><b>Google</b> configurado</li>
+      </ol>
     </section>
 
-    <section class="regioes" id="processo" aria-label="Como trabalhamos">
-      <div class="regioes__bloco regioes__bloco--a" data-revela>
-        <h2 class="titulo"><span class="linha"><span>Feito para</span></span><span class="linha"><span>ser achado.</span></span></h2>
-        <p class="corpo">SEO técnico, Google Meu Negócio e site rápido no celular. Quem procura o que você faz encontra você.</p>
+    <section class="contagem" id="processo" aria-labelledby="contagem-titulo">
+      <div class="contagem__cabeca">
+        <p class="rotulo">Contagem regressiva</p>
+        <h2 class="titulo" id="contagem-titulo" data-revela><span class="linha"><span>Do briefing</span></span><span class="linha"><span>à órbita.</span></span></h2>
+        <p class="corpo" data-revela>Cada site é uma missão com etapas claras. Você acompanha todas na sua área do cliente, e todo site passa pelos dois sócios antes de ir ao ar: um faz, o outro confere.</p>
       </div>
-      <div class="regioes__bloco regioes__bloco--b" data-revela data-falha>
-        <h2 class="titulo"><span class="linha"><span>Um faz,</span></span><span class="linha"><span>o outro confere.</span></span></h2>
-        <p class="corpo">Todo site passa pelos dois sócios e pelos 30 itens do Padrão Apolo antes de ir ao ar: LGPD, acessibilidade, SEO e segurança.</p>
-      </div>
-    </section>
-
-    <section class="dominio" id="dominio" aria-labelledby="dominio-titulo">
-      <div class="dominio__topo">
-        <h2 class="titulo" id="dominio-titulo" data-revela><span class="linha"><span>Comece</span></span><span class="linha"><span>pelo nome.</span></span></h2>
-        <p class="corpo dominio__texto" data-revela>Digite o nome que você quer. A gente consulta agora no Registro.br, e o domínio do primeiro ano já vem em todo pacote, no seu nome.</p>
-      </div>
-      <form class="busca" data-busca novalidate>
-        <label class="busca__rotulo" for="busca-input">Nome do seu site</label>
-        <div class="busca__linha">
-          <div class="busca__campo">
-            <span class="busca__espelho" aria-hidden="true"></span>
-            <input class="busca__input" id="busca-input" name="nome" placeholder="seunegocio" maxlength="40" autocomplete="off" autocapitalize="none" spellcheck="false" inputmode="url">
-            <span class="busca__sufixo" aria-hidden="true"><span class="busca__ponto">.<span class="busca__luz"></span></span><span data-sufixo-resto>com.br</span></span>
-            <span class="busca__cursor" aria-hidden="true"></span>
-          </div>
-          <button class="botao-seta busca__enviar" type="submit" aria-label="Consultar domínio"><span class="seta" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></button>
-        </div>
-        <p class="busca__erro" role="alert"></p>
-      </form>
-      <ul class="tlds" data-tlds aria-live="polite">
-        <li class="tld" data-tld=".com.br"><button class="tld__escolher" type="button" aria-pressed="true"><span class="tld__ponto"></span><span class="tld__nome">.com.br</span></button><span class="tld__estado">Digite um nome</span><span class="tld__preco">Incluso no 1º ano</span><button class="tld__acao" type="button" disabled><span class="rola">Quero este</span></button><span class="tld__sugestoes"></span></li>
-        <li class="tld" data-tld=".com"><button class="tld__escolher" type="button" aria-pressed="false"><span class="tld__ponto"></span><span class="tld__nome">.com</span></button><span class="tld__estado">Digite um nome</span><span class="tld__preco">Incluso no 1º ano</span><button class="tld__acao" type="button" disabled><span class="rola">Quero este</span></button><span class="tld__sugestoes"></span></li>
-        <li class="tld" data-tld=".net.br"><button class="tld__escolher" type="button" aria-pressed="false"><span class="tld__ponto"></span><span class="tld__nome">.net.br</span></button><span class="tld__estado">Digite um nome</span><span class="tld__preco">Incluso no 1º ano</span><button class="tld__acao" type="button" disabled><span class="rola">Quero este</span></button><span class="tld__sugestoes"></span></li>
-        <li class="tld" data-tld=".net"><button class="tld__escolher" type="button" aria-pressed="false"><span class="tld__ponto"></span><span class="tld__nome">.net</span></button><span class="tld__estado">Digite um nome</span><span class="tld__preco">Incluso no 1º ano</span><button class="tld__acao" type="button" disabled><span class="rola">Quero este</span></button><span class="tld__sugestoes"></span></li>
-      </ul>
+      <ol class="contagem__etapas">
+        <li class="etapa" data-revela><span class="etapa__t">T-5</span><h3>Briefing</h3><p>15 minutos de conversa para entender o seu negócio e o que o site precisa fazer.</p></li>
+        <li class="etapa" data-revela><span class="etapa__t">T-4</span><h3>Material</h3><p>Você manda logo, fotos e textos. Se faltar algo, a gente escreve ou providencia.</p></li>
+        <li class="etapa" data-revela><span class="etapa__t">T-3</span><h3>Construção</h3><p>O site toma forma no visual da sua marca, rápido no celular e feito para ser achado.</p></li>
+        <li class="etapa" data-revela><span class="etapa__t">T-2</span><h3>Prévia</h3><p>Você recebe um vídeo e o link para navegar. Pede os ajustes numa lista só.</p></li>
+        <li class="etapa" data-revela><span class="etapa__t">T-1</span><h3>Conferência</h3><p>Os 30 itens do Padrão Apolo: LGPD, acessibilidade, Google e segurança.</p></li>
+        <li class="etapa etapa--lancamento" data-revela><span class="etapa__t">T-0</span><h3>No ar</h3><p>Domínio no seu nome, Google configurado e 30 dias de garantia.</p></li>
+      </ol>
     </section>
 
     <section class="projetos" id="projetos" aria-labelledby="projetos-titulo">
@@ -510,6 +495,32 @@
           </div>
         </div>
       </div>
+    </section>
+
+    <section class="dominio" id="dominio" aria-labelledby="dominio-titulo">
+      <div class="dominio__topo">
+        <h2 class="titulo" id="dominio-titulo" data-revela><span class="linha"><span>Já pensou</span></span><span class="linha"><span>no nome?</span></span></h2>
+        <p class="corpo dominio__texto" data-revela>Digite o nome que você quer. A gente consulta agora no Registro.br, e o domínio do primeiro ano já vem em todo pacote, no seu nome.</p>
+      </div>
+      <form class="busca" data-busca novalidate>
+        <label class="busca__rotulo" for="busca-input">Nome do seu site</label>
+        <div class="busca__linha">
+          <div class="busca__campo">
+            <span class="busca__espelho" aria-hidden="true"></span>
+            <input class="busca__input" id="busca-input" name="nome" placeholder="seunegocio" maxlength="40" autocomplete="off" autocapitalize="none" spellcheck="false" inputmode="url">
+            <span class="busca__sufixo" aria-hidden="true"><span class="busca__ponto">.<span class="busca__luz"></span></span><span data-sufixo-resto>com.br</span></span>
+            <span class="busca__cursor" aria-hidden="true"></span>
+          </div>
+          <button class="botao-seta busca__enviar" type="submit" aria-label="Consultar domínio"><span class="seta" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></button>
+        </div>
+        <p class="busca__erro" role="alert"></p>
+      </form>
+      <ul class="tlds" data-tlds aria-live="polite">
+        <li class="tld" data-tld=".com.br"><button class="tld__escolher" type="button" aria-pressed="true"><span class="tld__ponto"></span><span class="tld__nome">.com.br</span></button><span class="tld__estado">Digite um nome</span><span class="tld__preco">Incluso no 1º ano</span><button class="tld__acao" type="button" disabled><span class="rola">Quero este</span></button><span class="tld__sugestoes"></span></li>
+        <li class="tld" data-tld=".com"><button class="tld__escolher" type="button" aria-pressed="false"><span class="tld__ponto"></span><span class="tld__nome">.com</span></button><span class="tld__estado">Digite um nome</span><span class="tld__preco">Incluso no 1º ano</span><button class="tld__acao" type="button" disabled><span class="rola">Quero este</span></button><span class="tld__sugestoes"></span></li>
+        <li class="tld" data-tld=".net.br"><button class="tld__escolher" type="button" aria-pressed="false"><span class="tld__ponto"></span><span class="tld__nome">.net.br</span></button><span class="tld__estado">Digite um nome</span><span class="tld__preco">Incluso no 1º ano</span><button class="tld__acao" type="button" disabled><span class="rola">Quero este</span></button><span class="tld__sugestoes"></span></li>
+        <li class="tld" data-tld=".net"><button class="tld__escolher" type="button" aria-pressed="false"><span class="tld__ponto"></span><span class="tld__nome">.net</span></button><span class="tld__estado">Digite um nome</span><span class="tld__preco">Incluso no 1º ano</span><button class="tld__acao" type="button" disabled><span class="rola">Quero este</span></button><span class="tld__sugestoes"></span></li>
+      </ul>
     </section>
 
     <section class="numeros" aria-label="Em números">

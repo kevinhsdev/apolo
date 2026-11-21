@@ -123,20 +123,6 @@ main > section > *, .rodape > * { position: relative; z-index: 2; }
 @keyframes respira { 50% { opacity: .45; box-shadow: 0 0 4px 0 var(--laranja-luz); } }
 
 /* o ponto que voa da Lua até a busca */
-.ponto-voo {
-  position: fixed; left: 0; top: 0; z-index: 3; width: 8px; height: 8px; border-radius: 50%;
-  background: radial-gradient(circle, #fff1e8 0 22%, var(--laranja) 40%, rgba(255, 90, 31, 0) 72%);
-  box-shadow: 0 0 18px 4px var(--laranja-luz);
-  pointer-events: none; opacity: 0;
-}
-.ponto-voo.is-voando { opacity: 1; }
-
-/* barra de rolagem própria */
-.barra { position: fixed; top: 0; right: 0; bottom: 0; width: 14px; z-index: 40; }
-.barra__polegar {
-  position: absolute; right: 3px; top: 0; width: 3px; border-radius: 3px;
-  background: var(--fio-forte); opacity: 0; transition: opacity .4s, width .25s var(--ease-snap);
-}
 .barra.is-ativa .barra__polegar, .barra:hover .barra__polegar { opacity: 1; }
 .barra:hover .barra__polegar, .barra.is-arrastando .barra__polegar { width: 6px; }
 @media (hover: none) { .barra { display: none; } }
@@ -183,7 +169,7 @@ html.tem-faixa .nav { top: 38px; }
   *, *::before, *::after { animation-duration: .001s !important; animation-iteration-count: 1 !important; transition-duration: .001s !important; }
   .linha > span, [data-revela] { transform: none !important; }
   /* movimento reduzido: a página já nasce pronta, sem esperar as fontes */
-  .nav__grupo, .nav__marca, .hero__palavra, .hero__acoes { opacity: 1 !important; }
+  .nav__grupo, .nav__marca, .hero__acoes, .hero__missao, .hero__telemetria { opacity: 1 !important; }
 }
 
 /* aparelho lento (src/desempenho.js): sem desfoque de fundo, que repinta a cada rolagem */
