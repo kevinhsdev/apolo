@@ -8,10 +8,13 @@ import '../styles/base.css';
 import './pagar.css';
 import '../estilo.js';
 import '../acessibilidade.js';
-import { CATALOGO, precoCartao, descontoPix, brl, PARCELAS_SEM_JUROS } from '../precos.js';
+import { CATALOGO, precoCartao, descontoPix, brl, PARCELAS_SEM_JUROS, OFERTA, ofertaNoAr } from '../precos.js';
 import { ligado, sb, sessao, enviarCodigo, conferirCodigo, salvarCliente, criarCobranca } from '../supabase.js';
-import { OFERTA, ofertaNoAr } from '../oferta.js';
+import { montarDeslizar } from '../components/deslizar/deslizar.js';
+
 import { linkConversa, WHATSAPP } from '../contato.js';
+
+let finalizar = null; // o botão de arrastar (montado lá embaixo)
 
 const $ = s => document.querySelector(s);
 const q = new URLSearchParams(location.search);
@@ -91,8 +94,8 @@ function pintar() {
     : estado.forma === 'pix' ? `Hoje você paga R$ ${brl(pix / 2)} (50%). O restante, na entrega.`
     : `${estado.parcelas}x de R$ ${brl(Math.round(cartao / estado.parcelas * 100) / 100)} no cartão, sem juros.`;
   // "Pagar" só quando a cobrança é gerada de verdade (área do cliente ligada); sem ela, o botão envia o pedido
-  $('[data-finalizar]').textContent = !ligado ? (site ? 'Finalizar pedido' : 'Contratar')
-    : !site ? `Pagar o 1º mês ${estado.forma === 'pix' ? 'no Pix' : 'no cartão'}` : estado.forma === 'pix' ? `Pagar R$ ${brl(pix / 2)} no Pix` : `Pagar em até ${estado.parcelas}x no cartão`;
+  rotuloFinalizar(!ligado ? (site ? 'Finalizar pedido' : 'Contratar')
+    : !site ? `Pagar o 1º mês ${estado.forma === 'pix' ? 'no Pix' : 'no cartão'}` : estado.forma === 'pix' ? `Pagar R$ ${brl(pix / 2)} no Pix` : `Pagar em até ${estado.parcelas}x no cartão`);
 }
 
 // cupom (só nos planos de site, enquanto a oferta vale)
@@ -111,7 +114,7 @@ campoCupom.addEventListener('keydown', e => { if (e.key === 'Enter') { e.prevent
 if (site && q.get('cupom')) aplicarCupom(q.get('cupom'), true);
 
 // finalizar
-const form = $('[data-checkout]'), saida = $('[data-estado]'), botao = $('[data-finalizar]');
+const form = $('[data-checkout]'), saida = $('[data-estado]');
 $('#c-aceite').addEventListener('change', e => { if (e.target.checked) { e.target.closest('.campo').classList.remove('is-erro'); saida.textContent = ''; } });
 const passoCodigo = $('[data-codigo]');
 const docOk = v => [11, 14].includes(v.replace(/\D/g, '').length);
@@ -150,8 +153,8 @@ async function pagarComConta(d) {
       $('[data-codigo-email]').textContent = d.email;
       passoCodigo.hidden = false;
       $('#c-codigo').focus();
-      saida.textContent = 'Digite o código que chegou no seu e-mail e aperte o botão de novo.';
-      return;
+      saida.textContent = 'Digite o código que chegou no seu e-mail e deslize de novo.';
+      return 'codigo';
     }
     const { data, error } = await conferirCodigo(d.email, $('#c-codigo').value.trim());
     if (error || !data.session) throw new Error('Código inválido ou vencido. Confira e tente de novo.');
@@ -183,15 +186,25 @@ async function pedirPelaConversa(d) {
   window.open(linkConversa(texto), '_blank', 'noopener');
 }
 
-form.addEventListener('submit', async e => {
-  e.preventDefault();
-  if (!conferir()) return;
-  const d = Object.fromEntries(new FormData(form));
-  if (!ligado) return pedirPelaConversa(d);
-  botao.disabled = true;
-  try { await pagarComConta(d); }
-  catch (err) { saida.textContent = err.message; }
-  finally { botao.disabled = false; }
+// finalizar: arrastar para confirmar (Enter e Espaço também). A mensagem do erro sobe no balão.
+form.addEventListener('submit', e => e.preventDefault());
+finalizar = montarDeslizar($('[data-finalizar]'), {
+  confirmado: ligado ? 'Abrindo o pagamento' : 'Pedido enviado',
+  carregando: 'Enviando o pedido…',
+  dica: 'Arraste até o fim ou aperte Enter para finalizar o pedido.',
+  resetAfter: 4000,
+  onConfirm: async () => {
+    if (!conferir()) throw new Error('Confira os dados');
+    const d = Object.fromEntries(new FormData(form));
+    if (!ligado) return pedirPelaConversa(d);
+    try {
+      if (await pagarComConta(d) === 'codigo') throw new Error('Falta o código do e-mail');
+    } catch (err) { saida.textContent = err.message; throw err; }
+  },
 });
+function rotuloFinalizar(t) {
+  if (!finalizar) $('[data-finalizar]').textContent = t;
+  else finalizar.rotulo(t);
+}
 
 pintar();

@@ -1,6 +1,7 @@
 // Pedido de diagnóstico: valida, abre a conversa já escrita (WhatsApp ou Instagram) e mostra o enviado.
 import { movimentoReduzido } from '../preferencias.js';
 import { linkConversa, WHATSAPP } from '../contato.js';
+import { montarConfete } from '../components/confete/confete.js';
 
 const SITE = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(\/.*)?$/i;
 
@@ -10,7 +11,7 @@ export function iniciarMigracao() {
   const site = form.querySelector('[name=site]');
   const nome = form.querySelector('[name=nome]');
   const ok = form.querySelector('.linha-form__ok');
-  const botao = form.querySelector('button[type=submit]');
+  const botao = montarConfete(form.querySelector('button[type=submit]'), { rotulo: 'Pedir diagnóstico', enviado: 'Pedido aberto', erro: 'Confira os campos', carregando: 'Abrindo a conversa' });
 
   const erro = (input, msg) => {
     const campo = input.closest('.campo');
@@ -35,14 +36,17 @@ export function iniciarMigracao() {
     const n = nome.value.trim();
     const a = erro(site, !s ? 'Diga qual é o seu site.' : !SITE.test(s) ? 'Confira o endereço (ex.: seusite.com.br).' : '');
     const b = erro(nome, !n ? 'Como podemos te chamar?' : '');
-    if (!a) { site.focus(); return; }
-    if (!b) { nome.focus(); return; }
+    if (!a) { botao.status('error'); site.focus(); return; }
+    if (!b) { botao.status('error'); nome.focus(); return; }
     // abre na hora do clique (depois o navegador bloquearia a janela)
     const msg = `Olá! Sou ${n} e quero um diagnóstico grátis do site ${s}.`;
     if (!WHATSAPP) navigator.clipboard?.writeText(msg).catch(() => {});
     window.open(linkConversa(msg), '_blank', 'noopener');
-    botao.classList.add('is-enviando');
-    botao.querySelectorAll('.rola span').forEach(sp => { sp.textContent = 'Abrindo…'; });
+    botao.status('loading');
+    setTimeout(() => {
+      botao.status('success');
+    }, 900);
+    // o confete cai e então o formulário dá lugar ao recado
     setTimeout(() => {
       form.classList.add('is-enviado');
       ok.textContent = '';
@@ -52,7 +56,7 @@ export function iniciarMigracao() {
       ok.append(p, WHATSAPP
         ? ` Abrimos o WhatsApp com o seu pedido. É só enviar, ${n.split(' ')[0]}.`
         : ` Abrimos o nosso Direct e copiamos o seu pedido. É só colar e enviar, ${n.split(' ')[0]}.`);
-    }, 900);
+    }, 3300);
   });
 }
 

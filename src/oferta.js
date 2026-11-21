@@ -4,6 +4,7 @@
 // cobrado quando a oferta acabar. Passou da data, a faixa, os riscados e o cupom somem sozinhos.
 import { definir, ler } from './motion/estado.js';
 import { precoCartao, descontoPix, OFERTA, ofertaNoAr, PARCELAS_SEM_JUROS } from './precos.js';
+import { montarConfete } from './components/confete/confete.js';
 
 export { OFERTA, ofertaNoAr };
 
@@ -106,6 +107,7 @@ export function iniciarOferta() {
     copiado.textContent = 'Copiado';
     setTimeout(() => { copiado.textContent = 'Copiar'; }, 1600);
   });
+  const botao = montarConfete(form.querySelector('button[type=submit]'), { rotulo: 'Aplicar', enviado: 'Aplicado', erro: 'Confira', icone: '', carregando: 'Aplicando o cupom' });
   form.addEventListener('submit', e => {
     e.preventDefault();
     const c = campo.value.trim().toUpperCase();
@@ -113,12 +115,17 @@ export function iniciarOferta() {
       estado.textContent = c ? 'Esse cupom não existe ou já acabou.' : 'Digite o código do cupom.';
       bloco.classList.remove('is-ok');
       bloco.classList.add('is-erro');
+      botao.status('error');
       return;
     }
-    definir({ cupom: c });
-    pintarPrecos();
-    bloco.classList.remove('is-erro');
-    bloco.classList.add('is-ok');
-    estado.textContent = `Cupom ${c} aplicado: ${OFERTA.cupons[c].desconto}% off nos pacotes de site. Já vai junto na sua mensagem.`;
+    botao.status('loading');
+    setTimeout(() => {
+      definir({ cupom: c });
+      pintarPrecos();
+      bloco.classList.remove('is-erro');
+      bloco.classList.add('is-ok');
+      estado.textContent = `Cupom ${c} aplicado: ${OFERTA.cupons[c].desconto}% off nos pacotes de site. Já vai junto na sua mensagem.`;
+      botao.status('success');
+    }, 900);
   });
 }

@@ -1,0 +1,139 @@
+/* Confetti Submit Button (ProfitizeBuild), nas cores da Apolo: pílula clara no tema escuro, escura no claro */
+@property --csb-draw { syntax: "<number>"; inherits: true; initial-value: 0; }
+.csb {
+  --csb-h: 46px;
+  --csb-fs: 0.9375rem;
+  --csb-px: 22px;
+  --csb-gap: 8px;
+  --csb-icon: 16px;
+  --csb-dot: 5.5px;
+  --csb-radius: 999px;
+  --csb-weight: 600;
+  --csb-font: inherit;
+  --csb-bg: var(--tinta);
+  --csb-bg-hover: #ffffff;
+  --csb-fg: var(--preto);
+  --csb-accent: var(--laranja);
+  --csb-success: #1f9d61;
+  --csb-danger: #e2483b;
+  --csb-ring: var(--laranja);
+  --csb-highlight: inset 0 -1px 0 rgba(23, 21, 27, .1);
+  --csb-shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 12px 26px -12px rgba(0, 0, 0, .6);
+  --csb-shadow-hover: 0 1px 2px rgba(0, 0, 0, .3), 0 18px 34px -14px rgba(255, 90, 31, .55);
+  --csb-ease-out: cubic-bezier(.23, 1, .32, 1);
+  --csb-ease-sine: cubic-bezier(.37, 0, .63, 1);
+}
+html.t-claro .csb {
+  --csb-bg-hover: #26232b;
+  --csb-success: #63d69e;
+  --csb-danger: #ff6b5c;
+  --csb-highlight: inset 0 1px 0 rgba(255, 255, 255, .09);
+  --csb-shadow: 0 1px 1px rgba(23, 21, 27, .14), 0 3px 8px -2px rgba(23, 21, 27, .2), 0 12px 24px -12px rgba(23, 21, 27, .45);
+}
+
+.csb {
+  position: relative; isolation: isolate; display: inline-grid; max-width: 100%; vertical-align: middle;
+  font-family: var(--csb-font); -webkit-font-smoothing: antialiased;
+}
+.csb, .csb *, .csb *::before, .csb *::after { box-sizing: border-box; }
+.csb:not([data-ready]) *, .csb:not([data-ready]) *::before, .csb:not([data-ready]) *::after { transition: none !important; }
+.csb-canvas { position: absolute; left: 0; top: 0; z-index: 0; display: block; width: 0; height: 0; pointer-events: none; }
+
+.csb-btn {
+  position: relative; z-index: 1; display: grid; width: 100%; min-width: 0; height: var(--csb-h); margin: 0; padding: 0;
+  border: 0; border-radius: var(--csb-radius); background: none; color: var(--csb-fg);
+  font: inherit; font-size: var(--csb-fs); font-weight: var(--csb-weight); line-height: 1; letter-spacing: -.01em;
+  text-align: center; cursor: pointer; outline: none; -webkit-appearance: none; appearance: none;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation; user-select: none;
+}
+.csb-btn:focus, .csb-btn:focus-visible { outline: none; }
+.csb[data-state="loading"] .csb-btn { cursor: progress; }
+.csb[data-state="success"] .csb-btn { cursor: default; }
+
+.csb-sizers { grid-area: 1 / 1; display: grid; height: 0; overflow: hidden; visibility: hidden; }
+.csb-sizers > .csb-row { grid-area: 1 / 1; justify-self: start; height: auto; }
+.csb-row { display: flex; align-items: center; justify-content: center; gap: var(--csb-gap); height: 100%; padding: 0 var(--csb-px); white-space: nowrap; }
+.csb-row--loading { min-width: calc(var(--csb-h) * 1.9); }
+.csb-text { display: block; padding-bottom: .04em; }
+
+.csb-face {
+  position: absolute; inset: 0; margin: 0 auto; width: 100%; border-radius: var(--csb-radius);
+  background-color: var(--csb-bg); box-shadow: var(--csb-highlight), var(--csb-shadow);
+  transition: background-color .3s ease, box-shadow .25s ease, opacity .2s ease, translate .22s var(--csb-ease-out), scale .16s var(--csb-ease-out);
+}
+.csb[data-align="start"] .csb-face { margin: 0 auto 0 0; }
+.csb[data-align="end"] .csb-face { margin: 0 0 0 auto; }
+.csb-clip { position: relative; display: block; height: 100%; border-radius: inherit; overflow: hidden; clip-path: inset(0 round var(--csb-radius)); }
+.csb[data-state="success"] .csb-face { background-color: color-mix(in srgb, var(--csb-success) 14%, var(--csb-bg)); }
+.csb[data-state="error"] .csb-face { background-color: color-mix(in srgb, var(--csb-danger) 14%, var(--csb-bg)); }
+
+@media (hover: hover) and (pointer: fine) {
+  .csb:not([data-busy]) .csb-btn:hover .csb-face { box-shadow: var(--csb-highlight), var(--csb-shadow-hover); }
+  .csb[data-state="idle"] .csb-btn:hover .csb-face { background-color: var(--csb-bg-hover); }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .csb:not([data-busy]) .csb-btn:hover .csb-face { translate: 0 -1px; }
+  .csb:not([data-busy]) .csb-btn:hover .csb-icon--plane { translate: 2px -2px; rotate: -4deg; }
+  .csb:not([data-busy]) .csb-btn:hover .csb-icon--retry { rotate: 40deg; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .csb:not([data-busy]) .csb-btn:active .csb-face, .csb:not([data-busy]) .csb-btn[data-sink] .csb-face { scale: .97; }
+}
+.csb-btn:focus-visible .csb-face { outline: 2px solid var(--csb-ring); outline-offset: 3px; }
+
+.csb-layer { opacity: 0; }
+.csb-layer.csb-row--idle { position: relative; }
+.csb-layer:not(.csb-row--idle) { position: absolute; inset: 0; }
+.csb-layer[data-phase="rest"], .csb-layer[data-phase="in"] { opacity: 1; }
+.csb-layer[data-phase="in"] { animation: csb-in .3s var(--csb-ease-out) .07s both; }
+.csb-layer[data-phase="out"] { animation: csb-out .17s var(--csb-ease-out) both; }
+@keyframes csb-in {
+  from { opacity: 0; transform: translateY(calc(var(--csb-h) * .15)); filter: blur(5px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+@keyframes csb-out {
+  from { opacity: 1; transform: translateY(0); filter: blur(0); }
+  to { opacity: 0; transform: translateY(calc(var(--csb-h) * -.15)); filter: blur(5px); }
+}
+
+.csb-icon { display: block; flex: none; width: var(--csb-icon); height: var(--csb-icon); overflow: visible; transition: translate .25s var(--csb-ease-out), rotate .4s var(--csb-ease-out); }
+.csb-icon--plane { color: var(--csb-accent); }
+.csb-icon--check { color: var(--csb-success); }
+.csb-icon--retry { color: var(--csb-danger); }
+.csb-draw { stroke-dasharray: 1 1.2; stroke-dashoffset: var(--csb-draw); }
+.csb-layer[data-phase="out"] .csb-icon--plane { animation: csb-fly .3s var(--csb-ease-out) both; }
+.csb-layer[data-phase="in"] .csb-icon--plane { animation: csb-arrive .55s var(--csb-ease-out) .12s both; }
+@keyframes csb-fly { to { transform: translate(11px, -9px) rotate(-8deg); opacity: 0; } }
+@keyframes csb-arrive { from { transform: translate(-9px, 6px) rotate(6deg); opacity: 0; } }
+.csb-layer[data-phase="in"] .csb-icon--check { animation: csb-draw .42s var(--csb-ease-out) .16s both; }
+.csb-layer[data-phase="in"] .csb-icon--retry { animation: csb-draw .5s var(--csb-ease-out) .1s both; }
+@keyframes csb-draw { from { --csb-draw: 1.02; } to { --csb-draw: 0; } }
+
+.csb-dots { display: flex; align-items: center; gap: calc(var(--csb-dot) * .8); }
+.csb-dots > i { display: block; width: var(--csb-dot); height: var(--csb-dot); }
+.csb-dots > i::before { content: ""; display: block; width: 100%; height: 100%; border-radius: 50%; background: var(--csb-accent); }
+.csb-layer[data-phase="in"] .csb-dots > i { animation: csb-dot-in .26s var(--csb-ease-out) both; animation-delay: calc(40ms + var(--i) * 50ms); }
+.csb-layer:not([data-phase="wait"]) .csb-dots > i::before { animation: csb-wave 1.1s var(--csb-ease-sine) infinite; animation-delay: calc(.26s + var(--i) * .14s); }
+@keyframes csb-dot-in { from { opacity: 0; transform: translateY(70%); } }
+@keyframes csb-wave { 0%, 56%, 100% { transform: translateY(0); opacity: .5; } 24% { transform: translateY(-75%); opacity: 1; } }
+
+.csb[data-moved][data-state="error"] .csb-face { animation: csb-shake .44s linear both; }
+@keyframes csb-shake {
+  0% { transform: translateX(0); } 14% { transform: translateX(-6px); } 30% { transform: translateX(5px); }
+  46% { transform: translateX(-3.5px); } 62% { transform: translateX(2px); } 80% { transform: translateX(-.8px); } 100% { transform: translateX(0); }
+}
+.csb-sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  .csb-layer[data-phase="in"] { animation: csb-fade-in .16s ease both; }
+  .csb-layer[data-phase="out"] { animation: csb-fade-out .12s ease both; }
+  .csb .csb-layer .csb-icon, .csb .csb-layer .csb-dots > i, .csb .csb-layer .csb-dots > i::before { animation: none; }
+  .csb .csb-layer:not([data-phase="wait"]) .csb-dots { animation: csb-pulse 1.4s ease-in-out infinite; }
+  .csb[data-moved][data-state="error"] .csb-face { animation: none; }
+  .csb-face::after { content: ""; position: absolute; inset: -4px; border-radius: inherit; box-shadow: 0 0 0 2px var(--csb-success); opacity: 0; pointer-events: none; }
+  .csb[data-moved][data-state="success"] .csb-face::after { animation: csb-ring 1.2s ease both; }
+}
+@keyframes csb-fade-in { from { opacity: 0; } }
+@keyframes csb-fade-out { to { opacity: 0; } }
+@keyframes csb-pulse { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+@keyframes csb-ring { 0% { opacity: 0; } 25% { opacity: .7; } 100% { opacity: 0; } }

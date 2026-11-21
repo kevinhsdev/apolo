@@ -15,16 +15,55 @@
   <meta name="twitter:card" content="summary_large_image">
   <!-- partial:a11y-cedo -->
 </head>
-<body>
-  <a class="simples__marca" href="./" aria-label="Apolo Studio, página inicial"><svg viewBox="210 226 315 280" aria-hidden="true"><path d="M318 241h100l97 169-25 45L367.5 302 245 455l-25-45z"/><path d="M245 455Q367.5 355 490 455l-20 38Q367.5 407 265 493z"/></svg><span>apolo</span></a>
-  <a class="biblioteca__voltar link" href="./#projetos">← Voltar ao site</a>
-  <main class="biblioteca">
-    <header class="biblioteca__cabeca">
-      <p class="projetos__eyebrow">Biblioteca · <span data-total>0</span> projetos</p>
-      <h1 class="projetos__titulo">Cada site, <span>aberto para você ver.</span></h1>
-      <p class="projetos__intro">Passe o mouse para ver cada site rolando, ou abra para navegar ao vivo no computador e no celular.</p>
-    </header>
-    <div class="biblioteca__grade" data-biblioteca></div>
+<body class="bib">
+  <header class="bib-topo">
+    <a class="bib-marca" href="./" aria-label="Apolo Studio, página inicial"><svg viewBox="210 226 315 280" aria-hidden="true"><path d="M318 241h100l97 169-25 45L367.5 302 245 455l-25-45z"/><path d="M245 455Q367.5 355 490 455l-20 38Q367.5 407 265 493z"/></svg><span>apolo</span></a>
+    <nav class="bib-nav" aria-label="Site">
+      <a href="./">Início</a>
+      <a href="./projetos.html" aria-current="page">Biblioteca</a>
+      <a href="./#pacotes">Pacotes</a>
+      <a href="./#diagnostico">Diagnóstico</a>
+    </nav>
+    <a class="bib-botao" href="./#pacotes">Quero um site</a>
+  </header>
+
+  <main class="bib-main">
+    <p class="bib-selo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z"/></svg><span data-total>5</span> sites no ar</p>
+    <h1 class="bib-titulo">Biblioteca de projetos</h1>
+
+    <div class="bib-barra">
+      <div class="bib-chips" role="group" aria-label="Filtrar por nicho" data-chips></div>
+      <div class="bib-ferramentas">
+        <label class="bib-busca">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <span class="sr-only">Buscar projeto</span>
+          <input type="search" placeholder="Buscar por nome ou nicho" autocomplete="off" data-busca>
+          <kbd aria-hidden="true">/</kbd>
+        </label>
+        <label class="bib-ordem">
+          <span class="sr-only">Ordenar</span>
+          <select data-ordem>
+            <option value="destaque">Em destaque</option>
+            <option value="az">A a Z</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <p class="bib-contagem" aria-live="polite" data-contagem></p>
+    <ul class="bib-grade" data-grade></ul>
+    <div class="bib-vazio" data-vazio hidden>
+      <p><b>Nenhum projeto com esse nome.</b> Tente outro nicho, ou peça o seu.</p>
+      <button type="button" class="bib-limpar" data-limpar>Limpar a busca</button>
+    </div>
+
+    <section class="bib-chamada" aria-labelledby="chamada-titulo">
+      <div>
+        <h2 id="chamada-titulo">O próximo da biblioteca pode ser o seu.</h2>
+        <p data-preco>Site sob medida com WhatsApp, mapa e Google prontos e o domínio do primeiro ano incluso, no ar em 7 dias úteis.</p>
+      </div>
+      <a class="bib-botao bib-botao--grande" href="./#pacotes">Ver os pacotes</a>
+    </section>
   </main>
   <!-- partial:rodape-confianca -->
   <script type="module" src="./src/paginas/projetos.js"></script>

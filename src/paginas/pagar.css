@@ -144,3 +144,6 @@ html.a-contraste .checkout .aceite input { border-color: currentColor; }
 .codigo b { color: var(--tinta); }
 .codigo input { letter-spacing: .4em; font-variant-numeric: tabular-nums; }
 .checkout__botao:disabled { opacity: .6; cursor: progress; }
+
+/* finalizar: arrastar para confirmar (src/components/deslizar) */
+.checkout .scb { margin-top: 44px; --scb-h: 64px; }

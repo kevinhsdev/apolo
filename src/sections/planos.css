@@ -170,7 +170,7 @@
 /* cupom: bilhete destacável + campo para aplicar */
 .cupom {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); max-width: 1180px; margin: 18px auto 0;
-  border-radius: 22px; overflow: hidden; border: 1px solid rgba(255, 90, 31, .35);
+  border-radius: 22px; overflow: visible; border: 1px solid rgba(255, 90, 31, .35); /* visível: o confete do Aplicar voa para fora */
   background: linear-gradient(110deg, rgba(255, 90, 31, .14), rgba(255, 90, 31, .03) 55%, rgb(var(--veu) / .02));
 }
 .cupom[hidden] { display: none; }

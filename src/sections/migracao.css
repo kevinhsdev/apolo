@@ -114,7 +114,7 @@
 .linha-form > .botao { margin-bottom: 1.5em; }
 .botao.is-enviando .rola { animation: pisca .55s steps(1) infinite; }
 .linha-form__ok { display: none; font-size: 1rem; align-items: center; gap: 10px; }
-.linha-form.is-enviado > .campo, .linha-form.is-enviado > .botao { display: none; }
+.linha-form.is-enviado > .campo, .linha-form.is-enviado > .csb { display: none; }
 .linha-form.is-enviado .linha-form__ok { display: flex; animation: entra .6s var(--ease-out); }
 .ponto--aceso { animation: none; }
 .migracao__lgpd { font-size: 0.8125rem; color: var(--tinta-3); margin-top: 4px; }
@@ -131,7 +131,7 @@
   .ra-actions, .ra-search kbd { display: none; }
   .linha-form { flex-direction: column; align-items: stretch; }
   .campo { flex: none; }
-  .linha-form > .botao { align-self: flex-start; }
+  .linha-form > .csb { align-self: flex-start; }
 }
 @media (prefers-reduced-motion: reduce) {
   .relevo__stage, .relevo__app, .ra-item, .ra-vh li, .relevo__copy > * { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
